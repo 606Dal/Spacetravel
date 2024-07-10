@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='글쓰기' )}" />
+	
+	<body>
+		
+		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav}" />
+		
+		<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '게시판', hcontent = '글쓰기')}" />
+		
+		<!-- Main Content-->
+        <main class="mb-4 jua-font">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <p class="text-info">자유롭게 작성해 주세요.</p>
+                        <div class="my-5">
+                    		<!-- 글 작성 부분 -->
+                            <form
+                            	th:action="@{/boardWriteOK}" method="post">
+                                <div class="form-floating">
+                                    <input class="form-control" name="writer" type="text" placeholder="Enter your name..." />
+                                    <label for="writer">작성자(나중에 로그인 유저로 변경)</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control" name="subject" type="text" placeholder="Enter subject..."/>
+                                    <label for="subject">제목</label>
+                                </div>
+                                <div class="form-floating">
+                                    <textarea class="form-control" name="content" placeholder="Enter your message here..." style="height: 12rem" ></textarea>
+                                    <label for="content">내용</label>
+                                </div>
+                                <br>
+                                <!-- Submit Button-->
+                                <button class="btn btn-outline-primary" id="submitButton" type="submit" style="font-size: large;">등록</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+		
+		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
+		
+	</body>
+</html>
