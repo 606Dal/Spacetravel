@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='글쓰기' )}" />
+	
+	<body>
+		
+		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'board' ) }" />
+		
+		<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '게시판', hcontent = ' ')}" />
+		
+		<!-- Main Content-->
+        <main class="mb-4 jua-font">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7  bg-dark bg-gradient bg-opacity-75">
+                    	<!-- 컨트롤러에서 지정한 것과 같이 boardList-->
+	                    <div th:each="row : ${boardList}">
+		                    <div class="post-preview">
+		                        <a href="#">
+		                            <h2 class="post-title jua-font" th:text="${row.subject}">제목</h2>
+		                        </a>
+		                       <p class="post-meta"
+		                       		th:text="${row.id} + ' | Posted by ' + ${row.writer} +
+		                       		'&nbsp;&nbsp;&nbsp;' + ${#dates.format(row.regdate, 'yyyy.MM.dd HH:mm')} + '&nbsp;&nbsp;hit : ' + ${row.hit}">
+		                        </p>
+		                    </div>
+		                    <!-- Divider-->
+		                    <hr class="my-4" />
+	                    </div>
+                
+                    </div>
+                </div>
+            </div>
+        </main>
+		
+		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
+		
+	</body>
+</html>

@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='글쓰기' )}" />
+
+	<script type="text/javascript">
+		function valid(){
+			/* 작성자 유효성 검사(임시) 
+			if($('input[name="writer"]').val().length == 0){
+				alert('작성자를 입력하세요. 4~20글자');
+				$('input[name="writer"]').focus();
+				return false;
+			}*/
+			/* 제목 유효성 검사 */
+			if($('input[name="subject"]').val().length == 0){
+				alert('제목을 입력하세요.');
+				$('input[name="subject"]').focus();
+				return false;
+			}
+			/* 본문 유효성 검사 */
+			if($('textarea[name="content"]').val().length == 0){
+				alert('내용을 입력하세요.');
+				$('textarea[name="content"]').focus();
+				return false;
+			}
+		}
+	</script>
 	
 	<body>
 		
-		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav}" />
+		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'board' ) }" />
 		
 		<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '게시판', hcontent = '글쓰기')}" />
 		
@@ -14,25 +37,25 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <p class="text-info">자유롭게 작성해 주세요.</p>
-                        <div class="my-5">
+                        <div id="contact_form" class="my-5">
+							
                     		<!-- 글 작성 부분 -->
-                            <form
-                            	th:action="@{/boardWriteOK}" method="post">
+                            <form  th:action="@{/board/boardWriteOK}" method="post" onsubmit="return valid()">
                                 <div class="form-floating">
-                                    <input class="form-control" name="writer" type="text" placeholder="Enter your name..." />
-                                    <label for="writer">작성자(나중에 로그인 유저로 변경)</label>
+                                    <input class="form-control input_field" name="writer" type="text" readonly />
+                                    <label for="writer" sec:authentication="name" class="mt-2"></label>
                                 </div>
                                 <div class="form-floating">
-                                    <input class="form-control" name="subject" type="text" placeholder="Enter subject..."/>
+                                    <input id="subject_width" class="form-control pt-4 ps-2" name="subject" type="text" placeholder="Enter subject..."/>
                                     <label for="subject">제목</label>
                                 </div>
                                 <div class="form-floating">
-                                    <textarea class="form-control" name="content" placeholder="Enter your message here..." style="height: 12rem" ></textarea>
+                                    <textarea class="form-control pt-4 ps-2" name="content" placeholder="Enter your message here..." style="height: 12rem" ></textarea>
                                     <label for="content">내용</label>
                                 </div>
                                 <br>
                                 <!-- Submit Button-->
-                                <button class="btn btn-outline-primary" id="submitButton" type="submit" style="font-size: large;">등록</button>
+                                <button class="submit_btn" id="submitButton" type="submit" style="font-size: large;">등록</button>
                             </form>
                         </div>
                     </div>

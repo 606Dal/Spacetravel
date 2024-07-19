@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spacetravel.mapper.UserMapper">
+
+	<resultMap type="UserDTO" id="UserResult">
+		<result column="username" property="username" />
+		<result column="password" property="password" />
+		<result column="regdate" property="regdate" />
+		<result column="update_date" property="updateDate" />
+		<result column="role_id" property="roleId" />
+	</resultMap>
+
+	<insert id="insertUser" parameterType="UserDTO">
+		<![CDATA[
+			INSERT INTO user_tb (
+					  username
+					, password
+			) VALUES (
+					  #{username}
+					, #{password}
+			);
+		]]>;
+	</insert>
+	
+	<select id="findByUsername" parameterType="String" resultMap="UserResult">
+		<![CDATA[
+			SELECT * FROM user_tb WHERE username = #{username};
+		]]>;
+	</select>
+	
+	<select id="selectUserRolesByUsername" parameterType="String" resultType="String">
+		<![CDATA[
+			SELECT
+					rolename
+			FROM
+					user_tb
+			INNER JOIN
+					authority_tb
+				ON
+					id = role_id 
+			WHERE
+					username = #{username};
+		]]>;
+	</select>
+	
+	<select id="usernameDuplicateCheck" parameterType="String" resultType="String">
+		<![CDATA[
+			SELECT username FROM user_tb WHERE username = #{username};
+		]]>;
+	</select>
+	
+</mapper>

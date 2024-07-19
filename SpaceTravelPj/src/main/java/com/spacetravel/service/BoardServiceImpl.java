@@ -1,5 +1,7 @@
 package com.spacetravel.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,11 @@ public class BoardServiceImpl implements BoardService {
 	public void insertBoard(BoardDTO boardDTO) {
 
 		boardMapper.insertBoard(boardDTO);
+	}
+	
+	@Override
+	public List<BoardDTO> getBoardList() {
+		return boardMapper.selectBoardAll();
 	}
 
 }

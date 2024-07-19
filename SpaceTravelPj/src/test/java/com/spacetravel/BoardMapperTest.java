@@ -1,16 +1,20 @@
 package com.spacetravel;
 
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.spacetravel.dto.BoardDTO;
-import com.spacetravel.mapper.BoardMapper;
+import com.spacetravel.service.BoardService;
 
 @SpringBootTest
 public class BoardMapperTest {
-	
+	@Autowired
+	private BoardService boardService;
+/*	
 	@Autowired
 	private BoardMapper boardMapper;
 	
@@ -29,5 +33,11 @@ public class BoardMapperTest {
 		
 		
 	}
-
+*/
+	@Test
+	public void testSelectAll() {
+		List<BoardDTO> boardList = boardService.getBoardList();
+		System.out.println("List 회원 출력 1 : "+boardList.get(0).toString());
+	}
+	
 }

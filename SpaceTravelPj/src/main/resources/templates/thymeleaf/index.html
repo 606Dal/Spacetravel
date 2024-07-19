@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<title>index</title>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='홈페이지' )}" />
+	
 	</head>
 	<body>
-		<h2 th:text="인덱스">index.html</h2>
+		
+		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'home' ) }" />
+		
+		<main class="mb-4 jua-font">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+						<h2>☆welcome to my homepage☆</h2>
+						<form th:action="@{/logout}" method="post">
+						<th:block sec:authorize="isAuthenticated()">
+						    <!-- 인증 받음 -->
+						    <input class="submit_btn mb-5" type="submit" value="Log out" />
+						  </th:block>
+						</form>
+					</div>
+				</div>
+			</div>
+		</main>
+		
+		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
 	</body>
 </html>

@@ -4,16 +4,31 @@
 <mapper namespace="com.spacetravel.mapper.BoardMapper">
 
 	<insert id="insertBoard" parameterType="BoardDTO">
-		insert into board (
-				  subject
-				, content
-				, writer
-		) values (
-				  #{subject}
-				, #{content}
-				, #{writer}
-		);
+		<![CDATA[
+			insert into board (
+					  subject
+					, content
+					, writer
+			) values (
+					  #{subject}
+					, #{content}
+					, #{writer}
+			);
+		]]>;
 	</insert>
+	
+	<select id="selectBoardAll" resultType="BoardDTO">
+		<![CDATA[
+			select
+				* 
+			from
+				board
+			where
+				id > 0
+			order by
+				id desc, regdate desc
+		]]>;
+	</select>
 
 
 </mapper>

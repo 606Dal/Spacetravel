@@ -115,10 +115,10 @@ ul.navigation li {
 ul.navigation a {
 	float: left;
 	display: block;
-	width: 110px;
+	width: 100px;
 	height: 32px;
 	padding: 10px 2px 0 0;
-	color: #f6bf34;
+	color: #fff;
 	font-size: 14px;
 	font-weight: 700;
 	text-align: center;
@@ -126,8 +126,45 @@ ul.navigation a {
 	background: url(../images/tooplate_menu_divider.png) no-repeat center right;
 }
 
+ul.navigation2 {
+    list-style: none;
+	margin: 0;
+    padding: 0;
+}
+
+ul.navigation2 .nav-item {
+    display: inline;
+    margin: 0;
+	padding: 0;
+}
+
+ul.navigation2 .nav-link {
+	float: left;
+	display: block;
+	width: 100px;
+	height: 32px;
+	padding: 10px 2px 0 0;
+	color: mediumaquamarine;
+	font-size: 14px;
+	font-weight: 700;
+	text-align: center;
+    text-decoration: none;
+}
+
+#login {
+	color: darkorchid;
+}
+
+#login.nav-link:hover, #login.nav-link.selected {
+	 color: #f6bf34;
+ }
+
 ul.navigation a:hover, ul.navigation a.selected {
-	color: #fff;
+	color: #f6bf34;
+}
+
+ul.navigation2 a:hover {
+	color: black;
 }
 
 ul.navigation a:focus {
@@ -150,11 +187,5 @@ ul.navigation a:focus {
 
 .hide {
     display: none;
-}
-
-.jua-font {
-  font-family: "Jua", sans-serif;
-  font-weight: 400;
-  font-style: normal;
 }
 

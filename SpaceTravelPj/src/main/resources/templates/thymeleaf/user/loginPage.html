@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='로그인페이지' )}" />
+	
+	<body>
+		
+		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'login' ) }" />
+		
+		<main class="mb-4 jua-font">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div id="contact_form" class="col-md-10 col-lg-8 col-xl-7 ps-5">
+						<h1 id="login" class="mt-5 jua-font">로그인 화면</h1>
+						<h3><div class="badge text-bg-danger bg-opacity-75 jua-font" th:if="${param.error}">
+							아이디나 비밀번호가 잘못되었습니다(Invalid username and password).</div></h3>
+						<h3><div class="badge text-bg-danger bg-opacity-75 jua-font" th:if="${param.logout}">
+							로그아웃 되었습니다(You have been logged out).</div></h3>
+							
+						<form th:action="@{/user/login}" method="post">
+							<input type="hidden" id="csrfToken" name="_csrf" th:value="${csrfToken}">
+							
+							<div class="form-floating mb-3">
+								<input class="form-control input_field pt-4 ps-2" type="text" name="username" placeholder="Username"/>
+								<label for="username">아이디</label>
+							</div>
+							<div class="form-floating mb-3">
+								<input class="form-control input_field pt-4 ps-2" type="password" name="password" placeholder="Password"/>
+								<label for="password">비밀번호</label>
+							</div>
+							<input class="submit_btn mb-5" type="submit" value="로그인" />
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</main>
+		
+		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
+	</body>
+</html>
