@@ -154,7 +154,7 @@ em { color: #f3c331; }
 
 #contact_form form label { 
 	display: block; 
-	width: 100px; 
+	width: 120px; 
 	margin-right: 10px; 
 	font-size: 14px; 
 }
@@ -176,6 +176,57 @@ em { color: #f3c331; }
 	border: 1px solid ghostwhite; 
 	color: #aaa;
 	font-size: 14px;
+}
+/* 글쓰기, 수정, 삭제, 목록 버튼 */
+#write_btn {
+	padding: 5px 10px;
+	background: #1b1a1a; 
+	border: 1px solid ghostwhite; 
+	color: #aaa;
+	font-size: medium;
+	text-decoration: none;
+}
+
+#modify_btn {
+	padding: 5px 10px;
+	background: #1b1a1a; 
+	border: 2px solid lightseagreen; 
+	color: ghostwhite;
+	font-size: medium;
+	text-decoration: none;
+	text-align: center;
+}
+#del_btn {
+	padding: 5px 10px;
+	background: #1b1a1a; 
+	border: 2px solid mediumvioletred; 
+	color: ghostwhite;
+	font-size: medium;
+	text-decoration: none;
+	text-align: center;
+}
+#back_btn {
+	padding: 5px 10px;
+	background: #1b1a1a; 
+	border: 2px solid dodgerblue; 
+	color: ghostwhite;
+	font-size: medium;
+	text-decoration: none;
+	text-align: center;
+}
+
+/* 탈퇴 버튼 */
+#contact_form form .submit_red_btn  {
+	display: block;
+	background: mediumvioletred; 
+	border: 1px solid ghostwhite; 
+	color: ghostwhite;
+	font-size: medium;
+}
+#contact_form form .submit_red_btn:hover {
+    background:#1b1a1a;
+    /* 색이 변하는 시간 */
+	transition: all .35s;
 }
 
 /* gallery */
@@ -243,4 +294,9 @@ em { color: #f3c331; }
 hr {
   border-color: #dee2e6;
   opacity: 1;
+}
+
+.read_content {
+  font-size: 1.125rem;
+  color: floralwhite;
 }

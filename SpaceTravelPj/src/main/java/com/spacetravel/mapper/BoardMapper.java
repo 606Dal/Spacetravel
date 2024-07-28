@@ -14,5 +14,9 @@ public interface BoardMapper {
 	public void insertBoard(BoardDTO boardDTO); // 글 추가
 
 	public List<BoardDTO> selectBoardAll(); // 글 목록 가져오기
+
+	public BoardDTO readBoard(Integer id); // 글 내용 보기
+
+	public void updateBoard(BoardDTO boardDTO); // 글 수정
 	
 }

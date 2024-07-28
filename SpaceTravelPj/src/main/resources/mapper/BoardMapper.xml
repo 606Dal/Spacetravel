@@ -5,11 +5,11 @@
 
 	<insert id="insertBoard" parameterType="BoardDTO">
 		<![CDATA[
-			insert into board (
+			INSERT INTO board (
 					  subject
 					, content
 					, writer
-			) values (
+			) VALUES (
 					  #{subject}
 					, #{content}
 					, #{writer}
@@ -19,16 +19,39 @@
 	
 	<select id="selectBoardAll" resultType="BoardDTO">
 		<![CDATA[
-			select
+			SELECT
 				* 
-			from
+			FROM
 				board
-			where
+			WHERE
 				id > 0
-			order by
-				id desc, regdate desc
+			ORDER BY
+				id DESC, regdate DESC
 		]]>;
 	</select>
+	
+	<select id="readBoard" resultType="BoardDTO">
+		<![CDATA[
+			SELECT
+				* 
+			FROM
+				board
+			WHERE
+				id = #{id}
+		]]>;
+	</select>
+	
+	<update id="updateBoard" parameterType="BoardDTO">
+		<![CDATA[
+			UPDATE
+				board
+			SET
+				  subject = #{subject}
+				, content = #{content}
+			WHERE
+				id = #{id}
+		]]>;
+	</update>
 
 
 </mapper>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='글읽기' )}" />
+	
+	<body>
+		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( ' ' ) }" />
+		
+		<header>
+            <div class="my-4 p-4 bg-black opacity-75 rounded jua-font">
+				<div class="container">
+					<h1 class="jua-font" th:text="*{boardDTO.subject}"></h1>
+                    <span class="meta"
+                    	th:text="'Posted by ' + *{boardDTO.writer} + '&nbsp;&nbsp;'
+                    		+ ${#dates.format(boardDTO.regdate, 'yyyy.MM.dd HH:mm')}">
+                    </span>
+				</div>
+			</div>
+		</header>
+		
+		<!-- Main Content-->
+        <main class="mb-4 jua-font">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7  bg-dark bg-gradient bg-opacity-75">
+                    	<p class="read_content mt-3" th:text="*{boardDTO.content}">본문 내용</p>
+		            	<hr class="my-2" />
+					</div>
+					<div class="w-100"></div>
+				        <!--Button-->
+			        <div class="row justify-content-center d-grid gap-2 d-md-block mt-5 ms-5">
+				        <span th:if="${#authentication.principal.username == boardDTO.writer}">
+					        <a th:href="@{/board/boardModifyForm(id=${boardDTO.id})}" class="col-md-3 mx-2" id="modify_btn" type="submit">수정하기</a>
+					        <a th:href="@{/board/memberWriteFormNew(id=${boardDTO.id})}" class="col-md-3 mx-2" id="del_btn" type="submit">삭제하기</a>
+				        </span>
+				        	<a onclick="history.go(-1);" class="col-md-3 mx-2" id="back_btn" type="submit">← 뒤로</a>
+			        </div>
+				</div>
+            </div>
+        </main>
+		
+		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
+		
+	</body>
+</html>

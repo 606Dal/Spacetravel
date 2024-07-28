@@ -21,13 +21,13 @@
 			var name = $("#username").val();
 			var pw = $("#password").val();
 			var cPw = $("#confirmPassword").val();
-			
+			/* 아이디 유효성 검사 */
 			if(false === idRegex.test(name)){
 				alert('아이디는 4~20자, 한글, 영문자, 숫자만 가능합니다.');
 				$('#username').focus();
 				return false;
 			}
-			/* 비밀 번호 검사 */
+			/* 비밀번호 유효성 검사 */
 			if(false === passwordRegex.test(pw)){
 				alert('비밀번호는 4~20자, 영문자, 숫자, 특수문자를 모두 포함하여 입력해주세요.');
 				$('#password').focus();
@@ -49,7 +49,7 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div id="contact_form" class="col-md-10 col-lg-8 col-xl-7 ps-5">
-						<h1 class="mt-5 jua-font">회원 가입 화면</h1>
+						<h1 class="mt-5 jua-font">회원 가입</h1>
 						
 						<h3><div class="badge text-bg-danger bg-opacity-75 jua-font" th:text="${msg}">아이디 중복 메시지</div></h3>
 						<form th:action="@{/user/singUpOk}" method="post" onsubmit="return valid()">
@@ -65,7 +65,7 @@
 								<input class="form-control input_field pt-4 ps-2" type="password" name="confirmPassword" id="confirmPassword" oninput="pwCheck()" placeholder="samePassword"/>
 								<label for="samePassword">비밀번호 확인</label>
 							</div>
-							<div id="pwConfirm" class="ps-2">비밀번호를 입력하세요</div>
+							<div id="pwConfirm" class="ps-2">아이디와 비밀번호를 입력하세요</div>
 							<div class="pt-4">
 								<input class="submit_btn mb-5" type="submit" value="회원가입" />
 							</div>

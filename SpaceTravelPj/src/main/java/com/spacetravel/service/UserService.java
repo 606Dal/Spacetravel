@@ -11,4 +11,10 @@ public interface UserService {
 	
 	public String usernameDuplicateCheck(String u);
 	
+	public boolean isMatchesPassword(String u, String currentPassword);
+	
+	public void updatePassword(UserDTO userDTO);
+
+	public int deleteAccount(String u);
+	
 }

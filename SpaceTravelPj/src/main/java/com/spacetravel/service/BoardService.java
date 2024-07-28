@@ -13,4 +13,8 @@ public interface BoardService {
 
 	public List<BoardDTO> getBoardList();
 
+	public BoardDTO readBoard(Integer id);
+
+	public void updateBoard(BoardDTO boardDTO);
+
 }

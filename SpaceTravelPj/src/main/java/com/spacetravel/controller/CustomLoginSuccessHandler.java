@@ -14,8 +14,6 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 	@Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        // 사용자 이름을 모델에 추가
-        request.getSession().setAttribute("username", authentication.getName());
         
         super.onAuthenticationSuccess(request, response, authentication);
     }

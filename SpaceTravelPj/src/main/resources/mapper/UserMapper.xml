@@ -8,7 +8,7 @@
 		<result column="password" property="password" />
 		<result column="regdate" property="regdate" />
 		<result column="update_date" property="updateDate" />
-		<result column="role_id" property="roleId" />
+		<result column="rolename" property="rolename" />
 	</resultMap>
 
 	<insert id="insertUser" parameterType="UserDTO">
@@ -29,25 +29,28 @@
 		]]>;
 	</select>
 	
-	<select id="selectUserRolesByUsername" parameterType="String" resultType="String">
-		<![CDATA[
-			SELECT
-					rolename
-			FROM
-					user_tb
-			INNER JOIN
-					authority_tb
-				ON
-					id = role_id 
-			WHERE
-					username = #{username};
-		]]>;
-	</select>
-	
 	<select id="usernameDuplicateCheck" parameterType="String" resultType="String">
 		<![CDATA[
 			SELECT username FROM user_tb WHERE username = #{username};
 		]]>;
 	</select>
+	
+	<select id="selectOnePasswordByUsername" parameterType="String" resultType="String">
+		<![CDATA[
+			SELECT password FROM user_tb WHERE username = #{username};
+		]]>;
+	</select>
+	
+	<update id="updatePassword" parameterType="UserDTO">
+		<![CDATA[
+			UPDATE user_tb SET password = #{password} WHERE username = #{username};
+		]]>;
+	</update>
+	
+	<delete id="deleteUser" parameterType="String">
+		<![CDATA[
+			DELETE FROM user_tb WHERE username = #{username};
+		]]>;
+	</delete>
 	
 </mapper>

@@ -11,12 +11,13 @@
 		<!-- Main Content-->
         <main class="mb-4 jua-font">
             <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="row row-cols-auto gx-4 gx-lg-5 justify-content-center">
+					<div class="col-md-10 col-lg-8 col-xl-7 mb-3"><a id="write_btn" th:href="@{/board/boardWriteForm}" class="float-end">글쓰기</a></div>
                     <div class="col-md-10 col-lg-8 col-xl-7  bg-dark bg-gradient bg-opacity-75">
                     	<!-- 컨트롤러에서 지정한 것과 같이 boardList-->
 	                    <div th:each="row : ${boardList}">
 		                    <div class="post-preview">
-		                        <a href="#">
+		                        <a th:href="@{/board/boardReadPage(id=${row.id})}">
 		                            <h2 class="post-title jua-font" th:text="${row.subject}">제목</h2>
 		                        </a>
 		                       <p class="post-meta"

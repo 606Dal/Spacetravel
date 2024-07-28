@@ -23,7 +23,7 @@
 		
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'board' ) }" />
 		
-		<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '게시판', hcontent = '글쓰기')}" />
+		<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '게시판', hcontent = '글 수정하기')}" />
 		
 		<!-- Main Content-->
         <main class="mb-4 jua-font">
@@ -34,22 +34,27 @@
                         <div id="contact_form" class="my-5">
 							
                     		<!-- 글 작성 부분 -->
-                            <form  th:action="@{/board/boardWriteOK}" method="post" onsubmit="return valid()">
+                            <form th:action="@{/board/boardModifyOk}" method="post" onsubmit="return valid()">
+								<input type="hidden" name="id" th:value="*{boardDTO.id}">
+								<input type="hidden" name="writer" th:value="*{boardDTO.writer}">
                                 <div class="form-floating">
                                     <input class="form-control input_field" name="writer" type="text" readonly />
-                                    <label for="writer" sec:authentication="name" class="mt-2"></label>
+                                    <label for="writer" th:text="*{boardDTO.writer}" class="mt-2"></label>
                                 </div>
                                 <div class="form-floating">
-                                    <input id="subject_width" class="form-control pt-4 ps-2" name="subject" type="text" placeholder="Enter subject..."/>
+                                    <input id="subject_width" class="form-control pt-4 ps-2" name="subject" type="text" placeholder="Enter subject..."
+                                    	th:value="*{boardDTO.subject}"/>
                                     <label for="subject">제목</label>
                                 </div>
                                 <div class="form-floating">
-                                    <textarea class="form-control pt-4 ps-2" name="content" placeholder="Enter your message here..." style="height: 12rem" ></textarea>
+                                    <textarea class="form-control pt-5 ps-2" name="content" placeholder="Enter your message here..." style="height: 12rem" 
+                                    	 th:text="*{boardDTO.content}"></textarea>
                                     <label for="content">내용</label>
                                 </div>
                                 <br>
                                 <!-- Submit Button-->
-                                <button class="submit_btn" id="submitButton" type="submit" style="font-size: large;">등록</button>
+                                <a onclick="history.go(-1);" class="pt-2 mx-2" id="back_btn" type="submit" style="font-size: large;">← 뒤로</a>
+                                <button class="pt-2" id="modify_btn" type="submit" style="font-size: large;">수정 완료</button>
                             </form>
                         </div>
                     </div>

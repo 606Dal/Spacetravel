@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.spacetravel.dto.UserDTO;
 import com.spacetravel.mapper.UserMapper;
+import com.spacetravel.service.AuthenticationProviderService;
 import com.spacetravel.service.UserService;
 
 @SpringBootTest
@@ -40,12 +41,8 @@ public class UserMapperTest {
 	public void testFindUser() {
 		log.info(userMapper.findByUsername("관리자").toString());
 	}
-	
-	@Test
-	public void testFindRole() {
-		log.info(userMapper.selectUserRolesByUsername("관리자").toString());
-	}
-*/
+*/	
+/*
 	@Test
 	public void testIdCheck() {
 		log.info(userMapper.usernameDuplicateCheck("테스터2").toString());
@@ -53,6 +50,6 @@ public class UserMapperTest {
 		if(result == null) {
 			System.out.println("널입니다");
 		}
-	}
+	}*/
 	
 }

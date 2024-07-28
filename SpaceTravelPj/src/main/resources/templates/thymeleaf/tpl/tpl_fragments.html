@@ -75,7 +75,7 @@
 					<ul class="navigation2 navbar-nav">
 							<!-- 로그인 유지 상태 -->
 						<th:block sec:authorize="isAuthenticated()">
-						<form id="logout-form" action="/logout" method="post">
+						<form th:action="@{/logout}" method="post">
 						    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
 						</form>
 						<li class="nav-item dropdown">
@@ -83,11 +83,11 @@
 				            	로그인 한 아이디
 				        	</a>
 				        	<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">계정 관리</a></li>
-					            <li><a class="dropdown-item" href="#">Another action</a></li>
+								<li><a class="dropdown-item" th:href="@{/user/accountPage}">계정 관리</a></li>
+					            <li><a class="dropdown-item" th:href="@{/user/changePassword}">비밀번호 변경</a></li>
 					            <li><hr class="dropdown-divider"></li>
 								<li class="dropdown-item">
-									<a href="#" onclick="document.getElementById('logout-form').submit();">🌒로그아웃</a>
+									<a th:href="@{/user/logout}">🌒로그아웃</a>
 								</li>
 				        	</ul>
 				        </li>

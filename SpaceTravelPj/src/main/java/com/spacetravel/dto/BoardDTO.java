@@ -2,7 +2,6 @@ package com.spacetravel.dto;
 
 import java.util.Date;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
@@ -18,18 +17,15 @@ public class BoardDTO {
 	@NotEmpty(message = "내용을 입력해 주세요.")
 	private String content;
 	
-	@NotBlank
-	@Size(min = 4, max = 20, message = "아이디는 4~20자리로 입력해 주세요.")
 	private String writer;
-	
 	private Date regdate;
+	private Date updatedAt;
 	
 	@PositiveOrZero
 	private int hit;
 	
 	
 	// getter, setter
-	
 	public int getId() {
 		return id;
 	}
@@ -60,6 +56,12 @@ public class BoardDTO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 	public int getHit() {
 		return hit;
 	}
@@ -70,7 +72,7 @@ public class BoardDTO {
 	@Override
 	public String toString() {
 		return "BoardDTO [id=" + id + ", subject=" + subject + ", content=" + content + ", writer=" + writer
-				+ ", regdate=" + regdate + ", hit=" + hit + "]";
+				+ ", regdate=" + regdate + ", updatedAt=" + updatedAt + ", hit=" + hit + "]";
 	}
 	
 }
