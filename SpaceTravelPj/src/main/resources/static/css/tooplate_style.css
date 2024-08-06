@@ -180,15 +180,18 @@ em { color: #f3c331; }
 /* 글쓰기, 수정, 삭제, 목록 버튼 */
 #write_btn {
 	padding: 5px 10px;
+	width: 90px;
 	background: #1b1a1a; 
 	border: 1px solid ghostwhite; 
-	color: #aaa;
+	color: ghostwhite;
 	font-size: medium;
 	text-decoration: none;
+	text-align: center;
 }
 
 #modify_btn {
 	padding: 5px 10px;
+	width: 90px;
 	background: #1b1a1a; 
 	border: 2px solid lightseagreen; 
 	color: ghostwhite;
@@ -198,6 +201,7 @@ em { color: #f3c331; }
 }
 #del_btn {
 	padding: 5px 10px;
+	width: 90px;
 	background: #1b1a1a; 
 	border: 2px solid mediumvioletred; 
 	color: ghostwhite;
@@ -207,6 +211,7 @@ em { color: #f3c331; }
 }
 #back_btn {
 	padding: 5px 10px;
+	width: 90px;
 	background: #1b1a1a; 
 	border: 2px solid dodgerblue; 
 	color: ghostwhite;
@@ -300,3 +305,4 @@ hr {
   font-size: 1.125rem;
   color: floralwhite;
 }
+

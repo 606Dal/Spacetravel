@@ -6,18 +6,18 @@
 			const page = /*[[ ${pagingDTO.pageCriteriaDTO.page} ]]*/ 'default';
 			// 셀렉트 옵션에 따라 경로 변경
 	       	function changeNumPerPage(){
-	       		self.location="/board/boardList?page="+page+"&numPerPage="+$("#selectNum").val()
+	       		self.location="/board/pageListTest?page="+page+"&numPerPage="+$("#selectNum").val()
 	       		+"&findType="+$("#findType option:selected").val()
    				+"&keyword="+$("#findword").val();
 	       	};
 	       	// 검색 버튼 클릭 시
 	       	function findBoard(){
-	       		self.location="/board/boardList?page=1&numPerPage="+$("#selectNum").val()
+	       		self.location="/board/pageListTest?page=1&numPerPage="+$("#selectNum").val()
 	       		+"&findType="+$("#findType option:selected").val()
    				+"&keyword="+$("#findword").val();
    				
    				if($("#findword").val() == ''){
-				self.location="/board/boardList?page=1&numPerPage=10";
+				self.location="/board/pageListTest?page=1&numPerPage=10";
 				}
 	       	};
 		/* ]]> */
@@ -85,17 +85,17 @@
 								<ul class="pagination">
 									<!--/* 시작페이지가 1이면 이전(<<) 버튼이 안 보이게 */-->
 									<li class="page-item" th:if="${pagingDTO.prev}">
-										<a th:href="@{boardList(page=${pagingDTO.startPage-1})}" class="page-link"  aria-label="Previous">
+										<a th:href="@{pageListTest(page=${pagingDTO.startPage-1})}" class="page-link"  aria-label="Previous">
 											<span aria-hidden="true">&laquo;</span>
 										</a>
 									</li>
 									<th:block th:each="pNum:${#numbers.sequence(pagingDTO.startPage, pagingDTO.endPage)}">
 									<li class="page-item" th:classappend="${pNum == pagingDTO.pageCriteriaDTO.page ? 'selected' : ''}">
-										<a th:href="@{boardList(page=${pNum}, numPerPage=${pagingDTO.pageCriteriaDTO.numPerPage})}"
+										<a th:href="@{pageListTest(page=${pNum}, numPerPage=${pagingDTO.pageCriteriaDTO.numPerPage})}"
 											th:if="${findCreteriaDTO.keyword} == null" class="page-link">
 											<span th:text="${pNum}" />
 										</a>
-										<a th:href="@{boardList(page=${pNum}, numPerPage=${pagingDTO.pageCriteriaDTO.numPerPage}, findType=${findCreteriaDTO.findType}, keyword=${findCreteriaDTO.keyword})}"
+										<a th:href="@{pageListTest(page=${pNum}, numPerPage=${pagingDTO.pageCriteriaDTO.numPerPage}, findType=${findCreteriaDTO.findType}, keyword=${findCreteriaDTO.keyword})}"
 											th:unless="${findCreteriaDTO.keyword} == null" class="page-link">
 											<span th:text="${pNum}" />
 										</a>
@@ -103,7 +103,7 @@
 									</th:block>
 									<!-- 다음(>>) 버튼 -->				    
 									<li class="page-item" th:if="${pagingDTO.next and pagingDTO.endPage > 0}">
-										<a th:href="@{boardList(page=${pagingDTO.endPage+1})}" class="page-link" aria-label="Next">
+										<a th:href="@{pageListTest(page=${pagingDTO.endPage+1})}" class="page-link" aria-label="Next">
 											<span aria-hidden="true">&raquo;</span>
 										</a>
 									</li>

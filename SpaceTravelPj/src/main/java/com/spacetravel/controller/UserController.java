@@ -35,10 +35,6 @@ public class UserController {
 		return "user/loginPage";
 	}
 	
-	/*
-	 * @PostMapping("/logout") public void logout() { }
-	 */
-	
 	// 회원 가입
 	@GetMapping("/singUp")
 	public String singUpForm() {
@@ -59,7 +55,7 @@ public class UserController {
 					model.addAttribute("msg", "회원 가입에 성공하였습니다.");
 					model.addAttribute("url", "user/loginPage");
 					
-					return "board/MessageAlert";
+					return "board/messageAlert";
 				} else {
 					model.addAttribute("msg", "중복된 아이디 입니다.");
 					model.addAttribute("reUsername", username);
@@ -102,7 +98,7 @@ public class UserController {
 					model.addAttribute("msg", "비밀번호 변경에 성공하였습니다.");
 					model.addAttribute("url", "/user/logout");
 						
-					return "board/MessageAlert";
+					return "board/messageAlert";
 					
 				} else {
 					model.addAttribute("msg", "비밀번호가 틀렸습니다. 다시 입력해 주세요");
@@ -141,7 +137,7 @@ public class UserController {
 					model.addAttribute("msg", "계정 정보가 삭제되었습니다.");
 					model.addAttribute("url", "/user/logout");
 				}
-				return "board/MessageAlert";
+				return "board/messageAlert";
 			} else {
 				model.addAttribute("msg", "비밀번호가 틀렸습니다. 다시 입력해 주세요");
 			}

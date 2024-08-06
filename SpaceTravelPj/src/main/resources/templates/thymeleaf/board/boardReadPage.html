@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='글읽기' )}" />
-	
+	<script type="text/javascript">
+		function check() {
+			if(confirm("글을 삭제하시겠습니까?") == true) {
+				
+			} else {
+				return false;
+			}
+		}
+	</script>
 	<body>
-		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( ' ' ) }" />
+		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'board' ) }" />
 		
 		<header>
             <div class="my-4 p-4 bg-black opacity-75 rounded jua-font">
-				<div class="container">
+				<div class="container px-4 px-md-5">
 					<h1 class="jua-font" th:text="*{boardDTO.subject}"></h1>
                     <span class="meta"
                     	th:text="'Posted by ' + *{boardDTO.writer} + '&nbsp;&nbsp;'
@@ -27,12 +35,21 @@
 					</div>
 					<div class="w-100"></div>
 				        <!--Button-->
-			        <div class="row justify-content-center d-grid gap-2 d-md-block mt-5 ms-5">
-				        <span th:if="${#authentication.principal.username == boardDTO.writer}">
-					        <a th:href="@{/board/boardModifyForm(id=${boardDTO.id})}" class="col-md-3 mx-2" id="modify_btn" type="submit">수정하기</a>
-					        <a th:href="@{/board/memberWriteFormNew(id=${boardDTO.id})}" class="col-md-3 mx-2" id="del_btn" type="submit">삭제하기</a>
-				        </span>
-				        	<a onclick="history.go(-1);" class="col-md-3 mx-2" id="back_btn" type="submit">← 뒤로</a>
+			        <div class="row col-md-10 col-lg-8 col-xl-7 d-grid gap-2 d-md-block mt-5">
+						<form id="del_form" th:action="@{/board/boardDeleteOk}" method="post" th:onsubmit="return check()">
+							<!--/* 작성자와 이름이 같은 유저와 관리자역할 계정만 버튼이 보임 */-->
+					        <span class="pe-0"
+					        	th:if="${#authentication.principal.username == boardDTO.writer or #authorization.expression('hasRole(''ADMIN'')')}">
+						        <a type="submit" th:href="@{/board/boardModifyForm(id=${boardDTO.id})}" id="modify_btn" class="col mx-2">수정하기</a>
+						        
+								<input type="hidden" name="id" th:value="*{boardDTO.id}">
+								<input type="hidden" name="writer" th:value="*{boardDTO.writer}">
+								<input type="submit" id="del_btn" name="del_btn" class="col mx-2" th:value="삭제하기">
+					        </span>
+					        <span>
+					        	<a type="submit" id="back_btn" class="col mx-2" onclick="history.go(-1);">← 뒤로</a>
+							</span>
+						</form>
 			        </div>
 				</div>
             </div>

@@ -14,7 +14,7 @@
 					, #{content}
 					, #{writer}
 			);
-		]]>;
+		]]>
 	</insert>
 	
 	<select id="selectBoardAll" resultType="BoardDTO">
@@ -27,7 +27,7 @@
 				id > 0
 			ORDER BY
 				id DESC, regdate DESC
-		]]>;
+		]]>
 	</select>
 	
 	<select id="readBoard" resultType="BoardDTO">
@@ -38,7 +38,7 @@
 				board
 			WHERE
 				id = #{id}
-		]]>;
+		]]>
 	</select>
 	
 	<update id="updateBoard" parameterType="BoardDTO">
@@ -50,8 +50,95 @@
 				, content = #{content}
 			WHERE
 				id = #{id}
-		]]>;
+		]]>
 	</update>
+	
+	<delete id="deleteBoard" parameterType="int">
+		<![CDATA[
+			DELETE FROM
+				board
+			WHERE
+				id = #{id}
+		]]>
+	</delete>
+	
+	<select id="listPageCriteria" resultType="BoardDTO">
+	  <![CDATA[
+		  	SELECT
+		  		*
+		  	FROM
+		  		board
+		  	WHERE
+		  		id > 0
+		  	ORDER BY
+		  		id desc, regdate desc
+		  	LIMIT #{startPage}, #{numPerPage}
+	  ]]>
+	</select>
+	
+	<select id="countBoardList" resultType="int">
+	  <![CDATA[
+		  	SELECT COUNT(id)
+		  	FROM
+		  		board
+		  	WHERE
+		  		id > 0
+	  ]]>
+	</select>
 
+	<sql id = "findSQL">
+		<if test="findType != null">
+	  	<if test="findType == 'S'.toString()">
+	  		and subject like CONCAT('%', #{keyword}, '%')
+	  	</if>
+	  	<if test="findType == 'C'.toString()">
+	  		and content like CONCAT('%', #{keyword}, '%')
+	  	</if>
+	  	<if test="findType == 'W'.toString()">
+	  		and writer like CONCAT('%', #{keyword}, '%')
+	  	</if>
+	  	<if test="findType == 'SC'.toString()">
+	  		and (subject like CONCAT('%', #{keyword}, '%')
+	  			 or content like CONCAT('%', #{keyword}, '%'))
+	  	</if>
+	  	<if test="findType == 'CW'.toString()">
+	  		and (content like CONCAT('%', #{keyword}, '%')
+	  			 or writer like CONCAT('%', #{keyword}, '%'))
+	  	</if>
+	  	<if test="findType == 'SCW'.toString()">
+	  		and (subject like CONCAT('%', #{keyword}, '%')
+	  			 or content like CONCAT('%', #{keyword}, '%') 
+	  			 or writer like CONCAT('%', #{keyword}, '%'))
+	  	</if>
+	  </if>
+	</sql>
+	
+	<select id="listfindCriteria" resultType="BoardDTO">
+	  <![CDATA[
+		  	SELECT
+		  		*
+		  	FROM
+		  		board
+		  	WHERE
+		  		id > 0
+	  ]]>
+			<include refid="findSQL"></include>	
+	  <![CDATA[  		
+		  	ORDER BY
+		  		id desc, regdate desc
+		  	LIMIT #{startPage}, #{numPerPage}
+	  ]]>
+	</select>
+	
+	<select id="findCountData" resultType="int">
+	  <![CDATA[
+		  	SELECT COUNT(id)
+		  	FROM
+		  		board
+		  	WHERE
+		  		id > 0
+	  ]]>
+	  		<include refid="findSQL"></include>
+	</select>
 
 </mapper>

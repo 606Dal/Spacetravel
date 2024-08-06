@@ -32,7 +32,7 @@ public class BindExceptionHandler {
 		model.addAttribute("url", "/");
 		log.warn(errors.toString());
 		
-		return "board/MessageAlert";
+		return "board/messageAlert";
 	}
 	
 }

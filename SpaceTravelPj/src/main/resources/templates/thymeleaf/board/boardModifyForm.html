@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='글쓰기' )}" />
+	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='글 수정' )}" />
 
 	<script type="text/javascript">
 		function valid(){
@@ -53,8 +53,8 @@
                                 </div>
                                 <br>
                                 <!-- Submit Button-->
-                                <a onclick="history.go(-1);" class="pt-2 mx-2" id="back_btn" type="submit" style="font-size: large;">← 뒤로</a>
-                                <button class="pt-2" id="modify_btn" type="submit" style="font-size: large;">수정 완료</button>
+                                <a onclick="history.go(-1);" class="mx-2" id="back_btn" type="submit">← 뒤로</a>
+                                <button class="" id="modify_btn" type="submit">수정 완료</button>
                             </form>
                         </div>
                     </div>

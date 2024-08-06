@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spacetravel.mapper.AdminMapper">
+
+	<resultMap type="UserDTO" id="UserResult">
+		<result column="username" property="username" />
+		<result column="password" property="password" />
+		<result column="regdate" property="regdate" />
+		<result column="update_date" property="updateDate" />
+		<result column="rolename" property="rolename" />
+	</resultMap>
+
+	<select id="getCountUser" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM
+				user_tb
+		]]>
+	</select>
+	
+	<select id="getUserList" resultMap="UserResult">
+		<![CDATA[
+			SELECT
+				username, regdate, update_date, rolename
+			FROM
+				user_tb
+			ORDER BY
+				regdate ASC
+		]]>
+	</select>
+	
+</mapper>

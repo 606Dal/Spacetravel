@@ -1,17 +1,26 @@
 package com.spacetravel;
 
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.spacetravel.dto.BoardDTO;
+import com.spacetravel.dto.FindCreteriaDTO;
 import com.spacetravel.service.BoardService;
 
 @SpringBootTest
 public class BoardMapperTest {
 	@Autowired
 	private BoardService boardService;
+	
+	private static final Logger log = LoggerFactory.getLogger(BoardMapperTest.class);
 /*	
 	@Autowired
 	private BoardMapper boardMapper;
@@ -43,7 +52,7 @@ public class BoardMapperTest {
 		
 		System.out.println("글 내용 보기 : "+boardService.readBoard(3));
 	}
-*/	
+*
 	@Test
 	public void updateBoard() {
 		
@@ -57,5 +66,37 @@ public class BoardMapperTest {
 		
 		System.out.println("글 수정 내용 보기 : "+boardService.readBoard(7));
 	}
-	
+
+	@Test
+	public void listPageCriteriaTest() {
+		
+		PageCriteriaDTO pageDTO = new PageCriteriaDTO();
+		pageDTO.setPage(3);
+		pageDTO.setNumPerPage(15); // 페이지 당 글 개수
+		
+		List<BoardDTO> list = boardService.listPageCriteria(pageDTO);
+		
+		for (BoardDTO bDTO : list) {
+			log.info(bDTO.getId() + " : " + bDTO.getSubject());
+		}
+	}
+	*/
+	@Test
+	public void testFind() throws Exception{
+		FindCreteriaDTO findCreteriaDTO = new FindCreteriaDTO();
+		findCreteriaDTO.setPage(1); //첫 페이지 1
+		findCreteriaDTO.setFindType("S"); // 찾는 유형 : 제목
+		findCreteriaDTO.setKeyword("테스트"); // 검색어
+		
+		log.info("************ 글 목록 테스트 출력 ************");
+		
+		List<BoardDTO> list = boardService.listfindCriteria(findCreteriaDTO);
+		//실제 검색은 아직 안 되지만 목록을 10개 출력하면 제대로 동작 중인 것
+		for(BoardDTO bDTO : list) {
+			log.info(bDTO.getId() + ": " + bDTO.getSubject());
+		}
+			
+		log.info("************ 테스트 Data 개수 출력 ************");
+		log.info("CountData: " + boardService.findCountData(findCreteriaDTO));
+	}
 }

@@ -20,37 +20,37 @@
 					  #{username}
 					, #{password}
 			);
-		]]>;
+		]]>
 	</insert>
 	
 	<select id="findByUsername" parameterType="String" resultMap="UserResult">
 		<![CDATA[
 			SELECT * FROM user_tb WHERE username = #{username};
-		]]>;
+		]]>
 	</select>
 	
 	<select id="usernameDuplicateCheck" parameterType="String" resultType="String">
 		<![CDATA[
 			SELECT username FROM user_tb WHERE username = #{username};
-		]]>;
+		]]>
 	</select>
 	
 	<select id="selectOnePasswordByUsername" parameterType="String" resultType="String">
 		<![CDATA[
 			SELECT password FROM user_tb WHERE username = #{username};
-		]]>;
+		]]>
 	</select>
 	
 	<update id="updatePassword" parameterType="UserDTO">
 		<![CDATA[
 			UPDATE user_tb SET password = #{password} WHERE username = #{username};
-		]]>;
+		]]>
 	</update>
 	
 	<delete id="deleteUser" parameterType="String">
 		<![CDATA[
 			DELETE FROM user_tb WHERE username = #{username};
-		]]>;
+		]]>
 	</delete>
 	
 </mapper>
