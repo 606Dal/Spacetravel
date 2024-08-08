@@ -14,10 +14,15 @@ public class PagingDTO {
 	private int displayPageNum = 10;  // 페이지 버튼에 나타낼 페이지 번호의 개수
 	
 	private PageCriteriaDTO pageCriteriaDTO;
+	private FindCriteriaDTO findCriteriaDTO;
 	
 	
 	public void setPageCriteriaDTO(PageCriteriaDTO pageCriteriaDTO) {
 		this.pageCriteriaDTO = pageCriteriaDTO;
+	}
+	
+	public void setFindCriteriaDTO(FindCriteriaDTO findCriteriaDTO) {
+		this.findCriteriaDTO = findCriteriaDTO;
 	}
 	
 	public void setTotalData(int totalData) {
@@ -48,6 +53,18 @@ public class PagingDTO {
 				.queryParam("page", page)
 				.queryParam("numPerPage", pageCriteriaDTO.getNumPerPage())
 				.build();
+			
+		return uriComponents.toUriString();
+	}
+	
+	public String makeFindURI(int page) {
+		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+				.queryParam("page", page)
+				.queryParam("numPerPage", findCriteriaDTO.getNumPerPage())
+				.queryParam("findType", findCriteriaDTO.getFindType())
+				.queryParam("keyword", findCriteriaDTO.getKeyword())
+				.build();
+		uriComponents.encode();
 			
 		return uriComponents.toUriString();
 	}
@@ -95,6 +112,10 @@ public class PagingDTO {
 
 	public PageCriteriaDTO getPageCriteriaDTO() {
 		return pageCriteriaDTO;
+	}
+	
+	public FindCriteriaDTO geFindCriteriaDTO() {
+		return findCriteriaDTO;
 	}
 
 	public int getTotalData() {

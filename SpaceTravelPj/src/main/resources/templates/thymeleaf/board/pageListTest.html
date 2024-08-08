@@ -12,7 +12,8 @@
 	       	};
 	       	// 검색 버튼 클릭 시
 	       	function findBoard(){
-	       		self.location="/board/pageListTest?page=1&numPerPage="+$("#selectNum").val()
+	       		//self.location="/board/pageListTest?page=1&numPerPage="+$("#selectNum").val()
+	       		self.location="/board/pageListTest${pagingDTO.makeURI(1)}"
 	       		+"&findType="+$("#findType option:selected").val()
    				+"&keyword="+$("#findword").val();
    				
@@ -62,12 +63,12 @@
 						<input type="text" id="findword" name="Keyword" class="col-5 ms-2 mt-1" th:value="${findCreteriaDTO.keyword}">
 						<button type="submit" id="back_btn" class="col-3 ms-2 mt-1" style="font-size: medium;" onclick="findBoard()">검색</button>
 					</div>
-					
                     <div class="col-md-10 col-lg-8 col-xl-7 bg-dark bg-gradient bg-opacity-75">
                     	<!-- 글 출력-->
 	                    <div th:each="row : ${boardList}">
 		                    <div class="post-preview">
-		                        <a th:href="@{/board/boardReadPage(page=${pagingDTO.pageCriteriaDTO.page}, numPerPage=${pagingDTO.pageCriteriaDTO.numPerPage}, id=${row.id})}">
+		                        <!--<a th:href="@{/board/boardReadPage(page=${pagingDTO.pageCriteriaDTO.page}, numPerPage=${pagingDTO.pageCriteriaDTO.numPerPage}, id=${row.id})}">
+		                        --><a th:href="@{/board/boardReadPage${pagingDTO.makeFindURI(${pagingDTO.pageCriteriaDTO.page})}(id=${row.id})">
 		                            <h2 class="post-title jua-font" th:text="${row.subject}">제목</h2>
 		                        </a>
 		                       <p class="post-meta"

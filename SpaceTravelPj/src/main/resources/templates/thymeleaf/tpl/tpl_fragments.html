@@ -55,10 +55,8 @@
 								th:classappend="${naviVal} == 'board' ? 'selected'" >🌏게시판</a>
 						</li>
 	                    <li class="nav-item">
-							<a href="#gallery" class="nav-link">-</a>
-						</li>
-	                    <li class="nav-item">
-							<a href="#contact" class="nav-link">Contact</a>
+							<a th:href="@{/etc/contactPage}" class="nav-link"
+								th:classappend="${naviVal} == 'contact' ? 'selected'">연락처</a>
 						</li>
 							<!-- 로그아웃 상태 -->
 						<th:block sec:authorize="isAnonymous()">
@@ -76,8 +74,8 @@
 							<!-- 로그인 유지 상태 -->
 						<th:block sec:authorize="isAuthenticated()">
 						<li class="nav-item dropdown">
-				        	<a sec:authentication="name" href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-				            	로그인 한 아이디
+				        	<a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				            	🔅 <span sec:authentication="name">로그인 한 아이디</span>
 				        	</a>
 				        	<ul class="dropdown-menu">
 								<li><a th:href="@{/user/accountPage}" class="dropdown-item">계정 관리</a></li>
@@ -112,14 +110,14 @@
         <header th:fragment="tpl_header( htitle, hcontent )">
             <div class="my-4 p-4 bg-black bg-opacity-75 rounded">
 				<div class="container px-4 px-md-5">
-					<h1 th:if="${hcontent != ' '}" th:text="${htitle} + ' - ' + ${hcontent}" class="display-4 ps-5 jua-font">ㅇㅇㅇ - ㅇㅇㅇ</h1>
-					<h1 th:unless="${hcontent != ' '}" th:text="${htitle}" class="display-4 ps-5 jua-font">ㅇㅇㅇ</h1>
+					<h1 class="display-4 ps-5 jua-font" th:if="${hcontent != ' '}" th:text="${htitle} + ' - ' + ${hcontent}">ㅇㅇㅇ - ㅇㅇㅇ</h1>
+					<h1 class="display-4 ps-5 jua-font" th:unless="${hcontent != ' '}" th:text="${htitle}">ㅇㅇㅇ</h1>
 				</div>
 			</div>
 		</header>
 		<!-- 관리자 페이지 사이드 바 내비게이션 -->
 		<div class="row">
-			<nav th:fragment="tpl_adminNav( naviVal )" class="d-flex align-items-start col-sm-2 navbar navbar-expand jua-font" aria-label="navbar">
+			<nav class="d-flex align-items-start col-sm-2 navbar navbar-expand jua-font" th:fragment="tpl_adminNav( naviVal )" aria-label="navbar">
 				<div class="container justify-content-center">
 	                <ul class="adminNav navbar-nav flex-column">
 	                    <li class="nav-item">

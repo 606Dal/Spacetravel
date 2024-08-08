@@ -172,9 +172,10 @@ em { color: #f3c331; }
 
 #contact_form form .submit_btn  {
 	padding: 5px 10px;
+	width: 90px;
 	background: #1b1a1a; 
-	border: 1px solid ghostwhite; 
-	color: #aaa;
+	border: 2px solid ghostwhite; 
+	color: ghostwhite;
 	font-size: 14px;
 }
 /* 글쓰기, 수정, 삭제, 목록 버튼 */
@@ -195,7 +196,7 @@ em { color: #f3c331; }
 	background: #1b1a1a; 
 	border: 2px solid lightseagreen; 
 	color: ghostwhite;
-	font-size: medium;
+	font-size: large;
 	text-decoration: none;
 	text-align: center;
 }
@@ -215,7 +216,7 @@ em { color: #f3c331; }
 	background: #1b1a1a; 
 	border: 2px solid dodgerblue; 
 	color: ghostwhite;
-	font-size: medium;
+	font-size: large;
 	text-decoration: none;
 	text-align: center;
 }

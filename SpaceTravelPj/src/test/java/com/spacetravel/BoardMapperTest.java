@@ -8,11 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.codec.Utf8;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.spacetravel.dto.BoardDTO;
-import com.spacetravel.dto.FindCreteriaDTO;
+import com.spacetravel.dto.FindCriteriaDTO;
 import com.spacetravel.service.BoardService;
 
 @SpringBootTest
@@ -80,7 +81,7 @@ public class BoardMapperTest {
 			log.info(bDTO.getId() + " : " + bDTO.getSubject());
 		}
 	}
-	*/
+	
 	@Test
 	public void testFind() throws Exception{
 		FindCreteriaDTO findCreteriaDTO = new FindCreteriaDTO();
@@ -98,5 +99,25 @@ public class BoardMapperTest {
 			
 		log.info("************ 테스트 Data 개수 출력 ************");
 		log.info("CountData: " + boardService.findCountData(findCreteriaDTO));
+	}
+	*/
+	@Test
+	public void uriTest2() throws Exception {
+		FindCriteriaDTO findCreteriaDTO = new FindCriteriaDTO();
+		findCreteriaDTO.setPage(1); //첫 페이지 1
+		findCreteriaDTO.setFindType("S"); // 찾는 유형 : 제목
+		findCreteriaDTO.setKeyword("테스트"); // 검색어
+		
+		UriComponents uriComponents = 
+				UriComponentsBuilder.newInstance()
+				.path("/{module}/{page}")
+				.queryParam("page", findCreteriaDTO.getPage())
+				.queryParam("numPerPage", 20)
+				.queryParam("findType", findCreteriaDTO.getFindType())
+				.queryParam("keyword", findCreteriaDTO.getKeyword())
+				.build();
+		
+		log.info("/bbs/read?bid=100&numPerPage=20");
+		log.info("uriComponents : " + uriComponents.toString());
 	}
 }

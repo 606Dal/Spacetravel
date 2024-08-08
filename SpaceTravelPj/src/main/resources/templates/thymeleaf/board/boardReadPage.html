@@ -14,7 +14,7 @@
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'board' ) }" />
 		
 		<header>
-            <div class="my-4 p-4 bg-black opacity-75 rounded jua-font">
+            <div class="my-4 p-4 bg-black bg-opacity-75 rounded jua-font">
 				<div class="container px-4 px-md-5">
 					<h1 class="jua-font" th:text="*{boardDTO.subject}"></h1>
                     <span class="meta"
@@ -40,13 +40,22 @@
 							<!--/* 작성자와 이름이 같은 유저와 관리자역할 계정만 버튼이 보임 */-->
 					        <span class="pe-0"
 					        	th:if="${#authentication.principal.username == boardDTO.writer or #authorization.expression('hasRole(''ADMIN'')')}">
-						        <a type="submit" th:href="@{/board/boardModifyForm(id=${boardDTO.id})}" id="modify_btn" class="col mx-2">수정하기</a>
+						        <!-- 수정 버튼 -->
+						        <a type="submit" th:href="@{/board/boardModifyForm((page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, id=${boardDTO.id}))}"
+						        	id="modify_btn" class="col mx-2" th:if="${findCriteriaDTO.keyword} == null">수정하기</a>
+						        <a type="submit" th:href="@{/board/boardModifyForm((page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, findType=${findCriteriaDTO.findType}, keyword=${findCriteriaDTO.keyword}, id=${boardDTO.id}))}"
+						        	id="modify_btn" class="col mx-2" th:unless="${findCriteriaDTO.keyword} == null">수정하기</a>
 						        
+								<input type="hidden" name="page" th:value="*{findCriteriaDTO.page}">
+								<input type="hidden" name="numPerPage" th:value="*{findCriteriaDTO.numPerPage}">
+								<input type="hidden" name="findType" th:value="*{findCriteriaDTO.findType}">
+								<input type="hidden" name="keyword" th:value="*{findCriteriaDTO.keyword}">
 								<input type="hidden" name="id" th:value="*{boardDTO.id}">
 								<input type="hidden" name="writer" th:value="*{boardDTO.writer}">
 								<input type="submit" id="del_btn" name="del_btn" class="col mx-2" th:value="삭제하기">
 					        </span>
 					        <span>
+								<!-- 뒤로가기 버튼 -->
 					        	<a type="submit" id="back_btn" class="col mx-2" onclick="history.go(-1);">← 뒤로</a>
 							</span>
 						</form>

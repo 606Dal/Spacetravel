@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.spacetravel.dto.BoardDTO;
-import com.spacetravel.dto.FindCreteriaDTO;
+import com.spacetravel.dto.FindCriteriaDTO;
 import com.spacetravel.dto.PageCriteriaDTO;
 /*
  * 게시판
@@ -23,6 +23,8 @@ public interface BoardMapper {
 
 	public int deleteBoard(int id); // 글 삭제
 	
+	public void updateHit(int id); // 조회수 올리기
+	
 	/*
 	 * 페이징 처리를 위한 메서드
 	 */
@@ -30,8 +32,9 @@ public interface BoardMapper {
 
 	public int countBoardList(PageCriteriaDTO pageCriteriaDTO); // 글의 총 개수
 
-	public List<BoardDTO> listfindCriteria(FindCreteriaDTO findCreteriaDTO); // 검색 기준 글 목록
+	public List<BoardDTO> listfindCriteria(FindCriteriaDTO findCreteriaDTO); // 검색 기준 글 목록
 
-	public int findCountData(FindCreteriaDTO findCreteriaDTO); // 검색된 글 개수
+	public int findCountData(FindCriteriaDTO findCreteriaDTO); // 검색된 글 개수
+
 	
 }

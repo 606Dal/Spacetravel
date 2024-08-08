@@ -30,7 +30,7 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <p class="text-info">자유롭게 작성해 주세요.</p>
+                        <p class="text-info">자유롭게 작성해 주세요. 개인 정보는 포함하지 않도록 주의하시기 바랍니다.</p>
                         <div id="contact_form" class="my-5">
 							
                     		<!-- 글 작성 부분 -->
@@ -49,7 +49,10 @@
                                 </div>
                                 <br>
                                 <!-- Submit Button-->
-                                <button class="submit_btn" id="submitButton" type="submit" style="font-size: large;">등록</button>
+                                <span class="row ms-1">
+					        		<a type="submit" id="back_btn" class="col-4" onclick="history.go(-1);">← 뒤로</a>
+                                	<button type="submit" id="submitButton"  class="submit_btn col-4 mx-3" style="font-size: large;">등록</button>
+								</span>
                             </form>
                         </div>
                     </div>

@@ -9,13 +9,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spacetravel.dto.BoardDTO;
-import com.spacetravel.dto.FindCreteriaDTO;
-import com.spacetravel.dto.PageCriteriaDTO;
+import com.spacetravel.dto.FindCriteriaDTO;
 import com.spacetravel.dto.PagingDTO;
 import com.spacetravel.service.BoardService;
 import com.spacetravel.service.CustomUserDetails;
@@ -70,20 +71,28 @@ public class BoardController {
 		return "board/messageAlert";
 	}
 	
+/*
+ * 페이징 처리
+ */	
 	// 글 목록 가져오기
-/*	@GetMapping("/boardList")
-	public String boardList(Model model) {
+	@GetMapping("/boardList")
+	public void pageListTest(@Valid FindCriteriaDTO findCriteriaDTO, Model model) {
 		
-		List<BoardDTO> boardList = boardService.getBoardList();
-		model.addAttribute("boardList", boardList);
+		model.addAttribute("boardList", boardService.listfindCriteria(findCriteriaDTO));
 		
-		return "board/boardList";
+		PagingDTO pagingDTO = new PagingDTO();
+		pagingDTO.setPageCriteriaDTO(findCriteriaDTO);
+		pagingDTO.setFindCriteriaDTO(findCriteriaDTO);
+		pagingDTO.setTotalData(boardService.findCountData(findCriteriaDTO)); // 임의의 값 -> 총 16페이지
+		
+		model.addAttribute("pagingDTO", pagingDTO);
 	}
-*/	
+	
 	// 글 내용 보기
 	@GetMapping("/boardReadPage")
 	public String boardReadPage(@RequestParam(value = "id", required = false) Integer id
-							  , Model model) {
+							  , Model model
+							  , @ModelAttribute("findCriteriaDTO") FindCriteriaDTO findCriteriaDTO) {
 		if(id != null) {
 			BoardDTO boardDTO = boardService.readBoard(id);
 			// db에서 가져온 정보가 없을 경우
@@ -93,7 +102,9 @@ public class BoardController {
 				
 				return "board/messageAlert";
 			}
+			
 			model.addAttribute("boardDTO", boardDTO);
+			boardService.updateHit(id);
 		} else {
 			// id가 null일 때 빈 객체 전송
 			model.addAttribute("boardDTO", new BoardDTO());
@@ -104,7 +115,8 @@ public class BoardController {
 	// 글 수정하는 폼
 	@GetMapping("/boardModifyForm")
 	public String boardModifyForm(@RequestParam(value = "id", required = false) Integer id
-			  , Model model) {
+			  					, Model model
+			  					, @ModelAttribute("findCriteriaDTO") FindCriteriaDTO findCriteriaDTO) {
 		
 		if(id != null) {
 			BoardDTO boardDTO = boardService.readBoard(id);
@@ -127,7 +139,9 @@ public class BoardController {
 	public String boardModifyOk(@Valid BoardDTO boardDTO
 							  , HttpServletRequest request
 							  , @AuthenticationPrincipal CustomUserDetails userDetails
-							  , Model model) {
+							  , Model model
+							  , FindCriteriaDTO findCriteriaDTO
+							  , RedirectAttributes reAttr) {
 		
 		int id = Integer.parseInt(request.getParameter("id"));
 		String writer = request.getParameter("writer");
@@ -139,6 +153,17 @@ public class BoardController {
 			// 로그인 유저 또는 관리자가 맞는가
 			if(writer.equals(username) || userRole.equals("ADMIN")) {
 				boardService.updateBoard(boardDTO);
+				
+				if(findCriteriaDTO.getKeyword() == "") {
+					reAttr.addAttribute("page", findCriteriaDTO.getPage());
+					reAttr.addAttribute("numPerPage", findCriteriaDTO.getNumPerPage());
+					
+					return "redirect:/board/boardReadPage?id=" + id;
+				}
+				reAttr.addAttribute("page", findCriteriaDTO.getPage());
+				reAttr.addAttribute("numPerPage", findCriteriaDTO.getNumPerPage());
+				reAttr.addAttribute("findType", findCriteriaDTO.getFindType());
+				reAttr.addAttribute("keyword", findCriteriaDTO.getKeyword());
 			} else {
 				model.addAttribute("msg", "권한이 없습니다.");
 				model.addAttribute("url", "/board/boardList?page=1&numPerPage=10");
@@ -148,7 +173,7 @@ public class BoardController {
 		} catch (Exception e) {
 			log.info("글 수정 중 오류 발생");
 		}
-		// 다시 상세 글로 이동할 때 id 사용
+		// 다시 상세 글로 이동할 때 id 사용 + 뒤에 reAttr에 담은 정보들을 유지해서 보던 글로 이동
 		return "redirect:/board/boardReadPage?id=" + id;
 	}
 	
@@ -158,12 +183,18 @@ public class BoardController {
 			  				  , HttpServletRequest request
 			  				  , @AuthenticationPrincipal CustomUserDetails userDetails
 							  , Model model
-							  , PageCriteriaDTO pCriaDTO) {
+							  , FindCriteriaDTO findCriteriaDTO) {
 		
 		int id = Integer.parseInt(request.getParameter("id"));
 		String writer = request.getParameter("writer");
 		String userRole = userDetails.getUser().getRolename();
 		String username = userDetails.getUser().getUsername();
+		
+		// uri도 생성하고 보던 글 목록으로 돌아오기 위해 세팅
+		PagingDTO pagingDTO = new PagingDTO();
+		pagingDTO.setFindCriteriaDTO(findCriteriaDTO);
+		String findUrl = "/board/boardList"+pagingDTO.makeFindURI(findCriteriaDTO.getPage());
+		String pageUrl = "/board/boardList?page="+findCriteriaDTO.getPage()+"&numPerPage="+findCriteriaDTO.getNumPerPage();
 		
 		// 그 글의 작성자랑 로그인 유저 이름 비교 -> 맞으면 삭제 진행
 		try {
@@ -176,8 +207,16 @@ public class BoardController {
 					model.addAttribute("url", "/board/boardList?page=1&numPerPage=10");
 				} else {
 					// 성공 시
+					// 키워드가 빈 문자열이면
+					if(findCriteriaDTO.getKeyword() == "") {
+						model.addAttribute("msg", "글이 삭제되었습니다.");
+						model.addAttribute("url", pageUrl);
+						
+						return "board/messageAlert";
+					}
+					model.addAttribute("findCriteriaDTO", findCriteriaDTO);
 					model.addAttribute("msg", "글이 삭제되었습니다.");
-					model.addAttribute("url", "/board/boardList?page=1&numPerPage=10");
+					model.addAttribute("url", findUrl);
 				}
 				
 				return "board/messageAlert";
@@ -194,31 +233,5 @@ public class BoardController {
 		}
 		return "board/boardList";
 	}
-	
-	/*
-	 * 페이징 처리
-	 */
-/*	@GetMapping("/pageListTest")
-	public void pageListTest(PageCriteriaDTO pCriaDTO, Model model) {
-			
-		model.addAttribute("boardList", boardService.listPageCriteria(pCriaDTO));
 		
-		PagingDTO pagingDTO = new PagingDTO();
-		pagingDTO.setPageCriteriaDTO(pCriaDTO);
-		pagingDTO.setTotalData(boardService.countBoardList(pCriaDTO)); // 임의의 값 -> 총 16페이지
-		
-		model.addAttribute("pagingDTO", pagingDTO);
-	}
-*/	
-	@GetMapping("/boardList")
-	public void pageListTest(@Valid FindCreteriaDTO findCreteriaDTO, Model model) {
-		
-		model.addAttribute("boardList", boardService.listfindCriteria(findCreteriaDTO));
-		
-		PagingDTO pagingDTO = new PagingDTO();
-		pagingDTO.setPageCriteriaDTO(findCreteriaDTO);
-		pagingDTO.setTotalData(boardService.findCountData(findCreteriaDTO)); // 임의의 값 -> 총 16페이지
-		
-		model.addAttribute("pagingDTO", pagingDTO);
-	}
 }
