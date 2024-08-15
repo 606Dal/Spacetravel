@@ -9,18 +9,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 /*
  * 컨트롤러에서 오류 발생 시 로그 출력 후 메시지 알림창으로 이동
  */
 @ControllerAdvice
-public class BindExceptionHandler {
+public class GlobalExceptionHandler {
 	
-	private static final Logger log = LoggerFactory.getLogger(BindExceptionHandler.class);
+	private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public String handleValidException(
-			MethodArgumentNotValidException ex,
-			Model model) {
+	protected String handleValidException(
+									  MethodArgumentNotValidException ex
+									, Model model) {
 		Map<String, String> errors = new HashMap<>();
 		
 		ex.getBindingResult()
@@ -31,6 +32,18 @@ public class BindExceptionHandler {
 		model.addAttribute("msg", "오류가 발생하였습니다.");
 		model.addAttribute("url", "/");
 		log.warn(errors.toString());
+		
+		return "board/messageAlert";
+	}
+	
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	protected String handleMethodArgumentTypeMismatchException(
+											  MethodArgumentTypeMismatchException e
+											, Model model) {
+		
+		model.addAttribute("msg", "오류가 발생하였습니다.");
+		model.addAttribute("url", "/");
+		log.warn(e.getMessage());
 		
 		return "board/messageAlert";
 	}

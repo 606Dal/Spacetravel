@@ -178,6 +178,43 @@ em { color: #f3c331; }
 	color: ghostwhite;
 	font-size: 14px;
 }
+
+#replyInput .input_field { 
+	width: 300px; 
+	padding: 5px; 
+	background: #1b1a1a; 
+	border: 1px solid #3b3a3a; 
+	font-family: Verdana,Geneva,sans-serif;
+	font-size: 12px;
+	color: #aaa;
+	margin-top: 5px;
+}
+#replyInput label { 
+	display: block; 
+	width: 120px; 
+	margin-right: 10px; 
+	font-size: 14px; 
+}
+
+#replyInput textarea { 
+	height: 100px; 
+	padding: 5px; 
+	background: #1b1a1a; 
+	border: 1px solid #3b3a3a; 
+	font-family: Verdana,Geneva,sans-serif;
+	font-size: 12px;
+	color: #aaa;
+	margin-top: 5px; 
+}
+
+#replyInput .submit_btn  {
+	padding: 5px 10px;
+	width: 90px;
+	background: #1b1a1a; 
+	border: 2px solid ghostwhite; 
+	color: ghostwhite;
+	font-size: 14px;
+}
 /* 글쓰기, 수정, 삭제, 목록 버튼 */
 #write_btn {
 	padding: 5px 10px;
@@ -197,6 +234,17 @@ em { color: #f3c331; }
 	border: 2px solid lightseagreen; 
 	color: ghostwhite;
 	font-size: large;
+	text-decoration: none;
+	text-align: center;
+}
+
+#reply_modify_btn {
+	padding: 1px 10px;
+	width: 90px;
+	background: #1b1a1a; 
+	border: 2px solid lightseagreen; 
+	color: ghostwhite;
+	font-size: medium;
 	text-decoration: none;
 	text-align: center;
 }
@@ -302,7 +350,7 @@ hr {
   opacity: 1;
 }
 
-.read_content {
+.read_content, #replyList_li {
   font-size: 1.125rem;
   color: floralwhite;
 }

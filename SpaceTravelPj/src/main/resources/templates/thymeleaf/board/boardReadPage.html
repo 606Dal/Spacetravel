@@ -41,9 +41,9 @@
 					        <span class="pe-0"
 					        	th:if="${#authentication.principal.username == boardDTO.writer or #authorization.expression('hasRole(''ADMIN'')')}">
 						        <!-- 수정 버튼 -->
-						        <a type="submit" th:href="@{/board/boardModifyForm((page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, id=${boardDTO.id}))}"
+						        <a type="submit" th:href="@{/board/boardModifyForm(page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, id=${boardDTO.id})}"
 						        	id="modify_btn" class="col mx-2" th:if="${findCriteriaDTO.keyword} == null">수정하기</a>
-						        <a type="submit" th:href="@{/board/boardModifyForm((page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, findType=${findCriteriaDTO.findType}, keyword=${findCriteriaDTO.keyword}, id=${boardDTO.id}))}"
+						        <a type="submit" th:href="@{/board/boardModifyForm(page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, findType=${findCriteriaDTO.findType}, keyword=${findCriteriaDTO.keyword}, id=${boardDTO.id})}"
 						        	id="modify_btn" class="col mx-2" th:unless="${findCriteriaDTO.keyword} == null">수정하기</a>
 						        
 								<input type="hidden" name="page" th:value="*{findCriteriaDTO.page}">
@@ -59,10 +59,276 @@
 					        	<a type="submit" id="back_btn" class="col mx-2" onclick="history.go(-1);">← 뒤로</a>
 							</span>
 						</form>
+						
+					<!-- 댓글 -->
+	                    <!-- Divider-->
+	                    <hr class="mt-5" />
+				        <div class="post-preview mt-2 jua-font">
+	                    	<h5 class="post-title jua-font">댓글</h5>
+	                    	<!-- 댓글 목록 -->
+			            	<div >
+			                   	<ul id="replyList_ul" class="list-group">
+									<li id="replyList_li" class="list-group-item bg-dark bg-gradient bg-opacity-75" th:each="row : ${replyList}">
+										<span th:id="row_replyid" th:text="${row.replyid}"></span>
+										<span th:text="' | '"></span>
+										<th:block th:if="${#authentication.principal.username == row.replier}">
+											<span th:id="'row_replier'+${row.replyid}" th:text="${row.replier}" style="color: aquamarine;"></span>
+										</th:block>
+										<th:block th:unless="${#authentication.principal.username == row.replier}">
+											<span th:id="'row_replier'+${row.replyid}" th:text="${row.replier}"></span>
+										</th:block>
+										<br>
+										<span class="ps-4">➡</span>
+										<span th:id="'row_spanReConr'+${row.replyid}" th:text="${row.replyContent}"></span>
+										<th:block th:if="${#authentication.principal.username == row.replier or #authorization.expression('hasRole(''ADMIN'')')}">
+											<button id="reply_modify_btn" class="pt-1 float-end">수정/삭제</button>
+										</th:block>
+									</li>
+								</ul>
+							</div>
+	                    	
+							<!-- 페이지 이동 버튼-->
+							<div class="d-flex justify-content-center my-3">
+							    <nav aria-label="Page navigation">
+									<ul class="pagination">
+										<!--/* 시작페이지가 1이면 이전(<<) 버튼이 안 보이게*/-->
+										<li class="page-item" th:if="${pagingDTO.prev}">
+											<a th:href="@{/board/boardReadReply(id=${boardDTO.id}, replyPage=${pagingDTO.startPage-1}, page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage})}"
+												class="page-link" aria-label="Previous" th:if="${findCriteriaDTO.keyword} == null">
+												<span aria-hidden="true">&laquo;</span>
+											</a>
+											<a th:href="@{/board/boardReadReply(id=${boardDTO.id}, replyPage=${pagingDTO.startPage-1}, page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, findType=${findCriteriaDTO.findType}, keyword=${findCriteriaDTO.keyword})}"
+												class="page-link" aria-label="Previous" th:unless="${findCriteriaDTO.keyword} == null">
+												<span aria-hidden="true">&laquo;</span>
+											</a>
+										</li>
+										<!-- 숫자 부분 -->
+										<th:block th:if="${pagingDTO.totalData} > 0" th:each="pNum : ${#numbers.sequence(pagingDTO.startPage, pagingDTO.endPage)}">
+										<li class="page-item" th:classappend="${pNum == pagingDTO.pageCriteriaDTO.page ? 'selected' : ''}">
+											<a th:href="@{/board/boardReadReply(id=${boardDTO.id}, replyPage=${pNum}, page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage})}"
+												class="page-link" th:if="${findCriteriaDTO.keyword} == null">
+												<span th:id="'pNum'+${pNum}" class="pageNumText" th:text="${pNum}"/>
+											</a>
+											<a th:href="@{/board/boardReadReply(id=${boardDTO.id}, replyPage=${pNum}, page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, findType=${findCriteriaDTO.findType}, keyword=${findCriteriaDTO.keyword})}"
+												class="page-link" th:unless="${findCriteriaDTO.keyword} == null">
+												<span th:id="'pNum'+${pNum}" class="pageNumText" th:text="${pNum}"/>
+											</a>
+										</li>
+										</th:block>
+										<!-- 다음(>>) 버튼 -->				    
+										<li class="page-item" th:if="${pagingDTO.next and pagingDTO.endPage > 0}">
+											<a th:href="@{/board/boardReadReply(id=${boardDTO.id}, replyPage=${pagingDTO.endPage+1}, page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage})}"
+												class="page-link" aria-label="Next" th:if="${findCriteriaDTO.keyword} == null">
+												<span aria-hidden="true">&raquo;</span>
+											</a>
+											<a th:href="@{/board/boardReadReply(id=${boardDTO.id}, replyPage=${pagingDTO.endPage+1}, page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, findType=${findCriteriaDTO.findType}, keyword=${findCriteriaDTO.keyword})}"
+												class="page-link" aria-label="Next" th:unless="${findCriteriaDTO.keyword} == null">
+												<span aria-hidden="true">&raquo;</span>
+											</a>
+										</li>
+									</ul>
+							    </nav>
+							</div>
+							<!-- 페이지 이동 버튼 끝-->
+	                    </div>
+	                    <!-- Divider-->
+	                    <hr class="my-4" />
+	                    <div id="replyInput">
+		                    <div class="form-floating">
+	                            <input type="text" name="writer" class="form-control input_field" readonly />
+	                            <label for="writer" sec:authentication="name" class="mt-2"></label>
+	                        </div>
+	                        <div class="form-floating">
+	                            <textarea id="addReContent" name="replyContent" class="form-control pt-5 ps-2" placeholder="Enter your message here" style="height: 90px;"></textarea>
+	                            <label for="addReContent" style="width: 180px;">댓글을 입력해 주세요</label>
+	                        </div>
+	                        <br>
+	                        <!-- replySubmit Button-->
+	                        <button type="submit" id="submit_btn" class="submit_btn" style="font-size: large;" onclick="replySubmit()">댓글 등록</button>
+	                        
+	                        <!--/* 띄워줄 수정 창 */-->
+	                        <div class="modal" tabindex="-1" id="modifyDiv">
+							  <div class="modal-dialog" >
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title jua-font" style="color: darkgreen;"><span class="title-dialog"></span> | <span id="replier"></span> &nbsp;&nbsp;&nbsp;수정할 댓글 내용을 적어주세요. </h5>
+							        <button type="button" class="btn-close closeBtn" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+							        <label for="reContent">수정 내용:</label>
+							        <textarea id="reContent" name="reContent" class="form-control" placeholder="Enter your message here..." style="height: 6rem" ></textarea>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" id="reModifyBtn" class="btn btn-outline-success">수정</button>
+							        <button type="button" id="reDelBtn" class="btn btn-outline-danger">삭제</button>
+							        <button type="button" id="closeBtn" class="btn btn-outline-dark closeBtn"  data-bs-dismiss="modal">닫기</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+						</div>
+						<!-- 댓글 부분 끝 -->
 			        </div>
 				</div>
             </div>
         </main>
+        
+		<script th:inline="javascript">
+		/* <![CDATA[ */	
+			const id = /*[[ ${boardDTO.id} ]]*/ 'default';
+			// 댓글 등록 버튼
+			function replySubmit(){
+				valid();
+				
+				const token = $("meta[name='_csrf']").attr("content");
+				const header = $("meta[name='_csrf_header']").attr("content");
+				
+				const reContent = $("#addReContent").val();
+				
+				$.ajax({
+					type : 'post',
+					url : '/replies/writeReply',
+					headers:{
+						"Content-Type" : "application/json",
+						"X-HTTP-Method-Override" : "POST"
+					},
+					beforeSend : function(xhr){   
+						xhr.setRequestHeader(header, token);
+		            },
+					dataType : 'text',
+					data : JSON.stringify({
+						id : id,
+						replyContent : reContent
+					}),
+					
+					success : function(result){
+						if(result == 'Success'){
+							alert("댓글 등록 성공!")
+							$("#addReContent").val("");
+							location.reload();
+						}
+					}
+				});
+			};
+			
+			function valid(){
+				/* 댓글 내용 길이 검사 */
+				if($("#addReContent").val().length == 0){
+					alert('내용을 입력하세요.');
+					$("#addReContent").focus();
+					return false;
+				}
+			}
+			
+	    	/* 댓글 수정 창 */
+	    	$(document).ready(function() {
+			    // 댓글 목록을 순회하면서 각 "수정" 버튼에 이벤트 핸들러를 동적으로 바인딩
+			    $("#replyList_ul li").each(function(index, element) {
+			        var $this = $(element); // 현재 요소에 대한 jQuery 객체
+			        var replyid = $this.find("span:first").text(); // 첫 번째 span 요소의 텍스트를 replyid로 사용
+			
+			        // 각 "수정" 버튼에 고유한 이벤트 핸들러를 바인딩
+			        $this.find("#reply_modify_btn").off().on("click", function(e) {
+			            e.preventDefault(); // 기본 이벤트 동작 방지
+				
+						//각 content id 가져오기
+						var replycontentId = document.getElementById('row_spanReConr' + replyid);
+						if(replycontentId) {
+						     var replyContent = replycontentId.textContent || replycontentId.innerText;
+						}
+						// 각 댓글의 작성자 가져오기
+						var replierId = document.getElementById('row_replier' + replyid);
+						if(replierId) {
+						     var replier = replierId.textContent || replierId.innerText;
+						}
+						
+						$(".title-dialog").html(replyid);
+						$("#replier").html(replier);
+						$("#reContent").val(replyContent);
+						$("#modifyDiv").show("fast");
+					});
+				});
+			});
+			
+			// 수정 창 닫기
+        	$(".closeBtn").on("click", function(){
+        		$("#modifyDiv").hide("fast");
+        	});
+        	
+        	// 수정 창 - 수정버튼 클릭 시 처리
+        	$("#reModifyBtn").on("click", function(){
+				const token = $("meta[name='_csrf']").attr("content");
+				const header = $("meta[name='_csrf_header']").attr("content");
+        		
+        		var replyid = $(".title-dialog").html();
+        		var replier = $("#replier").html();
+        		var reContent = $("#reContent").val();
+        		
+        		$.ajax({
+        			type:'put',
+        			url : '/replies/'+replyid,
+        			headers:{
+        				"Content-Type" : "application/json",
+        				"X-HTTP-Method-Override" : "PUT"
+        			},
+        			beforeSend : function(xhr){   
+						xhr.setRequestHeader(header, token);
+		            },
+        			dataType : 'text',
+        			data : JSON.stringify({
+						replyContent : reContent,
+						replier : replier
+					}),
+        			success : function(result){
+        				console.log("result: " + result);
+        				if(result == 'Success'){
+        					alert("댓글 수정 성공!");
+        					$("#modifyDiv").hide("slow");//수정 창 다시 닫음
+        					location.reload();
+        				}
+        			}
+        		});
+        	});
+        	
+        	//수정 창 - 삭제버튼 클릭 시 처리
+			$("#reDelBtn").on("click", function(){
+				const token = $("meta[name='_csrf']").attr("content");
+				const header = $("meta[name='_csrf_header']").attr("content");
+					
+				var replyid = $(".title-dialog").html();
+				var replier = $("#replier").html();
+				var reContent = $("#reContent").val();
+				
+				if (confirm("댓글을 삭제하시겠습니까?")) {	
+					$.ajax({
+						type:'delete',
+						url : '/replies/'+replyid,
+						headers:{
+							"Content-Type" : "application/json",
+							"X-HTTP-Method-Override" : "DELETE"
+						},
+						beforeSend : function(xhr){   
+							xhr.setRequestHeader(header, token);
+			            },
+						dataType : 'text',
+						data : JSON.stringify({
+							replier : replier
+						}),
+						success : function(result){
+							console.log("result: " + result);
+							if(result == 'Success'){
+								alert("댓글 삭제 성공!");
+								$("#modifyDiv").hide("slow");//수정 창 다시 닫음
+								location.reload();
+							}
+						}
+					});
+				} else {
+			        // 사용자가 취소했을 경우 아무런 동작도 하지 않음
+			    }
+			});
+		/* ]]> */
+		</script>
 		
 		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
 		

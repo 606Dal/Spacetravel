@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spacetravel.mapper.ReplyMapper">
+
+	<insert id="insertReply" parameterType="ReplyDTO">
+		<![CDATA[
+			INSERT INTO reply (
+					  id
+					, replyContent
+					, replier
+			) VALUES (
+					  #{id}
+					, #{replyContent}
+					, #{replier}
+			);
+		]]>
+	</insert>
+	
+	<select id="replyList" resultType="ReplyDTO">
+		<![CDATA[
+			SELECT
+				* 
+			FROM
+				reply
+			WHERE
+				id = #{id}
+			ORDER BY
+				replyid DESC
+		]]>
+	</select>
+	
+	<update id="modifyReply" parameterType="ReplyDTO">
+		<![CDATA[
+			UPDATE
+				reply
+			SET
+				replyContent = #{replyContent}
+			WHERE
+				replyid = #{replyid}
+		]]>
+	</update>
+	
+	<delete id="deleteReply" parameterType="int">
+		<![CDATA[
+			DELETE FROM
+				reply
+			WHERE
+				replyid = #{replyid}
+		]]>
+	</delete>
+	
+	<delete id="deleteReplyByBoardId" parameterType="int">
+		<![CDATA[
+			DELETE FROM
+				reply
+			WHERE
+				id = #{id}
+		]]>
+	</delete>
+	
+	<select id="replyListPageButton" resultType="ReplyDTO">
+	  <![CDATA[
+		  	SELECT
+		  		*
+		  	FROM
+		  		reply
+		  	WHERE
+		  		id = #{id}
+		  	ORDER BY
+		  		replyid desc, regdate desc
+		  	LIMIT #{pageCriteriaDTO.startPage}, #{pageCriteriaDTO.numPerPage}
+	  ]]>
+	</select>
+	
+	<select id="replyCount" resultType="int">
+	  <![CDATA[
+		  	SELECT COUNT(id)
+		  	FROM
+		  		reply
+		  	WHERE
+		  		id = #{id}
+	  ]]>
+	</select>
+	
+</mapper>

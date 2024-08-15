@@ -36,5 +36,4 @@ public interface BoardMapper {
 
 	public int findCountData(FindCriteriaDTO findCreteriaDTO); // 검색된 글 개수
 
-	
 }

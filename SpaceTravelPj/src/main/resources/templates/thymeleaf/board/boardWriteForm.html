@@ -34,7 +34,7 @@
                         <div id="contact_form" class="my-5">
 							
                     		<!-- 글 작성 부분 -->
-                            <form  th:action="@{/board/boardWriteOK}" method="post" onsubmit="return valid()">
+                            <form th:action="@{/board/boardWriteOK}" method="post" onsubmit="return valid()">
                                 <div class="form-floating">
                                     <input class="form-control input_field" name="writer" type="text" readonly />
                                     <label for="writer" sec:authentication="name" class="mt-2"></label>

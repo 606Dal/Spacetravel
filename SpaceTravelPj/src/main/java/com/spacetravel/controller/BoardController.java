@@ -1,5 +1,7 @@
 package com.spacetravel.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spacetravel.dto.BoardDTO;
 import com.spacetravel.dto.FindCriteriaDTO;
+import com.spacetravel.dto.PageCriteriaDTO;
 import com.spacetravel.dto.PagingDTO;
+import com.spacetravel.dto.ReplyDTO;
 import com.spacetravel.service.BoardService;
 import com.spacetravel.service.CustomUserDetails;
+import com.spacetravel.service.ReplyService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -31,6 +36,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private ReplyService replyService;
 	
 	private static final Logger log = LoggerFactory.getLogger(BoardController.class);
 
@@ -62,37 +70,44 @@ public class BoardController {
 			model.addAttribute("url", "/board/boardList?page=1&numPerPage=10");
 			
 		} catch (Exception e) {
-			
 			model.addAttribute("msg", "글 등록에 실패하였습니다.");
 			model.addAttribute("url", "/board/boardWriteForm");
 			log.info("글 등록 중 오류 발생");
 		}
-		
 		return "board/messageAlert";
 	}
-	
-/*
- * 페이징 처리
- */	
+
 	// 글 목록 가져오기
 	@GetMapping("/boardList")
-	public void pageListTest(@Valid FindCriteriaDTO findCriteriaDTO, Model model) {
-		
-		model.addAttribute("boardList", boardService.listfindCriteria(findCriteriaDTO));
-		
-		PagingDTO pagingDTO = new PagingDTO();
-		pagingDTO.setPageCriteriaDTO(findCriteriaDTO);
-		pagingDTO.setFindCriteriaDTO(findCriteriaDTO);
-		pagingDTO.setTotalData(boardService.findCountData(findCriteriaDTO)); // 임의의 값 -> 총 16페이지
-		
-		model.addAttribute("pagingDTO", pagingDTO);
+	public String pageList(@Valid FindCriteriaDTO findCriteriaDTO, Model model) {
+		try {
+			model.addAttribute("boardList", boardService.listfindCriteria(findCriteriaDTO));
+			
+			PagingDTO pagingDTO = new PagingDTO();
+			pagingDTO.setPageCriteriaDTO(findCriteriaDTO);
+			pagingDTO.setFindCriteriaDTO(findCriteriaDTO);
+			pagingDTO.setTotalData(boardService.findCountData(findCriteriaDTO));
+			
+			if((pagingDTO.getEndPage()-pagingDTO.getStartPage()) < 0) {
+				model.addAttribute("msg", "없는 페이지입니다.");
+				model.addAttribute("url", "/board/boardList?page=1&numPerPage=10");
+				
+				return "board/messageAlert";
+			}
+			model.addAttribute("pagingDTO", pagingDTO);
+			
+		} catch (Exception e) {
+		}
+		return "board/boardList";
 	}
 	
 	// 글 내용 보기
 	@GetMapping("/boardReadPage")
-	public String boardReadPage(@RequestParam(value = "id", required = false) Integer id
+	public String boardReadPage(@RequestParam(required = false) Integer id
 							  , Model model
-							  , @ModelAttribute("findCriteriaDTO") FindCriteriaDTO findCriteriaDTO) {
+							  , @ModelAttribute("findCriteriaDTO") FindCriteriaDTO findCriteriaDTO
+							  , @ModelAttribute("pageCriteriaDTO") PageCriteriaDTO pageCriteriaDTO
+							  , @RequestParam(required = false) Integer replyPage) {
 		if(id != null) {
 			BoardDTO boardDTO = boardService.readBoard(id);
 			// db에서 가져온 정보가 없을 경우
@@ -102,16 +117,68 @@ public class BoardController {
 				
 				return "board/messageAlert";
 			}
+			// 댓글 페이지 버튼
+			if(replyPage == null) {
+				replyPage = 1;
+				boardService.updateHit(id); // 처음 boardReadPage 왔을 때만 조회 수 증가
+			}
+			pageCriteriaDTO.setPage(replyPage);
+			pageCriteriaDTO.setNumPerPage(5);
+			List<ReplyDTO> replyList = replyService.replyListPageButton(id, pageCriteriaDTO);
 			
+			PagingDTO pagingDTO = new PagingDTO();
+    		pagingDTO.setPageCriteriaDTO(pageCriteriaDTO);
+    		pagingDTO.setDisplayPageNum(5); // 버튼에 표시할 개수
+    		pagingDTO.setTotalData(replyService.replyCount(id));
+    		
 			model.addAttribute("boardDTO", boardDTO);
-			boardService.updateHit(id);
+			model.addAttribute("replyList", replyList);
+			model.addAttribute("pagingDTO", pagingDTO);
+			// replyPage를 url에서 숫자 변경시
+			if(pagingDTO.getTotalData() > 0 && (pagingDTO.getEndPage()-pagingDTO.getStartPage()) < 0) {
+				model.addAttribute("msg", "존재하지 않는 페이지입니다.");
+				model.addAttribute("url", "/board/boardList?page=1&numPerPage=10");
+				
+				return "board/messageAlert";
+			}
 		} else {
 			// id가 null일 때 빈 객체 전송
 			model.addAttribute("boardDTO", new BoardDTO());
 		}
 		return "board/boardReadPage";
 	}
-	
+		// boardReadPage의 댓글 페이지버튼 경로 처리
+	@GetMapping("/boardReadReply")
+	public String boardReadReply(HttpServletRequest request
+							  , FindCriteriaDTO findCriteriaDTO
+							  , @ModelAttribute("pageCriteriaDTO") PageCriteriaDTO pageCriteriaDTO
+							  , RedirectAttributes reAttr) {
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		Integer replyPage = Integer.parseInt(request.getParameter("replyPage"));
+		
+		try {
+			if(replyPage != null) {
+				pageCriteriaDTO.setPage(replyPage);
+				PagingDTO pagingDTO = new PagingDTO();
+				pagingDTO.setPageCriteriaDTO(pageCriteriaDTO);
+				
+				if(findCriteriaDTO.getKeyword() == "") {
+					reAttr.addAttribute("page", findCriteriaDTO.getPage());
+					reAttr.addAttribute("numPerPage", findCriteriaDTO.getNumPerPage());
+					
+					return "redirect:/board/boardReadPage?id=" + id + "&replyPage=" + replyPage;
+				}
+				reAttr.addAttribute("page", findCriteriaDTO.getPage());
+				reAttr.addAttribute("numPerPage", findCriteriaDTO.getNumPerPage());
+				reAttr.addAttribute("findType", findCriteriaDTO.getFindType());
+				reAttr.addAttribute("keyword", findCriteriaDTO.getKeyword());
+			}
+		} catch (Exception e) {
+		}
+		return "redirect:/board/boardReadPage?id=" + id + "&replyPage=" + replyPage;
+	}
+
 	// 글 수정하는 폼
 	@GetMapping("/boardModifyForm")
 	public String boardModifyForm(@RequestParam(value = "id", required = false) Integer id
@@ -153,7 +220,7 @@ public class BoardController {
 			// 로그인 유저 또는 관리자가 맞는가
 			if(writer.equals(username) || userRole.equals("ADMIN")) {
 				boardService.updateBoard(boardDTO);
-				
+				// Keyword가 비었을 때와 아닐 때 경로 이동 구분
 				if(findCriteriaDTO.getKeyword() == "") {
 					reAttr.addAttribute("page", findCriteriaDTO.getPage());
 					reAttr.addAttribute("numPerPage", findCriteriaDTO.getNumPerPage());
@@ -200,6 +267,7 @@ public class BoardController {
 		try {
 			// 로그인 유저 또는 관리자가 맞는가
 			if(writer.equals(username) || userRole.equals("ADMIN")) {
+				replyService.deleteReplyByBoardId(id); // 댓글 먼저 삭제
 				int isOk = boardService.deleteBoard(id);
 				
 				if(isOk != 1) {
@@ -229,7 +297,7 @@ public class BoardController {
 		} catch (DataAccessException e) {
 			
 		} catch (Exception e) {
-			log.info("글 삭제 중 오류 발생");
+			log.error("글 삭제 중 오류 발생"+e.getMessage());
 		}
 		return "board/boardList";
 	}

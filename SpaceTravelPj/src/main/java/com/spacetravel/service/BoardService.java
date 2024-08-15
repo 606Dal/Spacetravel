@@ -26,12 +26,11 @@ public interface BoardService {
 	/*
 	 * 페이징 처리를 위한
 	 */
-	//public List<BoardDTO> listPageCriteria(PageCriteriaDTO pageCriteriaDTO);
-
 	public int countBoardList(PageCriteriaDTO pageCriteriaDTO);
 
 	public List<BoardDTO> listfindCriteria(FindCriteriaDTO findCreteriaDTO);
 
 	public int findCountData(FindCriteriaDTO findCreteriaDTO);
+
 
 }

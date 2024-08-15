@@ -122,4 +122,12 @@ public class PagingDTO {
 		return totalData;
 	}
 
+	@Override
+	public String toString() {
+		return "PagingDTO [totalData=" + totalData + ", startPage=" + startPage + ", endPage=" + endPage + ", prev="
+				+ prev + ", next=" + next + ", displayPageNum=" + displayPageNum + "]";
+	}
+	
+	
+
 }

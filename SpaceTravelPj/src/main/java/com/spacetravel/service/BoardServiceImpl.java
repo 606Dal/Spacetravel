@@ -50,11 +50,6 @@ public class BoardServiceImpl implements BoardService {
 	/*
 	 * 페이징 처리
 	 */
-/*	@Override
-	public List<BoardDTO> listPageCriteria(PageCriteriaDTO pageCriteriaDTO) {
-		return boardMapper.listPageCriteria(pageCriteriaDTO);
-	}
-*/	
 	@Override
 	public int countBoardList(PageCriteriaDTO pageCriteriaDTO) {
 		return boardMapper.countBoardList(pageCriteriaDTO);
