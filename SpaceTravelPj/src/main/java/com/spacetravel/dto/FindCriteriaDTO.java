@@ -9,6 +9,7 @@ public class FindCriteriaDTO extends PageCriteriaDTO {
 	@Size(max = 50)
 	private String keyword;
 	
+	// getter, setter
 	public String getFindType() {
 		return findType;
 	}

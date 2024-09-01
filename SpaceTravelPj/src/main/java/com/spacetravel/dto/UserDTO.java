@@ -13,7 +13,7 @@ public class UserDTO {
 	
 	@NotBlank
 	@Pattern(regexp = "(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{4,20}", 
-		message = "비밀번호는 4~20자, 영문자, 숫자, 특수문자를 모두 포함하여 입력해주세요.")
+			 message = "비밀번호는 4~20자, 영문자, 숫자, 특수문자를 모두 포함하여 입력해주세요.")
 	private String password;
 	
 	private Date regdate;

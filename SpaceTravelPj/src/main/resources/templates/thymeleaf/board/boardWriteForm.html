@@ -20,7 +20,6 @@
 	</script>
 	
 	<body>
-		
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'board' ) }" />
 		
 		<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '게시판', hcontent = '글쓰기')}" />
@@ -32,7 +31,6 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <p class="text-info">자유롭게 작성해 주세요. 개인 정보는 포함하지 않도록 주의하시기 바랍니다.</p>
                         <div id="contact_form" class="my-5">
-							
                     		<!-- 글 작성 부분 -->
                             <form th:action="@{/board/boardWriteOK}" method="post" onsubmit="return valid()">
                                 <div class="form-floating">
@@ -44,7 +42,7 @@
                                     <label for="subject">제목</label>
                                 </div>
                                 <div class="form-floating">
-                                    <textarea class="form-control pt-4 ps-2" name="content" placeholder="Enter your message here..." style="height: 12rem" ></textarea>
+                                    <textarea class="form-control pt-5 ps-2" name="content" placeholder="Enter your message here..." style="height: 12rem" ></textarea>
                                     <label for="content">내용</label>
                                 </div>
                                 <br>
@@ -61,6 +59,5 @@
         </main>
 		
 		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
-		
 	</body>
 </html>

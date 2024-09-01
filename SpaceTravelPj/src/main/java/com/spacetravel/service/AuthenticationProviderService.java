@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 /*
- * 스프링 시큐리티 인증용 (빈 등록이 필요없다고 해서 @Service 일단 지움)
+ * 스프링 시큐리티 인증용
  */
 public class AuthenticationProviderService implements AuthenticationProvider {
 

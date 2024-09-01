@@ -42,13 +42,11 @@ public class UserMapperTest {
 		System.out.println("테스트 유저 추가 성공" + uDto.toString());
 	}
 	
-	
 	@Test
 	public void testFindUser() {
 		log.info(userMapper.findByUsername("관리자").toString());
 	}
 	
-
 	@Test
 	public void testIdCheck() {
 		log.info(userMapper.usernameDuplicateCheck("테스터2").toString());

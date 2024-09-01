@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='글쓰기' )}" />
+	
 	<script th:inline="javascript">
 		/* <![CDATA[ */
 			const page = /*[[ ${findCriteriaDTO.page} ]]*/ 'default';
@@ -27,8 +28,8 @@
 	       	};
 		/* ]]> */
 	</script>
+	
 	<body>
-		
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'board' ) }" />
 		
 		<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '게시판', hcontent = ' ')}" />
@@ -69,7 +70,7 @@
 					</div>
 					
                     <div class="col-md-10 col-lg-8 col-xl-7 bg-dark bg-gradient bg-opacity-75">
-                    	<!-- 글 출력-->
+                    	<!-- 글 목록 출력-->
 	                    <div th:each="row : ${boardList}">
 		                    <div class="post-preview">
 								<a th:href="@{/board/boardReadPage(page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, id=${row.id})}"
@@ -137,6 +138,5 @@
         </main>
 		
 		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
-		
 	</body>
 </html>

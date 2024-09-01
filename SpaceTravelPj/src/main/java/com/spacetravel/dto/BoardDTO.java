@@ -24,7 +24,6 @@ public class BoardDTO {
 	@PositiveOrZero
 	private int hit;
 	
-	
 	// getter, setter
 	public int getId() {
 		return id;

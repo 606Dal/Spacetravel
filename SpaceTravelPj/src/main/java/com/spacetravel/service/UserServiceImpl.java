@@ -30,7 +30,8 @@ public class UserServiceImpl implements UserService {
 
 		userMapper.insertUser(userDTO);
 	}
-	// 아이디 중복 체크용
+	
+	// 아이디 중복 체크
 	@Override
 	public String usernameDuplicateCheck(String user) {
 		return userMapper.usernameDuplicateCheck(user);
@@ -62,4 +63,5 @@ public class UserServiceImpl implements UserService {
 		
 		return userMapper.deleteUser(u);
 	}
+
 }

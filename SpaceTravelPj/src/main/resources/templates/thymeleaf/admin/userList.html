@@ -10,13 +10,14 @@
 		}
 	</script>
 	<body>
-		
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( ' ' ) }" />
 		
 		<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '유저 목록', hcontent = ' ')}" />
 		
 		<div class="row">
+			<!-- 사이드 바 내비 -->
 			<nav th:replace="~{tpl/tpl_fragments :: tpl_adminNav ( 'userList' ) }" />
+			
 			<!-- Main Content-->
 	        <main class="col-sm-10 mb-4 jua-font">
 	            <div class="container px-4 px-lg-5">
@@ -25,7 +26,7 @@
 	                    	<p class="read_content mt-4 float-end"
 			                	th:text="'&nbsp;&nbsp;총 유저 : ' + ${totalUser}">
 			                </p>
-	                    	<!-- 컨트롤러에서 지정한 것과 같이 boardList-->
+	                    	<!-- 목록 출력 -->
 		                    <div th:each="row : ${userList}">
 			                    <div class="post-preview">
 			                        <a th:href="@{#}">
@@ -48,13 +49,13 @@
 			                    <!-- Divider-->
 			                    <hr class="my-4" />
 		                    </div>
-	                
+		                    <!-- 목록 출력 끝 -->
 	                    </div>
 	                </div>
 	            </div>
 	        </main>
 		</div>
-		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
 		
+		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
 	</body>
 </html>

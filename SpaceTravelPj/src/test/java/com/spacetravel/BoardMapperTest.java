@@ -1,5 +1,6 @@
 package com.spacetravel;
 
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.spacetravel.dto.BoardDTO;
 import com.spacetravel.dto.FindCriteriaDTO;
 import com.spacetravel.service.BoardService;
 
@@ -37,13 +39,13 @@ public class BoardMapperTest {
 		
 		
 	}
-
+*/
 	@Test
 	public void testSelectAll() {
 		List<BoardDTO> boardList = boardService.getBoardList();
 		System.out.println("List 회원 출력 1 : "+boardList.get(0).toString());
 	}
-	
+	/*
 	@Test
 	public void readBoard() {
 		
@@ -80,7 +82,7 @@ public class BoardMapperTest {
 	
 	@Test
 	public void testFind() throws Exception{
-		FindCreteriaDTO findCreteriaDTO = new FindCreteriaDTO();
+		FindCriteriaDTO findCreteriaDTO = new FindCriteriaDTO();
 		findCreteriaDTO.setPage(1); //첫 페이지 1
 		findCreteriaDTO.setFindType("S"); // 찾는 유형 : 제목
 		findCreteriaDTO.setKeyword("테스트"); // 검색어
@@ -96,7 +98,7 @@ public class BoardMapperTest {
 		log.info("************ 테스트 Data 개수 출력 ************");
 		log.info("CountData: " + boardService.findCountData(findCreteriaDTO));
 	}
-	*/
+	
 	@Test
 	public void uriTest2() throws Exception {
 		FindCriteriaDTO findCreteriaDTO = new FindCriteriaDTO();
@@ -116,4 +118,5 @@ public class BoardMapperTest {
 		log.info("/bbs/read?bid=100&numPerPage=20");
 		log.info("uriComponents : " + uriComponents.toString());
 	}
+	*/
 }

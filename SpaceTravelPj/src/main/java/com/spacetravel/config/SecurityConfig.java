@@ -22,12 +22,8 @@ public class SecurityConfig {
 	
 	@Bean
 	protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		// post 요청마다 token이 필요한 과정을 임시로 생략
-		
-		
 		http.formLogin((form) -> form
 				.loginPage("/user/login")
-				//.defaultSuccessUrl("/user/loginOk", true)
 				.successHandler(new CustomLoginSuccessHandler())
 			)
 			.logout((logout) -> logout
@@ -41,8 +37,6 @@ public class SecurityConfig {
 				.requestMatchers("/css/**", "/js/**", "/images/**", "/", "/user/login", "/user/singUp", "/user/singUpOk").permitAll()
 				.anyRequest().authenticated()
 			);
-			
-		
 		return http.build();
 	}
 

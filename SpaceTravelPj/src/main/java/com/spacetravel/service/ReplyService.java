@@ -23,4 +23,5 @@ public interface ReplyService {
 	public int replyCount(Integer id);
 
 	public void deleteReplyByBoardId(int id);
+	
 }

@@ -30,7 +30,6 @@ public class AdminController {
 	
 	@GetMapping("/adminPage")
 	public void adminPage() {
-		
 	}
 	
 	// 유저 목록
@@ -46,6 +45,7 @@ public class AdminController {
 		return "admin/userList";
 	}
 	
+	// 유저 삭제
 	@PostMapping("deleteUserOk")
 	public String deleteUserOk(HttpServletRequest request
 						   , @AuthenticationPrincipal CustomUserDetails userDetails
@@ -75,9 +75,9 @@ public class AdminController {
 				return "board/messageAlert";
 			}
 		} catch (DataAccessException e) {
-			
+			log.warn("유저 삭제 중 오류 발생"+e.getMessage());
 		} catch (Exception e) {
-			log.info("유저 삭제 중 오류 발생");
+			log.warn("유저 삭제 중 오류 발생");
 		}
 		
 		return "admin/userList";

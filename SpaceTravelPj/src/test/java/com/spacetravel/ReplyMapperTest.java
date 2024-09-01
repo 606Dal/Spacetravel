@@ -77,7 +77,6 @@ public class ReplyMapperTest {
 	public void deleteReplyByBoardId() {
 		
 		replyService.deleteReplyByBoardId(256);
-		
 	}
 	
 }

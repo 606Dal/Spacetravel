@@ -42,42 +42,10 @@ h4 { font-size: 14px; margin: 0 0 5px 0; padding: 0; }
 .float_l { float: left; }
 .float_r { float: right; }
 
-.image_wrapper { 
-	display: inline-block; 
-	border: 1px solid #000000; 
-	background: #252120; 
-	padding: 4px; 
-	margin-bottom: 10px; 
-}
-
-.image_fl { 
-	float: left; 
-	margin: 3px 30px 0 0; 
-}
-
-.image_fr { 
-	float: right; 
-	margin: 3px 0 0 30px; 
-}
-
 blockquote { font-style: italic; margin: 0 0 0 10px;}
 cite { font-weight: bold; font-size: 11px; color:#f3c331; }
 cite span { color: #f3c331; }
 em { color: #f3c331; }
-
-.btn_more a {
-	display: inline-block;
-	font-weight: bold;
-	color: #000;
-	font-size: 12px;
-	padding: 2px 15px 2px 0;
-	text-decoration: none;
-}
-
-.btn_more a:hover {
-	padding-right: 20px;
-	text-decoration: none;
-}
 
 .col_380 { width: 380px; } 
 .col_320 { width: 320px; }
@@ -88,12 +56,10 @@ em { color: #f3c331; }
 	padding: 0; 
 	list-style: none; 
 }
-
 .service_list li { 
 	margin: 0;
 	padding: 0; 
 }
-
 .service_list li a { 
 	font-size: 16px; 
 	display: block; 
@@ -102,74 +68,65 @@ em { color: #f3c331; }
 	padding-left: 40px; 
 	text-decoration: none; 
 }
-
 .service_list li .service_one { 
 	background: url(../images/onebit_08.png) center left no-repeat; 
 }
 .service_list li .service_two { 
 	background: url(../images/onebit_11.png) center left no-repeat; 
 }
-
 .service_list li .service_three { 
 	background: url(../images/onebit_17.png) center left no-repeat; 
 }
-
 .service_list li .service_four { 
 	background: url(../images/onebit_21.png) center left no-repeat; 
 }
-
 .service_list li .service_five { 
 	background: url(../images/onebit_12.png) center left no-repeat; 
+}
+
+#subject_width {
+	padding: 5px; 
+	background: #1b1a1a; 
+	border: 1px solid #3b3a3a;
+	font-family: Verdana,Geneva,sans-serif;
+	font-size: 14px;
+	color: #aaa;
+	margin-top: 5px;
 }
 
 #contact_form {  
 	padding: 0; 
 }
-
 #contact_form form { 
 	margin: 0px; 
 	padding: 0px; 
 }
-
 #contact_form form .input_field { 
 	width: 300px; 
 	padding: 5px; 
 	background: #1b1a1a; 
 	border: 1px solid #3b3a3a; 
 	font-family: Verdana,Geneva,sans-serif;
-	font-size: 12px;
+	font-size: 14px;
 	color: #aaa;
 	margin-top: 5px;
 }
-
-#subject_width {
-	padding: 5px; 
-	background: #1b1a1a; 
-	border: 1px solid #3b3a3a; 
-	font-family: Verdana,Geneva,sans-serif;
-	font-size: 12px;
-	color: #aaa;
-	margin-top: 5px;
-}
-
 #contact_form form label { 
 	display: block; 
 	width: 120px; 
 	margin-right: 10px; 
 	font-size: 14px; 
 }
-
 #contact_form form textarea { 
 	height: 100px; 
 	padding: 5px; 
 	background: #1b1a1a; 
 	border: 1px solid #3b3a3a; 
 	font-family: Verdana,Geneva,sans-serif;
-	font-size: 12px;
+	font-size: 14px;
 	color: #aaa;
 	margin-top: 5px; 
 }
-
 #contact_form form .submit_btn  {
 	padding: 5px 10px;
 	width: 90px;
@@ -179,13 +136,14 @@ em { color: #f3c331; }
 	font-size: 14px;
 }
 
+/* 댓글 입력 창 */
 #replyInput .input_field { 
 	width: 300px; 
 	padding: 5px; 
 	background: #1b1a1a; 
 	border: 1px solid #3b3a3a; 
 	font-family: Verdana,Geneva,sans-serif;
-	font-size: 12px;
+	font-size: 14px;
 	color: #aaa;
 	margin-top: 5px;
 }
@@ -193,20 +151,18 @@ em { color: #f3c331; }
 	display: block; 
 	width: 120px; 
 	margin-right: 10px; 
-	font-size: 14px; 
+	font-size: 14px;
 }
-
 #replyInput textarea { 
 	height: 100px; 
 	padding: 5px; 
 	background: #1b1a1a; 
 	border: 1px solid #3b3a3a; 
 	font-family: Verdana,Geneva,sans-serif;
-	font-size: 12px;
+	font-size: 14px;
 	color: #aaa;
 	margin-top: 5px; 
 }
-
 #replyInput .submit_btn  {
 	padding: 5px 10px;
 	width: 90px;
@@ -215,6 +171,7 @@ em { color: #f3c331; }
 	color: ghostwhite;
 	font-size: 14px;
 }
+
 /* 글쓰기, 수정, 삭제, 목록 버튼 */
 #write_btn {
 	padding: 5px 10px;
@@ -248,6 +205,7 @@ em { color: #f3c331; }
 	text-decoration: none;
 	text-align: center;
 }
+
 #del_btn {
 	padding: 5px 10px;
 	width: 90px;
@@ -258,6 +216,7 @@ em { color: #f3c331; }
 	text-decoration: none;
 	text-align: center;
 }
+
 #back_btn {
 	padding: 5px 10px;
 	width: 90px;
@@ -282,33 +241,6 @@ em { color: #f3c331; }
     /* 색이 변하는 시간 */
 	transition: all .35s;
 }
-
-/* gallery */
-#gallery_container { 
-	clear: both; 
-	margin-top: 30px; 
-	padding-right: 40px; 
-} 
-
-#gallery_container .gallery_box {
-	float: left;
-	width: 145px;
-	display: block; 
-	padding: 0;
-	margin: 0 25px 30px 0;
-}
- 
-.gallery_box img {
-	float: left;
-	width: 135px;
-	height: 80px;
-	border: 1px solid #000000; 
-	background: #252120; 
-	padding: 4px;
-}
-
-#gallery_container .gb_rm { margin-right:0 }
-/* end of gallery */
 
 .jua-font {
   font-family: "Jua", sans-serif;
@@ -345,6 +277,7 @@ em { color: #f3c331; }
     font-size: 2.25rem;
   }
 }
+
 hr {
   border-color: #dee2e6;
   opacity: 1;

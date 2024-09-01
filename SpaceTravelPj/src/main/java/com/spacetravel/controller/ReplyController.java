@@ -44,7 +44,7 @@ public class ReplyController {
 				
 			resEntity = new ResponseEntity<String>("Success", HttpStatus.OK);
 		} catch (Exception e) {
-			log.info("댓글 추가 중 오류 발생");
+			log.warn("댓글 추가 중 오류 발생");
 		}
 
 		return resEntity;
@@ -74,7 +74,7 @@ public class ReplyController {
 				  resEntity = new ResponseEntity<String>("Success", HttpStatus.OK);
 			  }
 		} catch (Exception e) {
-			log.info("댓글 수정 중 오류 발생");
+			log.warn("댓글 수정 중 오류 발생");
 		}
 		return resEntity;
 	}
@@ -98,7 +98,7 @@ public class ReplyController {
     			resEntity = new ResponseEntity<String>("Success", HttpStatus.OK);
     		}
     	} catch (Exception e) {
-    		log.info("댓글 삭제 중 오류 발생");
+    		log.warn("댓글 삭제 중 오류 발생");
     	}
     	return resEntity;
     }

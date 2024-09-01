@@ -1,24 +1,6 @@
-#slider {
-    position: relative;
-	width: 100%;
-}
-
-#tooplate_wrapper {
-	width: 780px;
-	margin: 0 auto;
-	background: url(../images/tooplate_body.jpg) top center no-repeat
-}
-
-#tooplate_header {
-	width: 780px;
-	height: 100px;
-	margin-bottom: 50px;
-}
-
 #site_title { 
 	float: left; 
 }
-
 #site_title a { 
 	display: block; 
 	width: 180px; 
@@ -43,7 +25,6 @@
 	margin-bottom: 40px;
 	background: url(../images/tooplate_content_bg.png)
 }
-
 #content2 {
 	clear: both;
 	width: 900px;
@@ -52,30 +33,21 @@
 	object-fit: fill;
 	background: url(../images/spaceLandscape1.jpg)
 }
-
 .content_section {
 	margin-bottom: 30px;
 	padding-bottom: 30px;
 	border-bottom: 1px dashed #ccc
 }
 
-.last_section {
-	margin: 0;
-	padding: 0;
-	border: 0;
-}
-
 #footer {
 	clear: both;
 	padding: 0 40px;
 }
-
 #footer_left { 
 	float: left;
 	display: inline;
 	text-align: left
 }
-
 #footer a {
 	color: mediumaquamarine;
 }
@@ -84,29 +56,11 @@
 	float: right;
 	height: 85px;
 	padding: 0;
-	
 }
-
 #social_box a {
 	display: inline-block;
 	margin-left: 20px;
 	width: 60px; height: 60px;
-}
-
-.scroll {
-    height: 470px;
-    width: 780px;
-    overflow: auto;
-    /* overflow-x: hidden; */
-    position: relative;
-    clear: left;
-}
-
-.scrollContainer div.panel {
-    height: 350px;
-    width: 700px;
-	padding: 40px;
-	overflow: hidden;
 }
 
 ul.navigation {
@@ -114,13 +68,11 @@ ul.navigation {
 	margin: 0;
     padding: 0;
 }
-
 ul.navigation li {
     display: inline;
     margin: 0;
 	padding: 0;
 }
-
 ul.navigation a {
 	float: left;
 	display: block;
@@ -134,17 +86,21 @@ ul.navigation a {
     text-decoration: none;
 	background: url(../images/tooplate_menu_divider.png) no-repeat center right;
 }
+ul.navigation a:hover, ul.navigation a.selected {
+	color: #f6bf34;
+}
+ul.navigation a:focus {
+    outline: none;
+}
 
 ul.adminNav {
     list-style: none;
 }
-
 ul.adminNav li {
     display: inline;
     margin: 0;
 	padding: 0;
 }
-
 ul.adminNav a {
 	width: 130px;
 	color: #fff;
@@ -155,19 +111,20 @@ ul.adminNav a {
     vertical-align: middle;
 	background: url(../images/tooplate_menu_divider.png) no-repeat center right;
 }
+ul.adminNav a:hover, ul.adminNav a.selected {
+	color: mediumaquamarine;
+}
 
 ul.navigation2 {
     list-style: none;
 	margin: 0;
     padding: 0;
 }
-
 ul.navigation2 .nav-item {
     display: inline;
     margin: 0;
 	padding: 0;
 }
-
 ul.navigation2 .nav-link {
 	float: left;
 	display: block;
@@ -180,6 +137,11 @@ ul.navigation2 .nav-link {
 	text-align: center;
     text-decoration: none;
 }
+ul.navigation2 a:hover {
+	color: darkorchid;
+	text-decoration: none;
+}
+
 /*페이지 버튼*/
 ul.pagination a {
     background: #1b1a1a; 
@@ -193,43 +155,10 @@ ul.pagination a:hover, ul.pagination li.selected a {
 #login {
 	color: darkorchid;
 }
-
 #login.nav-link:hover, #login.nav-link.selected {
 	 color: #f6bf34;
  }
 
-ul.navigation a:hover, ul.navigation a.selected {
-	color: #f6bf34;
-}
-
-ul.adminNav a:hover, ul.adminNav a.selected {
-	color: mediumaquamarine;
-}
-
-ul.navigation2 a:hover {
-	color: darkorchid;
-	text-decoration: none;
-}
-
-ul.navigation a:focus {
-    outline: none;
-}
-
-.scrollButtons {
-    position: absolute;
-    top: 300px;
-    cursor: pointer;
-}
-
-.scrollButtons.left {
-    left: 0
-}
-
-.scrollButtons.right {
-    right: 0
-}
-
 .hide {
     display: none;
 }
-

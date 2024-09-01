@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='계정 관리 페이지' )}" />
+	
 	<script type="text/javascript">
 		function check() {
 			if(confirm("정말 탈퇴하시겠습니까?") == true) {
@@ -14,8 +15,8 @@
 			}
 		}
 	</script>
+	
 	<body>
-		
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( ' ' ) }" />
 		
 		<main class="mb-4 jua-font">

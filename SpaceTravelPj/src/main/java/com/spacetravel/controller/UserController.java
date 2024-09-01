@@ -47,31 +47,31 @@ public class UserController {
 						   @RequestParam(value = "username") String username,
 						   Model model) {
 		try {
-				String result = userService.usernameDuplicateCheck(username);
-				// DB에서 검색된 아이디가 없으면
-				if(result == null) {
-					userService.insertUser(userDTO);
-					
-					model.addAttribute("msg", "회원 가입에 성공하였습니다.");
-					model.addAttribute("url", "user/loginPage");
-					
-					return "board/messageAlert";
-				} else {
-					model.addAttribute("msg", "중복된 아이디 입니다.");
-					model.addAttribute("reUsername", username);
-				}
+			String result = userService.usernameDuplicateCheck(username);
+			// DB에서 검색된 아이디가 없으면
+			if(result == null) {
+				userService.insertUser(userDTO);
+				
+				model.addAttribute("msg", "회원 가입에 성공하였습니다.");
+				model.addAttribute("url", "user/loginPage");
+				
+				return "board/messageAlert";
+			} else {
+				model.addAttribute("msg", "중복된 아이디 입니다.");
+				model.addAttribute("reUsername", username);
+			}
 		} catch (Exception e) {
-			log.info("회원가입 중 오류 발생");
+			log.warn("회원가입 중 오류 발생");
 		}
 		
 		return "user/singUpForm";
 	}
 	
 	// 비밀번호 변경 페이지
-	@GetMapping("/changePassword")
-	public String changePassword() {
+	@GetMapping("/changePasswordForm")
+	public void changePasswordForm() {
 		
-		return "user/changePasswordForm";
+		//return "user/changePasswordForm";
 	}
 	
 	@PostMapping("/changePasswordOk")
@@ -83,28 +83,28 @@ public class UserController {
 								 , Authentication authentication
 								 , Model model) {
 		try {
-				String username = authentication.getName();
-				String currentPassword = request.getParameter("currentPassword");
+			String username = authentication.getName();
+			String currentPassword = request.getParameter("currentPassword");
+			
+			// 폼에서 입력받은 현재 비밀번호와 기존의 비밀번호와 맞는지 확인
+			boolean matchesPassword = userService.isMatchesPassword(username, currentPassword);
+			// 동일하면
+			if(matchesPassword == true) {
+				userDTO.setUsername(username);
+				userDTO.setPassword(newPassword);
 				
-				// 폼에서 입력받은 현재 비밀번호와 기존의 비밀번호와 맞는지 확인
-				boolean matchesPassword = userService.isMatchesPassword(username, currentPassword);
-				// 동일하면
-				if(matchesPassword == true) {
-					userDTO.setUsername(username);
-					userDTO.setPassword(newPassword);
-					// 유저 이름이랑 새 비밀번호를 넘겨줘야 함.
-					userService.updatePassword(userDTO);
+				userService.updatePassword(userDTO);
+				
+				model.addAttribute("msg", "비밀번호 변경에 성공하였습니다.");
+				model.addAttribute("url", "/user/logout");
 					
-					model.addAttribute("msg", "비밀번호 변경에 성공하였습니다.");
-					model.addAttribute("url", "/user/logout");
-						
-					return "board/messageAlert";
-					
-				} else {
-					model.addAttribute("msg", "비밀번호가 틀렸습니다. 다시 입력해 주세요");
-				}
+				return "board/messageAlert";
+				
+			} else {
+				model.addAttribute("msg", "비밀번호가 틀렸습니다. 다시 입력해 주세요");
+			}
 		} catch (Exception e) {
-			log.info("비밀번호 변경 중 오류 발생");
+			log.warn("비밀번호 변경 중 오류 발생");
 		}
 		return "user/changePasswordForm";
 	}
@@ -142,9 +142,9 @@ public class UserController {
 				model.addAttribute("msg", "비밀번호가 틀렸습니다. 다시 입력해 주세요");
 			}
 		} catch (DataAccessException e) {
-			
+			log.warn("계정 삭제 중 오류 발생"+e.getMessage());
 		} catch (Exception e) {
-			log.info("계정 삭제 중 오류 발생");
+			log.warn("계정 삭제 중 오류 발생");
 		}
 		return "user/accountPage";
 	}

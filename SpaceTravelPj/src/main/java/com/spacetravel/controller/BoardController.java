@@ -29,7 +29,6 @@ import com.spacetravel.service.ReplyService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
-
 @Controller
 @RequestMapping("/board")
 public class BoardController {
@@ -42,16 +41,6 @@ public class BoardController {
 	
 	private static final Logger log = LoggerFactory.getLogger(BoardController.class);
 
-	/*
-	 * 테스트 확인 용 main
-	 */
-	@GetMapping("/main")
-	public String main() {
-		log.info("...main() 호출...");
-		
-		return "include/index";
-	}
-	
 	// 게시판 글 쓰기
 	@GetMapping("/boardWriteForm")
 	public void boardWriteForm() {
@@ -72,7 +61,7 @@ public class BoardController {
 		} catch (Exception e) {
 			model.addAttribute("msg", "글 등록에 실패하였습니다.");
 			model.addAttribute("url", "/board/boardWriteForm");
-			log.info("글 등록 중 오류 발생");
+			log.warn("글 등록 중 오류 발생");
 		}
 		return "board/messageAlert";
 	}
@@ -97,6 +86,7 @@ public class BoardController {
 			model.addAttribute("pagingDTO", pagingDTO);
 			
 		} catch (Exception e) {
+			log.warn("글 목록 출력 실패"+e.getMessage());
 		}
 		return "board/boardList";
 	}
@@ -175,15 +165,19 @@ public class BoardController {
 				reAttr.addAttribute("keyword", findCriteriaDTO.getKeyword());
 			}
 		} catch (Exception e) {
+			log.warn("댓글 페이지 출력 중 오류");
 		}
 		return "redirect:/board/boardReadPage?id=" + id + "&replyPage=" + replyPage;
 	}
 
 	// 글 수정하는 폼
 	@GetMapping("/boardModifyForm")
-	public String boardModifyForm(@RequestParam(value = "id", required = false) Integer id
+	public String boardModifyForm(@RequestParam(required = false) Integer id
+								, Authentication authentication
 			  					, Model model
 			  					, @ModelAttribute("findCriteriaDTO") FindCriteriaDTO findCriteriaDTO) {
+		
+		String user = authentication.getName();
 		
 		if(id != null) {
 			BoardDTO boardDTO = boardService.readBoard(id);
@@ -194,6 +188,14 @@ public class BoardController {
 				
 				return "board/messageAlert";
 			}
+			// id 번호로 이동했을 때 유저 확인
+			if(!boardDTO.getWriter().equals(user)) {
+				model.addAttribute("msg", "권한이 없습니다.");
+				model.addAttribute("url", "/board/boardList?page=1&numPerPage=10");
+				
+				return "board/messageAlert";
+			}
+			
 			model.addAttribute("boardDTO", boardDTO);
 		} else {
 			// id가 null일 때 빈 객체 전송
@@ -238,7 +240,7 @@ public class BoardController {
 				return "board/messageAlert";
 			}
 		} catch (Exception e) {
-			log.info("글 수정 중 오류 발생");
+			log.warn("글 수정 중 오류 발생");
 		}
 		// 다시 상세 글로 이동할 때 id 사용 + 뒤에 reAttr에 담은 정보들을 유지해서 보던 글로 이동
 		return "redirect:/board/boardReadPage?id=" + id;
@@ -295,11 +297,11 @@ public class BoardController {
 				return "board/messageAlert";
 			}
 		} catch (DataAccessException e) {
-			
+			log.warn("글 삭제 중 오류 발생"+e.getMessage());
 		} catch (Exception e) {
-			log.error("글 삭제 중 오류 발생"+e.getMessage());
+			log.warn("글 삭제 중 오류 발생");
 		}
 		return "board/boardList";
 	}
-		
+	
 }
