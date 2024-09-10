@@ -1,6 +1,8 @@
 package com.spacetravel.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -18,8 +20,8 @@ public class BoardDTO {
 	private String content;
 	
 	private String writer;
-	private Date regdate;
-	private Date updatedAt;
+	private LocalDateTime regdate;
+	private LocalDateTime updatedAt;
 	
 	@PositiveOrZero
 	private int hit;
@@ -49,16 +51,22 @@ public class BoardDTO {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
-	public Date getRegdate() {
+	public LocalDateTime getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(Date regdate) {
-		this.regdate = regdate;
+	public void setRegdate(LocalDateTime regdate) {
+		ZoneId utcZone = ZoneId.of("UTC");
+        ZoneId koreaZone = ZoneId.of("Asia/Seoul");
+        
+        ZonedDateTime utcTime = regdate.atZone(utcZone);
+        ZonedDateTime koreaTime = utcTime.withZoneSameInstant(koreaZone);
+        
+		this.regdate = koreaTime.toLocalDateTime();
 	}
-	public Date getUpdatedAt() {
+	public LocalDateTime getUpdatedAt() {
 		return updatedAt;
 	}
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 	public int getHit() {

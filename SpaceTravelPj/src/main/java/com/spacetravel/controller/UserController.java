@@ -1,5 +1,9 @@
 package com.spacetravel.controller;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,21 +67,18 @@ public class UserController {
 		} catch (Exception e) {
 			log.warn("회원가입 중 오류 발생");
 		}
-		
 		return "user/singUpForm";
 	}
 	
 	// 비밀번호 변경 페이지
 	@GetMapping("/changePasswordForm")
 	public void changePasswordForm() {
-		
-		//return "user/changePasswordForm";
 	}
 	
 	@PostMapping("/changePasswordOk")
 	public String changePasswordOk(UserDTO userDTO
-								 , @Pattern(regexp = "(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{4,20}", 
-										message = "비밀번호는 4~20자, 영문자, 숫자, 특수문자를 모두 포함하여 입력해주세요.") 
+								 , @Pattern(regexp = "(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,20}", 
+										message = "비밀번호는 8~20자, 영문자, 숫자, 특수문자를 모두 포함하여 입력해주세요.") 
 								   @RequestParam("newPassword") String newPassword
 								 , HttpServletRequest request
 								 , Authentication authentication
@@ -110,6 +111,20 @@ public class UserController {
 	}
 	
 	// 계정 관리 페이지
+	@GetMapping("/myAccountPage")
+	public void myAccountPage(Model model
+							, Authentication authentication) {
+		
+		String username = authentication.getName();
+		Date singUpDate = userService.findUserDate(username);
+		LocalDateTime localDateTime = singUpDate.toInstant()
+				.atZone(ZoneId.of("Asia/Seoul"))
+				.toLocalDateTime();
+		
+		model.addAttribute("singUpDate", localDateTime);
+	}
+	
+	// 계정 관리 - 탈퇴 페이지
 	@GetMapping("/accountPage")
 	public void accountPage() {
 	}

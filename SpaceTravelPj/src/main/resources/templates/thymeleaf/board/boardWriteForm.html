@@ -29,27 +29,27 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <p class="text-info">자유롭게 작성해 주세요. 개인 정보는 포함하지 않도록 주의하시기 바랍니다.</p>
+                        <p class="text-info bg-dark bg-opacity-75" style="font-size: 18px;">자유롭게 작성해 주세요.<br>개인 정보는 포함하지 않도록 주의하시기 바랍니다.</p>
                         <div id="contact_form" class="my-5">
                     		<!-- 글 작성 부분 -->
                             <form th:action="@{/board/boardWriteOK}" method="post" onsubmit="return valid()">
                                 <div class="form-floating">
-                                    <input class="form-control input_field" name="writer" type="text" readonly />
-                                    <label for="writer" sec:authentication="name" class="mt-2"></label>
+                                    <input type="text" name="writer" class="form-control input_field" readonly />
+                                    <label class="mt-2" for="writer" sec:authentication="name"></label>
                                 </div>
                                 <div class="form-floating">
-                                    <input id="subject_width" class="form-control pt-4 ps-2" name="subject" type="text" placeholder="Enter subject..."/>
+                                    <input type="text" id="subject_width" name="subject" class="form-control pt-4 ps-2" placeholder="Enter subject..."/>
                                     <label for="subject">제목</label>
                                 </div>
                                 <div class="form-floating">
-                                    <textarea class="form-control pt-5 ps-2" name="content" placeholder="Enter your message here..." style="height: 12rem" ></textarea>
+                                    <textarea name="content" class="form-control pt-5 ps-2" placeholder="Enter your message here..." style="height: 12rem" ></textarea>
                                     <label for="content">내용</label>
                                 </div>
                                 <br>
                                 <!-- Submit Button-->
                                 <span class="row ms-1">
 					        		<a type="submit" id="back_btn" class="col-4" onclick="history.go(-1);">← 뒤로</a>
-                                	<button type="submit" id="submitButton"  class="submit_btn col-4 mx-3" style="font-size: large;">등록</button>
+                                	<button type="submit" id="submitButton" class="submit_btn col-4 mx-3" style="font-size: large;">등록</button>
 								</span>
                             </form>
                         </div>

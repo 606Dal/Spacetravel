@@ -40,10 +40,10 @@
 								        </span>
 			                        </form>
 			                       <p class="post-meta ms-2"
-			                       		th:text="'가입일 : ' + ${#dates.format(row.regdate, 'yyyy.MM.dd HH:mm')}">
+			                       		th:text="'가입일 : ' + ${#temporals.format(row.regdate, 'yyyy.MM.dd HH:mm')}">
 			                        </p>
 			                       <p class="post-meta ms-2"
-			                       		th:text="'정보 수정일 : ' + ${#dates.format(row.updateDate, 'yyyy.MM.dd HH:mm')}">
+			                       		th:text="'정보 수정일 : ' + ${#temporals.format(row.updateDate, 'yyyy.MM.dd HH:mm')}">
 			                        </p>
 			                    </div>
 			                    <!-- Divider-->

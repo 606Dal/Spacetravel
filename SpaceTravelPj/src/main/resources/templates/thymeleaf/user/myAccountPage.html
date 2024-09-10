@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	
+	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='연락처' )}" />
+	
+	<body>
+		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'contact' ) }" />
+		
+		<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '계정 관리', hcontent = ' ')}" />
+		
+		<main id="content" class="col-sm-10 container mb-4 jua-font">
+            <div class="justify-content-center">
+		        <div class="container-md">
+					<div class="panel" id="contact">
+						<div class="py-4">
+							<ul class="service_list2">
+			                  <li class="py-3"><span>📅 가입일 : </span>
+			                  		<span th:text="${#temporals.format(singUpDate, 'yyyy년 MM월 dd일 HH:mm')}"></span></li>
+			                  <li class="py-3"><a th:href="@{/user/accountPage}">🌠 탈퇴</a></li>
+			                </ul>
+						</div>
+			  		</div>
+			  	</div>
+            </div>
+        </main>
+          
+    	<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
+	</body>
+</html>

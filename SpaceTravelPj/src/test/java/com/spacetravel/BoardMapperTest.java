@@ -39,13 +39,13 @@ public class BoardMapperTest {
 		
 		
 	}
-*/
+
 	@Test
 	public void testSelectAll() {
 		List<BoardDTO> boardList = boardService.getBoardList();
-		System.out.println("List 회원 출력 1 : "+boardList.get(0).toString());
+		System.out.println("List 출력 1 : "+boardList.get(0).toString());
 	}
-	/*
+	
 	@Test
 	public void readBoard() {
 		

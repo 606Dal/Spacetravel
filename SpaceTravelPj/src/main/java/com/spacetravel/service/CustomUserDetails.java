@@ -12,6 +12,8 @@ import com.spacetravel.dto.UserDTO;
  */
 public class CustomUserDetails implements UserDetails {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private final UserDTO userDTO;
 	
 	public CustomUserDetails(UserDTO userDTO) {

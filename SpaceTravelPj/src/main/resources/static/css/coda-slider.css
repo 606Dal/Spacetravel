@@ -20,10 +20,9 @@
 
 #content {
 	clear: both;
-	width: 780px;
-	height: 470px;	
 	margin-bottom: 40px;
-	background: url(../images/tooplate_content_bg.png)
+	background-color: black;
+	border-radius: 20px;
 }
 #content2 {
 	clear: both;
@@ -76,11 +75,11 @@ ul.navigation li {
 ul.navigation a {
 	float: left;
 	display: block;
-	width: 100px;
+	width: 120px;
 	height: 32px;
 	padding: 10px 2px 0 0;
 	color: #fff;
-	font-size: 14px;
+	font-size: 18px;
 	font-weight: 700;
 	text-align: center;
     text-decoration: none;
@@ -132,7 +131,7 @@ ul.navigation2 .nav-link {
 	height: 32px;
 	padding: 10px 2px 0 0;
 	color: mediumaquamarine;
-	font-size: 14px;
+	font-size: 18px;
 	font-weight: 700;
 	text-align: center;
     text-decoration: none;

@@ -60,15 +60,4 @@ public class GlobalExceptionHandler {
 		return "board/messageAlert";
 	}
 	
-	// 500 예외처리
-	@ExceptionHandler(Exception.class)
-	public String handle500(Exception e, Model model){
-		
-		model.addAttribute("msg", "오류가 발생하였습니다.");
-		model.addAttribute("url", "/");
-		log.warn(e.getMessage());
-		
-		return "board/messageAlert";
-	}
-	
 }

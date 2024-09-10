@@ -1,5 +1,7 @@
 package com.spacetravel.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -60,8 +62,13 @@ public class UserServiceImpl implements UserService {
 	// 회원 탈퇴
 	@Override
 	public int deleteAccount(String u) {
-		
 		return userMapper.deleteUser(u);
+	}
+	
+	// 회원 가입일
+	@Override
+	public Date findUserDate(String u) {
+		return userMapper.findUserDate(u);
 	}
 
 }

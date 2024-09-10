@@ -10,13 +10,13 @@
 		    }else{
 		        $('#pwConfirm').text('비밀번호 불일치').css('color', 'red')
 		    }
-			if($('#password').val().length < 4 || 20 < $('#password').val().length){
-				$('#pwConfirm').text('비밀번호는 4~20, 영문자, 숫자, 특수문자를 모두 포함하여 입력해주세요');
+			if($('#password').val().length < 8 || 20 < $('#password').val().length){
+				$('#pwConfirm').text('비밀번호는 8~20, 영문자, 숫자, 특수문자를 모두 포함하여 입력해주세요');
 			}
 		}
 		
 		function valid(){
-			var passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{4,20}$/;
+			var passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,20}$/;
 			var idRegex = /^[a-zA-Z가-힣0-9]{4,20}$/;
 			
 			var name = $("#username").val();
@@ -30,7 +30,7 @@
 			}
 			/* 비밀번호 유효성 검사 */
 			if(false === passwordRegex.test(pw)){
-				alert('비밀번호는 4~20자, 영문자, 숫자, 특수문자를 모두 포함하여 입력해주세요.');
+				alert('비밀번호는 8~20자, 영문자, 숫자, 특수문자를 모두 포함하여 입력해주세요.');
 				$('#password').focus();
 				return false;
 			}

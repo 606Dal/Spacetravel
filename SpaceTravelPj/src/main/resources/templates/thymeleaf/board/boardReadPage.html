@@ -21,7 +21,7 @@
 					<h1 class="jua-font" th:text="*{boardDTO.subject}"></h1>
                     <span class="meta"
                     	  th:text="'Posted by ' + *{boardDTO.writer} + '&nbsp;&nbsp;'
-                    		+ ${#dates.format(boardDTO.regdate, 'yyyy.MM.dd HH:mm')}">
+                    		+ ${#temporals.format(boardDTO.regdate, 'yyyy.MM.dd HH:mm')}">
                     </span>
 				</div>
 			</div>

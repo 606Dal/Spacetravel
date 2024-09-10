@@ -1,5 +1,7 @@
 package com.spacetravel.service;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Service;
 
 import com.spacetravel.dto.UserDTO;
@@ -16,5 +18,7 @@ public interface UserService {
 	public void updatePassword(UserDTO userDTO);
 
 	public int deleteAccount(String u);
+
+	public Date findUserDate(String u);
 	
 }

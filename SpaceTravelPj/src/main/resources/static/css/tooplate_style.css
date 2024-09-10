@@ -26,7 +26,7 @@ p { margin: 0 0 15px 0; padding: 0; }
 img { border: none; }
 
 h1, h2, h3, h4, h5, h6 { color: #fadc0f; font-family: Georgia, "Times New Roman", Times, serif; }
-h1 { font-size: 38px; font-weight: normal; margin: 0 0 20px 0; padding: 5px 0; }
+h1 { font-size: 46px; font-weight: normal; margin: 0 0 20px 0; padding: 5px 0; }
 h2 { font-size: 30px; font-weight: normal; margin: 0 0 30px 0; font-weight: normal; }
 h3 { font-size: 20px; margin: 0 0 15px 0; padding: 0; padding: 0; font-weight: normal;  }
 h4 { font-size: 14px; margin: 0 0 5px 0; padding: 0; }
@@ -82,6 +82,24 @@ em { color: #f3c331; }
 }
 .service_list li .service_five { 
 	background: url(../images/onebit_12.png) center left no-repeat; 
+}
+.service_list2 li {
+	list-style-type: none;
+}
+.service_list2 li span {
+	font-size: 20px;
+	display: inline;
+	height: 25px;
+	color: ghostwhite;
+}
+.service_list2 li a { 
+	font-size: 20px;
+	display: inline;
+	height: 25px;
+	text-decoration: none; 
+}
+.service_list2 a:hover { 
+	color: #f6bf34;
 }
 
 #subject_width {

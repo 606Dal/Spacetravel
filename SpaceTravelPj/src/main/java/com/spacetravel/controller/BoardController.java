@@ -79,7 +79,7 @@ public class BoardController {
 			
 			if((pagingDTO.getEndPage()-pagingDTO.getStartPage()) < 0) {
 				model.addAttribute("msg", "없는 페이지입니다.");
-				model.addAttribute("url", "/board/boardList?page=1&numPerPage=10");
+				model.addAttribute("url", "/");
 				
 				return "board/messageAlert";
 			}
@@ -173,11 +173,12 @@ public class BoardController {
 	// 글 수정하는 폼
 	@GetMapping("/boardModifyForm")
 	public String boardModifyForm(@RequestParam(required = false) Integer id
-								, Authentication authentication
+								, @AuthenticationPrincipal CustomUserDetails userDetails
 			  					, Model model
 			  					, @ModelAttribute("findCriteriaDTO") FindCriteriaDTO findCriteriaDTO) {
 		
-		String user = authentication.getName();
+		String user = userDetails.getUser().getUsername();
+		String userRole = userDetails.getUser().getRolename();
 		
 		if(id != null) {
 			BoardDTO boardDTO = boardService.readBoard(id);
@@ -188,8 +189,8 @@ public class BoardController {
 				
 				return "board/messageAlert";
 			}
-			// id 번호로 이동했을 때 유저 확인
-			if(!boardDTO.getWriter().equals(user)) {
+			// url상에서 id 번호로 이동했을 때 유저 확인
+			if(!boardDTO.getWriter().equals(user) && !userRole.equals("ADMIN")) {
 				model.addAttribute("msg", "권한이 없습니다.");
 				model.addAttribute("url", "/board/boardList?page=1&numPerPage=10");
 				

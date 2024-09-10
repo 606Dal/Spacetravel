@@ -81,10 +81,12 @@
 		                        	th:unless="${findCriteriaDTO.keyword} == null">
 		                            <h2 class="post-title jua-font" th:text="${row.subject}">제목</h2>
 		                        </a>
-		                       <p class="post-meta"
-		                       		th:text="${row.id} + ' | Posted by ' + ${row.writer} +
-		                       		'&nbsp;&nbsp;&nbsp;' + ${#dates.format(row.regdate, 'yyyy.MM.dd HH:mm')} + '&nbsp;&nbsp;hit : ' + ${row.hit}">
-		                        </p>
+		                        <div class="post-meta row">
+			                        <span class="col-sm-6"
+			                       		th:text="${row.id} + ' | Posted by ' + ${row.writer}"></span>
+			                        <span class="col-sm-6"
+		                        	th:text="${#temporals.format(row.regdate, 'yyyy.MM.dd HH:mm')} + '&nbsp;&nbsp;&nbsp;조회수 : ' + ${row.hit}"></span>
+		                        </div>
 		                    </div>
 		                    <!-- Divider-->
 		                    <hr class="my-4" />

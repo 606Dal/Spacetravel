@@ -53,4 +53,10 @@
 		]]>
 	</delete>
 	
+	<select id="findUserDate" parameterType="String" resultType="Date">
+		<![CDATA[
+			SELECT regdate FROM user_tb WHERE username = #{username};
+		]]>
+	</select>
+	
 </mapper>

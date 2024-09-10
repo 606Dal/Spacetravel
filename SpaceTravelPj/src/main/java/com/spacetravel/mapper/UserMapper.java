@@ -1,5 +1,7 @@
 package com.spacetravel.mapper;
 
+import java.util.Date;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.spacetravel.dto.UserDTO;
@@ -13,6 +15,8 @@ public interface UserMapper {
 	
 	public String usernameDuplicateCheck(String user); // 아이디 중복 체크
 	
+	public Date findUserDate(String u); // 회원 가입일
+	
 	/*
 	 * 스프링 시큐리티 관련
 	 */
@@ -23,4 +27,5 @@ public interface UserMapper {
 	public void updatePassword(UserDTO userDTO); // 비밀번호 변경
 
 	public int deleteUser(String u); // 유저 삭제
+
 }
