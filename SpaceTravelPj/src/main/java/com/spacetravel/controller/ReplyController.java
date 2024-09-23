@@ -32,8 +32,8 @@ public class ReplyController {
 	
 	// 댓글 추가
 	@PostMapping("/writeReply")
-	public ResponseEntity<String> writeReply(@Valid @RequestBody ReplyDTO replyDTO
-										   , Authentication authentication){
+	public ResponseEntity<String> writeReply(@Valid @RequestBody ReplyDTO replyDTO,
+											 Authentication authentication){
 		
 		ResponseEntity<String> resEntity = null;
 		
