@@ -60,21 +60,21 @@ public class ReplyController {
 	        @RequestBody ReplyDTO replyDTO,
 	        @AuthenticationPrincipal CustomUserDetails userDetails){
 		
-		ResponseEntity<String> resEntity = null;
-		String replier = replyDTO.getReplier();
-		String userRole = userDetails.getUser().getRolename();
-		String username = userDetails.getUser().getUsername();
+    	ResponseEntity<String> resEntity = null;
+    	String replier = replyDTO.getReplier();
+    	String userRole = userDetails.getUser().getRolename();
+    	String username = userDetails.getUser().getUsername();
 		
-		try {
-			  if(replier.equals(username) || userRole.equals("ADMIN")) {
-				  replyDTO.setReplyid(replyid);
-				  replyService.modifyReply(replyDTO);
-				  resEntity = new ResponseEntity<String>("Success", HttpStatus.OK);
-			  }
-		} catch (Exception e) {
-			log.warn("댓글 수정 중 오류 발생");
-		}
-		return resEntity;
+    	try {
+    		if(replier.equals(username) || userRole.equals("ADMIN")) {
+    			replyDTO.setReplyid(replyid);
+    			replyService.modifyReply(replyDTO);
+    			resEntity = new ResponseEntity<String>("Success", HttpStatus.OK);
+    		}
+    	} catch (Exception e) {
+    		log.warn("댓글 수정 중 오류 발생");
+    	}
+    	return resEntity;
 	}
     
     // 댓글 삭제하기
