@@ -57,8 +57,8 @@ public class ReplyController {
     // 댓글 수정하기
     @PutMapping("/{replyid}")
     public ResponseEntity<String> modifyReply(@PathVariable("replyid") Integer replyid,
-    		@RequestBody ReplyDTO replyDTO,
-    		@AuthenticationPrincipal CustomUserDetails userDetails){
+	        @RequestBody ReplyDTO replyDTO,
+	        @AuthenticationPrincipal CustomUserDetails userDetails){
 		
 		ResponseEntity<String> resEntity = null;
 		String replier = replyDTO.getReplier();
