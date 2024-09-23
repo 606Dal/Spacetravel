@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 	<head th:fragment="tpl_head( title )">
 		<!--/* Required meta tags */-->
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<!--/* csrf */-->
-		<meta name="_csrf" th:content="${_csrf.token}"/>
-		<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+		<meta name="_csrf" th:content="${_csrf.token}" />
+		<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 		<!-- Bootstrap CSS -->
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-		
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+			integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	
 		<title th:text="${title}">tpl_fragments</title>
 		<!-- template 설정들 -->
 		<meta name="keywords" content="" />
 		<meta name="description" content="" />
-		
+	
 		<link href="/css/tooplate_style.css" rel="stylesheet" type="text/css" />
 		<link href="/css/coda-slider.css" rel="stylesheet" type="text/css" charset="utf-8" />
 		<!-- jquery -->
@@ -24,169 +26,177 @@
 		<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 	</head>
+	
 	<body>
 		<!-- 네비게이션 바(navbar) -->
 		<nav th:fragment="tpl_nav( naviVal )" class="navbar navbar-expand-md my-1 jua-font" aria-label="navbar">
 			<div class="container-fluid">
-	            <span id="site_title" class="navbar-brand ps-4 ps-lg-5"><a th:href="@{/}">우주 여행 로고</a></span>
-	            <!--토글 버튼(toggl btn)-->
-				<button class="navbar-toggler bg-light bg-opacity-75" type="button" data-bs-toggle="collapse" 
-						data-bs-target="#navbarMyTopmenu">
+				<span id="site_title" class="navbar-brand ps-4 ps-lg-5"><a th:href="@{/}">우주 여행 로고</a></span>
+				<!--토글 버튼(toggl btn)-->
+				<button class="navbar-toggler bg-light bg-opacity-75" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMyTopmenu">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				
-	            <div class="collapse navbar-collapse" id="navbarMyTopmenu">
-	                <ul class="navigation navbar-nav">
-	                    <li class="nav-item">
-							<a th:href="@{/}" class="nav-link" 
-								th:classappend="${naviVal} == 'home' ? 'selected'">Home</a>
+	
+				<div class="collapse navbar-collapse" id="navbarMyTopmenu">
+					<ul class="navigation navbar-nav">
+						<li class="nav-item">
+							<a th:href="@{/}" class="nav-link" th:classappend="${naviVal} == 'home' ? 'selected'">Home</a>
 						</li>
-	                    <!--/* <li class="nav-item">
-							<a href="#" class="nav-link">별자리</a>
-						</li> */-->
-	                    <li class="nav-item">
-							<a th:href="@{/board/boardList(page=1, numPerPage=10)}" class="nav-link" 
-								th:classappend="${naviVal} == 'board' ? 'selected'" >🌏게시판</a>
+						<!--/* <li class="nav-item">
+								<a href="#" class="nav-link">별자리</a>
+							</li> */-->
+						<li class="nav-item">
+							<a th:href="@{/board/boardList(page=1, numPerPage=10)}" class="nav-link"
+								th:classappend="${naviVal} == 'board' ? 'selected'">🌏게시판</a>
 						</li>
-	                    <li class="nav-item">
+						<li class="nav-item">
 							<a th:href="@{/etc/contactPage}" class="nav-link"
 								th:classappend="${naviVal} == 'contact' ? 'selected'">연락처</a>
 						</li>
 						<!--/* 로그아웃 상태에 보임 */-->
 						<th:block sec:authorize="isAnonymous()">
-	                    <li class="nav-item">
-							<a id="login" th:href="@{/user/login}" class="nav-link"
-								th:classappend="${naviVal} == 'login' ? 'selected'">🔅로그인</a>
-						</li>
-	                    <li class="nav-item">
-							<a th:href="@{/user/singUp}" class="nav-link"
-								th:classappend="${naviVal} == 'singup' ? 'selected'">🚀회원가입</a>
-						</li>
+							<li class="nav-item">
+								<a id="login" th:href="@{/user/login}" class="nav-link"
+									th:classappend="${naviVal} == 'login' ? 'selected'">🔅로그인</a>
+							</li>
+							<li class="nav-item">
+								<a th:href="@{/user/singUp}" class="nav-link"
+									th:classappend="${naviVal} == 'singup' ? 'selected'">🚀회원가입</a>
+							</li>
 						</th:block>
 						<!--/* 로그아웃 상태에 보임 끝 */-->
-	                </ul>
+					</ul>
 					<ul class="navigation2 navbar-nav">
 						<!--/* 로그인 유지 상태에 보임 */-->
 						<th:block sec:authorize="isAuthenticated()">
-						<li class="nav-item dropdown">
-				        	<a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-				            	🔅 <span sec:authentication="name">로그인 한 아이디</span>
-				        	</a>
-				        	<ul class="dropdown-menu" style="font-size: 18px;">
-								<li><a th:href="@{/user/myAccountPage}" class="dropdown-item">계정 관리</a></li>
-					            <li><a th:href="@{/user/changePasswordForm}" class="dropdown-item">비밀번호 변경</a></li>
-					            <li><hr class="dropdown-divider"></li>
-					            
-					            <th:block th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-								<li class="dropdown-item">
-									<a th:href="@{/admin/adminPage}">관리자 페이지</a>
-								</li>
-					            </th:block>
-								<li class="dropdown-item">
-									<a th:href="@{/user/logout}">
-										<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-moon-stars-fill" viewBox="0 0 16 16">
-  <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/>
-  <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/>
-</svg>
-										로그아웃
-									</a>
-								</li>
-				        	</ul>
-				        </li>
+							<li class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									🔅 <span sec:authentication="name">로그인 한 아이디</span>
+								</a>
+								<ul class="dropdown-menu" style="font-size: 18px;">
+									<li><a th:href="@{/user/myAccountPage}" class="dropdown-item">계정 관리</a></li>
+									<li><a th:href="@{/user/changePasswordForm}" class="dropdown-item">비밀번호 변경</a></li>
+									<li><hr class="dropdown-divider"></li>
+	
+									<th:block th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+										<li class="dropdown-item">
+											<a th:href="@{/admin/adminPage}">관리자 페이지</a>
+										</li>
+									</th:block>
+									<li class="dropdown-item">
+										<a th:href="@{/user/logout}">
+											<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-moon-stars-fill" viewBox="0 0 16 16">
+												<path
+													d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278" />
+												<path
+													d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" />
+											</svg>
+											로그아웃
+										</a>
+									</li>
+								</ul>
+							</li>
 						</th:block>
 						<!--/* 로그인 유지 상태에 보임 끝 */-->
-	                </ul>
-	            </div>
-	            <div class="cleaner"></div>
-	        </div> 
+					</ul>
+				</div>
+				<div class="cleaner"></div>
+			</div>
 		</nav>
 		<!-- 네비게이션 바(navbar) 끝-->
-			
+	
 		<!-- Page Header-->
-        <header th:fragment="tpl_header( htitle, hcontent )">
-            <div class="my-4 p-4 bg-black bg-opacity-75 rounded">
+		<header th:fragment="tpl_header( htitle, hcontent )">
+			<div class="my-4 p-4 bg-black bg-opacity-75 rounded">
 				<div class="container px-4 px-md-5">
-					<h1 class="display-1 ps-5 jua-font" th:if="${hcontent != ' '}" th:text="${htitle} + ' - ' + ${hcontent}">ㅇㅇㅇ - ㅇㅇㅇ</h1>
+					<h1 class="display-1 ps-5 jua-font" th:if="${hcontent != ' '}"
+						th:text="${htitle} + ' - ' + ${hcontent}">ㅇㅇㅇ - ㅇㅇㅇ</h1>
 					<h1 class="display-1 ps-5 jua-font" th:unless="${hcontent != ' '}" th:text="${htitle}">ㅇㅇㅇ</h1>
 				</div>
 			</div>
 		</header>
 		<div class="row">
 			<!-- 관리자 페이지 사이드 바 내비게이션 -->
-			<nav class="d-flex align-items-start col-sm-2 navbar navbar-expand jua-font" th:fragment="tpl_adminNav( naviVal )" aria-label="navbar">
+			<nav class="d-flex align-items-start col-sm-2 navbar navbar-expand jua-font"
+				th:fragment="tpl_adminNav( naviVal )" aria-label="navbar">
 				<div class="container justify-content-center">
-	                <ul class="adminNav navbar-nav flex-column">
-	                    <li class="nav-item">
-							<a th:href="@{/admin/userList}" class="nav-link" 
+					<ul class="adminNav navbar-nav flex-column">
+						<li class="nav-item">
+							<a th:href="@{/admin/userList}" class="nav-link"
 								th:classappend="${naviVal} == 'userList' ? 'selected'">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
-  <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
-</svg>
+									<path
+										d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4" />
+								</svg>
 								유저 목록
 							</a>
 						</li>
-	                    <li class="nav-item">
+						<li class="nav-item">
 							<a href="#about" class="nav-link">-</a>
 						</li>
-	                    <li class="nav-item">
-							<a th:href="@{/board/boardList}" class="nav-link" 
-								th:classappend="${naviVal} == 'board' ? 'selected'" >-</a>
+						<li class="nav-item">
+							<a th:href="@{/board/boardList}" class="nav-link"
+								th:classappend="${naviVal} == 'board' ? 'selected'">-</a>
 						</li>
-	                    <li class="nav-item">
+						<li class="nav-item">
 							<a href="#" class="nav-link">-</a>
 						</li>
-	                    <li class="nav-item">
+						<li class="nav-item">
 							<a href="#" class="nav-link">-</a>
 						</li>
-	                </ul>
-	            </div>
+					</ul>
+				</div>
 			</nav>
 			<!-- 관리자 페이지 사이드 바 내비게이션 끝 -->
-			
+	
 			<!-- 사이드 바 옆 Main Content-->
-	        <main class="col-sm-10">
+			<main class="col-sm-10">
 				...
 			</main>
 		</div>
-		
+	
 		<h2>본문 부분</h2>
-		
+	
 		<!-- 밑단(footer) -->
 		<footer th:fragment="tpl_footer">
 			<div id="footer" class="text-center mx-5">
-	    		<div class="row">
-		            <div id="footer_left" class="col-md-3 ms-5 py-2 jua-font">
-		            	Copyright © 2024 <a href="#">Dal'</a><br />
-		            	<!-- Galaxy by <a rel="nofollow" href="http://www.tooplate.com">Templates</a><br /> -->
-		            </div>
-		            
-		        	<div id="social_box" class="col-md-7 me-5">
+				<div class="row">
+					<div id="footer_left" class="col-md-3 ms-5 py-2 jua-font">
+						Copyright © 2024 <a href="#">Dal'</a><br />
+						<!-- Galaxy by <a rel="nofollow" href="http://www.tooplate.com">Templates</a><br /> -->
+					</div>
+	
+					<div id="social_box" class="col-md-7 me-5">
 						<!-- 페이스북 아이콘 -->
-		            	<a href="#">
+						<a href="#">
 							<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
-  <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
-</svg>
+								<path
+									d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+							</svg>
 						</a>
 						<!-- 깃허브 아이콘 -->
-		            	<a th:href="@{https://github.com/606Dal/Spacetravel}">
+						<a th:href="@{https://github.com/606Dal/Spacetravel}">
 							<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
-  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
-</svg>
+								<path
+									d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+							</svg>
 						</a>
 						<!-- 트위터 아이콘 -->
-		            	<a href="#">
+						<a href="#">
 							<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
-  <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 0 0 0 16 3.542a6.7 6.7 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15"/>
-</svg>
+								<path
+									d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 0 0 0 16 3.542a6.7 6.7 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15" />
+							</svg>
 						</a>
-		            </div>
-	    		</div>
-	            <div class="cleaner"></div>
-	 		</div>
+					</div>
+				</div>
+				<div class="cleaner"></div>
+			</div>
 	
 			<!-- jQuery and  Bootstrap Bundle (with Popper) -->
 			<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 		</footer>
 	</body>
+
 </html>
