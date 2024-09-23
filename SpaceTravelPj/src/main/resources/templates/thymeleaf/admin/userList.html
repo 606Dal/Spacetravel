@@ -1,64 +1,63 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='유저 목록' )}" />
-<script type="text/javascript">
-	function check() {
-		if (confirm("정말 삭제하시겠습니까?") == true) {
-		} else {
-			return false;
+	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='유저 목록' )}" />
+	<script type="text/javascript">
+		function check() {
+			if (confirm("정말 삭제하시겠습니까?") == true) {
+			} else {
+				return false;
+			}
 		}
-	}
-</script>
-
-<body>
-	<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( ' ' ) }" />
-
-	<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '유저 목록', hcontent = ' ')}" />
-
-	<div class="row">
-		<!-- 사이드 바 내비 -->
-		<nav th:replace="~{tpl/tpl_fragments :: tpl_adminNav ( 'userList' ) }" />
-
-		<!-- Main Content-->
-		<main class="col-sm-10 mb-4 jua-font">
-			<div class="container px-4 px-lg-5">
-				<div class="row row-cols-auto gx-4 gx-lg-5 justify-content-center">
-					<div class="col-md-10 col-lg-8 col-xl-7 bg-dark bg-gradient bg-opacity-75">
-						<p class="read_content mt-4 float-end" th:text="'&nbsp;&nbsp;총 유저 : ' + ${totalUser}">
-						</p>
-						<!-- 목록 출력 -->
-						<div th:each="row : ${userList}">
-							<div class="post-preview">
-								<a th:href="@{#}">
-									<h2 class="mt-4 ms-2 jua-font" th:text="${row.username}">이름</h2>
-								</a>
-								<form id="del_form" th:action="@{/admin/deleteUserOk}" method="post"
-									th:onsubmit="return check()">
-									<span class="float-end" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-										<input type="hidden" name="username" th:value="${row.username}">
-										<input type="submit" id="del_btn" name="del_btn" class="col mx-2"
-											th:value="삭제하기">
-									</span>
-								</form>
-								<p class="post-meta ms-2"
-									th:text="'가입일 : ' + ${#temporals.format(row.regdate, 'yyyy.MM.dd HH:mm')}">
-								</p>
-								<p class="post-meta ms-2"
-									th:text="'정보 수정일 : ' + ${#temporals.format(row.updateDate, 'yyyy.MM.dd HH:mm')}">
-								</p>
+	</script>
+	
+	<body>
+		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( ' ' ) }" />
+	
+		<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '유저 목록', hcontent = ' ')}" />
+	
+		<div class="row">
+			<!-- 사이드 바 내비 -->
+			<nav th:replace="~{tpl/tpl_fragments :: tpl_adminNav ( 'userList' ) }" />
+	
+			<!-- Main Content-->
+			<main class="col-sm-10 mb-4 jua-font">
+				<div class="container px-4 px-lg-5">
+					<div class="row row-cols-auto gx-4 gx-lg-5 justify-content-center">
+						<div class="col-md-10 col-lg-8 col-xl-7 bg-dark bg-gradient bg-opacity-75">
+							<p class="read_content mt-4 float-end" th:text="'&nbsp;&nbsp;총 유저 : ' + ${totalUser}">
+							</p>
+							<!-- 목록 출력 -->
+							<div th:each="row : ${userList}">
+								<div class="post-preview">
+									<a th:href="@{#}">
+										<h2 class="mt-4 ms-2 jua-font" th:text="${row.username}">이름</h2>
+									</a>
+									<form id="del_form" th:action="@{/admin/deleteUserOk}" method="post"
+										th:onsubmit="return check()">
+										<span class="float-end" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+											<input type="hidden" name="username" th:value="${row.username}">
+											<input type="submit" id="del_btn" name="del_btn" class="col mx-2" th:value="삭제하기">
+										</span>
+									</form>
+									<p class="post-meta ms-2"
+										th:text="'가입일 : ' + ${#temporals.format(row.regdate, 'yyyy.MM.dd HH:mm')}">
+									</p>
+									<p class="post-meta ms-2"
+										th:text="'정보 수정일 : ' + ${#temporals.format(row.updateDate, 'yyyy.MM.dd HH:mm')}">
+									</p>
+								</div>
+								<!-- Divider-->
+								<hr class="my-4" />
 							</div>
-							<!-- Divider-->
-							<hr class="my-4" />
+							<!-- 목록 출력 끝 -->
 						</div>
-						<!-- 목록 출력 끝 -->
 					</div>
 				</div>
-			</div>
-		</main>
-	</div>
-
-	<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
-</body>
+			</main>
+		</div>
+	
+		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
+	</body>
 
 </html>
