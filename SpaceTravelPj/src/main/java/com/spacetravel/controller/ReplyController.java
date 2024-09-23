@@ -33,7 +33,7 @@ public class ReplyController {
 	// 댓글 추가
 	@PostMapping("/writeReply")
 	public ResponseEntity<String> writeReply(@Valid @RequestBody ReplyDTO replyDTO,
-											 Authentication authentication){
+			Authentication authentication){
 		
 		ResponseEntity<String> resEntity = null;
 		
@@ -56,9 +56,9 @@ public class ReplyController {
   
     // 댓글 수정하기
     @PutMapping("/{replyid}")
-    public ResponseEntity<String> modifyReply(@PathVariable("replyid") Integer replyid
-    										, @RequestBody ReplyDTO replyDTO
-    										, @AuthenticationPrincipal CustomUserDetails userDetails){
+    public ResponseEntity<String> modifyReply(@PathVariable("replyid") Integer replyid,
+    		@RequestBody ReplyDTO replyDTO,
+    		@AuthenticationPrincipal CustomUserDetails userDetails){
 		
 		ResponseEntity<String> resEntity = null;
 		String replier = replyDTO.getReplier();
@@ -79,9 +79,9 @@ public class ReplyController {
     
     // 댓글 삭제하기
     @DeleteMapping("/{replyid}")
-    public ResponseEntity<String> deleteReply(@PathVariable("replyid") Integer replyid
-    										, @RequestBody ReplyDTO replyDTO
-    										, @AuthenticationPrincipal CustomUserDetails userDetails){
+    public ResponseEntity<String> deleteReply(@PathVariable("replyid") Integer replyid,
+    		@RequestBody ReplyDTO replyDTO, 
+    		@AuthenticationPrincipal CustomUserDetails userDetails){
     	
     	ResponseEntity<String> resEntity = null;
     	String replier = replyDTO.getReplier();
