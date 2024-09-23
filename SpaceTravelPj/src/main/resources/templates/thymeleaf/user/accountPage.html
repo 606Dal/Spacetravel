@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='계정 관리 페이지' )}" />
 	
 	<script type="text/javascript">
 		function check() {
-			if(confirm("정말 탈퇴하시겠습니까?") == true) {
-				if($("#password").val().length == 0){
+			if (confirm("정말 탈퇴하시겠습니까?") == true) {
+				if ($("#password").val().length == 0) {
 					alert('비밀번호를 입력하세요.');
 					$('#password').focus();
 					return false;
@@ -18,26 +19,30 @@
 	
 	<body>
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( ' ' ) }" />
-		
+	
 		<main class="mb-4 jua-font">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div id="contact_form" class="col-md-10 col-lg-8 col-xl-7 ps-5">
+			<div class="container px-4 px-lg-5">
+				<div class="row gx-4 gx-lg-5 justify-content-center">
+					<div id="contact_form" class="col-md-10 col-lg-8 col-xl-7 ps-5">
 						<h1 class="mt-5 jua-font">계정 관리 - 탈퇴</h1>
-						
-						<h3><div class="badge text-bg-danger bg-opacity-75 jua-font" th:text="${msg}">비밀번호 확인 메시지</div></h3>	
+	
+						<h3>
+							<div class="badge text-bg-danger bg-opacity-75 jua-font" th:text="${msg}">비밀번호 확인 메시지</div>
+						</h3>
 						<form th:action="@{/user/deleteAccountOk}" method="post" th:onsubmit="return check()">
 							<div class="form-floating mb-3">
-								<input class="form-control input_field pt-4 ps-2" type="password" id="password" name="password" placeholder="Password"/>
+								<input class="form-control input_field pt-4 ps-2" type="password" id="password"
+									name="password" placeholder="Password" />
 								<label for="password">비밀번호 입력</label>
 							</div>
-							<input class="btn submit_red_btn mb-5 rounded-0" type="submit" value="탈퇴하기"/>
+							<input class="btn submit_red_btn mb-5 rounded-0" type="submit" value="탈퇴하기" />
 						</form>
 					</div>
 				</div>
 			</div>
 		</main>
-		
+	
 		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
 	</body>
+
 </html>
