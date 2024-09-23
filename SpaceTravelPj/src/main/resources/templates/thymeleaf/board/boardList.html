@@ -1,100 +1,95 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='글쓰기' )}" />
 	
 	<script th:inline="javascript">
 		/* <![CDATA[ */
-			const page = /*[[ ${findCriteriaDTO.page} ]]*/ 'default';
-			const numPerPage = /*[[ ${findCriteriaDTO.numPerPage} ]]*/ 'default';
-			// 셀렉트 옵션에 따라 경로 변경
-	       	function changeNumPerPage(){
-				if($("#findword").val().length == 0){
-	       			self.location="/board/boardList?page="+page+"&numPerPage="+$("#selectNum").val();
-				} else {
-		       		self.location="/board/boardList?page="+page+"&numPerPage="+$("#selectNum").val()
-		       		+"&findType="+$("#findType option:selected").val()
-	   				+"&keyword="+$("#findword").val();
-				}
-	       	};
-	       	// 검색 버튼 클릭 시
-	       	function findBoard(){
-	       		self.location="/board/boardList?page="+page+"&numPerPage="+numPerPage
-	       		+"&findType="+$("#findType option:selected").val()
-   				+"&keyword="+$("#findword").val();
-   				
-   				if($("#findword").val() == ''){
-				self.location="/board/boardList?page=1&numPerPage=10";
-				}
-	       	};
-		/* ]]> */
+		const page = /*[[ ${findCriteriaDTO.page} ]]*/ 'default';
+		const numPerPage = /*[[ ${findCriteriaDTO.numPerPage} ]]*/ 'default';
+		// 셀렉트 옵션에 따라 경로 변경
+		function changeNumPerPage() {
+			if ($("#findword").val().length == 0) {
+				self.location = "/board/boardList?page=" + page + "&numPerPage=" + $("#selectNum").val();
+			} else {
+				self.location = "/board/boardList?page=" + page + "&numPerPage=" + $("#selectNum").val()
+					+ "&findType=" + $("#findType option:selected").val()
+					+ "&keyword=" + $("#findword").val();
+			}
+		};
+		// 검색 버튼 클릭 시
+		function findBoard() {
+			self.location = "/board/boardList?page=" + page + "&numPerPage=" + numPerPage
+				+ "&findType=" + $("#findType option:selected").val()
+				+ "&keyword=" + $("#findword").val();
+	
+			if ($("#findword").val() == '') {
+				self.location = "/board/boardList?page=1&numPerPage=10";
+			}
+		};
+			/* ]]> */
 	</script>
 	
 	<body>
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'board' ) }" />
-		
+	
 		<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '게시판', hcontent = ' ')}" />
-		
+	
 		<!-- Main Content-->
-        <main class="mb-4 jua-font">
-            <div class="container px-4 px-lg-5">
-                <div class="row row-cols-auto gx-4 gx-lg-5 justify-content-center">
+		<main class="mb-4 jua-font">
+			<div class="container px-4 px-lg-5">
+				<div class="row row-cols-auto gx-4 gx-lg-5 justify-content-center">
 					<div class="col-sm-10 col-lg-8 col-xl-7 mb-3 row justify-content-end">
 						<!-- 목록에 보이는 글 개수 선택 창 -->
-						<select id="selectNum" class="col-4 form-select form-select-sm" style="width: 150px;" aria-label=".form-select-sm" onChange="changeNumPerPage()">
+						<select id="selectNum" class="col-4 form-select form-select-sm" style="width: 150px;"
+							aria-label=".form-select-sm" onChange="changeNumPerPage()">
 							<option value="10" th:selected="${findCriteriaDTO.numPerPage} == '10'">10개씩 보기</option>
 							<option value="15" th:selected="${findCriteriaDTO.numPerPage} == '15'">15개씩 보기</option>
 							<option value="20" th:selected="${findCriteriaDTO.numPerPage} == '20'">20개씩 보기</option>
 						</select>
-						
+	
 						<a th:href="@{/board/boardWriteForm}" id="write_btn" class="col-4 ms-2">글쓰기</a>
 					</div>
 					<div class="col-sm-10 col-lg-8 col-xl-7 mb-3 py-2 row justify-content-end">
-						<select id="findType" name="findType" class="col-4 form-select form-select-sm mt-1" style="width: 150px;" aria-label=".form-select-sm">
-							<option value="N"
-								th:selected="${findCriteriaDTO.findType} == null">------</option>
-							<option value="S"
-								th:selected="${findCriteriaDTO.findType} == 'S'">제목</option>
-							<option value="C"
-								th:selected="${findCriteriaDTO.findType} == 'C'">내용</option>
-							<option value="W"
-								th:selected="${findCriteriaDTO.findType} == 'W'">작성자</option>
-							<option value="SC"
-								th:selected="${findCriteriaDTO.findType} == 'SC'">제목+내용</option>
-							<option value="CW"
-								th:selected="${findCriteriaDTO.findType} == 'CW'">내용+작성자</option>
-							<option value="SCW"
-								th:selected="${findCriteriaDTO.findType} == 'SCW'">제목+내용+작성자</option>
+						<select id="findType" name="findType" class="col-4 form-select form-select-sm mt-1"
+							style="width: 150px;" aria-label=".form-select-sm">
+							<option value="N" th:selected="${findCriteriaDTO.findType} == null">------</option>
+							<option value="S" th:selected="${findCriteriaDTO.findType} == 'S'">제목</option>
+							<option value="C" th:selected="${findCriteriaDTO.findType} == 'C'">내용</option>
+							<option value="W" th:selected="${findCriteriaDTO.findType} == 'W'">작성자</option>
+							<option value="SC" th:selected="${findCriteriaDTO.findType} == 'SC'">제목+내용</option>
+							<option value="CW" th:selected="${findCriteriaDTO.findType} == 'CW'">내용+작성자</option>
+							<option value="SCW" th:selected="${findCriteriaDTO.findType} == 'SCW'">제목+내용+작성자</option>
 						</select>
 						<input type="text" id="findword" name="Keyword" class="col-5 ms-2 mt-1" th:value="${findCriteriaDTO.keyword}">
-						<button type="submit" id="back_btn" class="col-3 ms-2 mt-1" style="font-size: medium;" onclick="findBoard()">검색</button>
+						<button type="submit" id="back_btn" class="col-3 ms-2 mt-1" style="font-size: medium;"
+							onclick="findBoard()">검색</button>
 					</div>
-					
-                    <div class="col-md-10 col-lg-8 col-xl-7 bg-dark bg-gradient bg-opacity-75">
-                    	<!-- 글 목록 출력-->
-	                    <div th:each="row : ${boardList}">
-		                    <div class="post-preview">
+	
+					<div class="col-md-10 col-lg-8 col-xl-7 bg-dark bg-gradient bg-opacity-75">
+						<!-- 글 목록 출력-->
+						<div th:each="row : ${boardList}">
+							<div class="post-preview">
 								<a th:href="@{/board/boardReadPage(page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, id=${row.id})}"
 									th:if="${findCriteriaDTO.keyword} == null">
-		                            <h2 class="post-title jua-font" th:text="${row.subject}">제목</h2>
+									<h2 class="post-title jua-font" th:text="${row.subject}">제목</h2>
 								</a>
-		                        <a th:href="@{/board/boardReadPage(page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, findType=${findCriteriaDTO.findType}, keyword=${findCriteriaDTO.keyword}, id=${row.id})}"
-		                        	th:unless="${findCriteriaDTO.keyword} == null">
-		                            <h2 class="post-title jua-font" th:text="${row.subject}">제목</h2>
-		                        </a>
-		                        <div class="post-meta row">
-			                        <span class="col-sm-6"
-			                       		th:text="${row.id} + ' | Posted by ' + ${row.writer}"></span>
-			                        <span class="col-sm-6"
-		                        	th:text="${#temporals.format(row.regdate, 'yyyy.MM.dd HH:mm')} + '&nbsp;&nbsp;&nbsp;조회수 : ' + ${row.hit}"></span>
-		                        </div>
-		                    </div>
-		                    <!-- Divider-->
-		                    <hr class="my-4" />
-	                    </div>
-                
-                		<!-- 페이지 이동 버튼-->
+								<a th:href="@{/board/boardReadPage(page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, findType=${findCriteriaDTO.findType}, keyword=${findCriteriaDTO.keyword}, id=${row.id})}"
+									th:unless="${findCriteriaDTO.keyword} == null">
+									<h2 class="post-title jua-font" th:text="${row.subject}">제목</h2>
+								</a>
+								<div class="post-meta row">
+									<span class="col-sm-6" th:text="${row.id} + ' | Posted by ' + ${row.writer}"></span>
+									<span class="col-sm-6" th:text="${#temporals.format(row.regdate, 'yyyy.MM.dd HH:mm')} + '&nbsp;&nbsp;&nbsp;조회수 : ' + ${row.hit}"></span>
+								</div>
+							</div>
+							<!-- Divider-->
+							<hr class="my-4" />
+						</div>
+	
+						<!-- 페이지 이동 버튼-->
 						<div class="d-flex justify-content-center mb-4">
-						    <nav aria-label="Page navigation">
+							<nav aria-label="Page navigation">
 								<ul class="pagination">
 									<!--/* 시작페이지가 1이면 이전(<<) 버튼이 안 보이게 */-->
 									<li class="page-item" th:if="${pagingDTO.prev}">
@@ -108,37 +103,40 @@
 										</a>
 									</li>
 									<th:block th:each="pNum:${#numbers.sequence(pagingDTO.startPage, pagingDTO.endPage)}">
-									<li class="page-item" th:classappend="${pNum == findCriteriaDTO.page ? 'selected' : ''}">
-										<a th:href="@{boardList(page=${pNum}, numPerPage=${findCriteriaDTO.numPerPage})}"
-											class="page-link" th:if="${findCriteriaDTO.keyword} == null">
-											<span th:text="${pNum}" />
-										</a>
-										<a th:href="@{boardList(page=${pNum}, numPerPage=${findCriteriaDTO.numPerPage}, findType=${findCriteriaDTO.findType}, keyword=${findCriteriaDTO.keyword})}"
-											class="page-link" th:unless="${findCriteriaDTO.keyword} == null">
-											<span th:text="${pNum}" />
-										</a>
-									</li>
+										<li class="page-item"
+											th:classappend="${pNum == findCriteriaDTO.page ? 'selected' : ''}">
+											<a th:href="@{boardList(page=${pNum}, numPerPage=${findCriteriaDTO.numPerPage})}"
+												class="page-link" th:if="${findCriteriaDTO.keyword} == null">
+												<span th:text="${pNum}" />
+											</a>
+											<a th:href="@{boardList(page=${pNum}, numPerPage=${findCriteriaDTO.numPerPage}, findType=${findCriteriaDTO.findType}, keyword=${findCriteriaDTO.keyword})}"
+												class="page-link" th:unless="${findCriteriaDTO.keyword} == null">
+												<span th:text="${pNum}" />
+											</a>
+										</li>
 									</th:block>
-									<!-- 다음(>>) 버튼 -->				    
+									<!-- 다음(>>) 버튼 -->
 									<li class="page-item" th:if="${pagingDTO.next and pagingDTO.endPage > 0}">
 										<a th:href="@{boardList(page=${pagingDTO.endPage+1}, numPerPage=${findCriteriaDTO.numPerPage})}"
 											class="page-link" aria-label="Next" th:if="${findCriteriaDTO.keyword} == null">
 											<span aria-hidden="true">&raquo;</span>
 										</a>
 										<a th:href="@{boardList(page=${pagingDTO.endPage+1}, numPerPage=${findCriteriaDTO.numPerPage}, findType=${findCriteriaDTO.findType}, keyword=${findCriteriaDTO.keyword})}"
-											class="page-link" aria-label="Next" th:unless="${findCriteriaDTO.keyword} == null">
+											class="page-link" aria-label="Next"
+											th:unless="${findCriteriaDTO.keyword} == null">
 											<span aria-hidden="true">&raquo;</span>
 										</a>
 									</li>
 								</ul>
-						    </nav>
+							</nav>
 						</div>
 						<!-- 페이지 이동 버튼 끝-->
-                    </div>
-                </div>
-            </div>
-        </main>
-		
+					</div>
+				</div>
+			</div>
+		</main>
+	
 		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
 	</body>
+
 </html>
