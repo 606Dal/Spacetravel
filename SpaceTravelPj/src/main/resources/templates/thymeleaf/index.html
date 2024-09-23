@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='홈페이지' )}" />
 	
 	<body>
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'home' ) }" />
-		
+	
 		<!-- Main Content-->
-        <main id="content2" class="col-sm-10 container mb-4 jua-font">
-            <div class="justify-content-center">
-		        <div class="container-md text-center">
+		<main id="content2" class="col-sm-10 container mb-4 jua-font">
+			<div class="justify-content-center">
+				<div class="container-md text-center">
 					<h2 class="pt-5 jua-font">☆welcome☆</h2>
-		        </div>
-            </div>
-        </main>
-		
+				</div>
+			</div>
+		</main>
+	
 		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
 	</body>
+
 </html>
