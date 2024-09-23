@@ -22,43 +22,43 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	
+
 	@Autowired
 	private AdminService adminService;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(AdminController.class);
-	
+
 	@GetMapping("/adminPage")
 	public void adminPage() {
 	}
-	
+
 	// 유저 목록
 	@GetMapping("/userList")
 	public String userList(Model model) {
-		
+
 		int totalUser = adminService.getCountUser();
 		model.addAttribute("totalUser", totalUser);
-		
+
 		List<UserDTO> userList = adminService.getUserList();
 		model.addAttribute("userList", userList);
-		
+
 		return "admin/userList";
 	}
-	
+
 	// 유저 삭제
 	@PostMapping("deleteUserOk")
-	public String deleteUserOk(HttpServletRequest request
-						   , @AuthenticationPrincipal CustomUserDetails userDetails
-						   , Model model) {
+	public String deleteUserOk(HttpServletRequest request,
+			@AuthenticationPrincipal CustomUserDetails userDetails,
+			Model model) {
 		// 관리자 확인, username으로 검색해서 삭제
 		String userRole = userDetails.getUser().getRolename();
 		String username = request.getParameter("username");
-		
+
 		try {
-			if(userRole.equals("ADMIN")) {
+			if (userRole.equals("ADMIN")) {
 				int isOk = adminService.deleteUser(username);
-				
-				if(isOk != 1) {
+
+				if (isOk != 1) {
 					model.addAttribute("msg", "유저 삭제를 실패하였습니다.");
 					model.addAttribute("url", "/admin/userList");
 				} else {
@@ -66,21 +66,21 @@ public class AdminController {
 					model.addAttribute("msg", "유저가 삭제되었습니다.");
 					model.addAttribute("url", "/admin/userList");
 				}
-				
+
 				return "board/messageAlert";
 			} else {
 				model.addAttribute("msg", "권한이 없습니다.");
 				model.addAttribute("url", "/admin/userList");
-				
+
 				return "board/messageAlert";
 			}
 		} catch (DataAccessException e) {
-			log.warn("유저 삭제 중 오류 발생"+e.getMessage());
+			log.warn("유저 삭제 중 오류 발생" + e.getMessage());
 		} catch (Exception e) {
 			log.warn("유저 삭제 중 오류 발생");
 		}
-		
+
 		return "admin/userList";
 	}
-	
+
 }
