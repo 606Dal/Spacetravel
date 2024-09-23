@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='글 수정' )}" />
 
+	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='글 수정' )}" />
+	
 	<script type="text/javascript">
-		function valid(){
+		function valid() {
 			/* 제목 유효성 검사 */
-			if($('input[name="subject"]').val().length == 0){
+			if ($('input[name="subject"]').val().length == 0) {
 				alert('제목을 입력하세요.');
 				$('input[name="subject"]').focus();
 				return false;
 			}
 			/* 본문 유효성 검사 */
-			if($('textarea[name="content"]').val().length == 0){
+			if ($('textarea[name="content"]').val().length == 0) {
 				alert('내용을 입력하세요.');
 				$('textarea[name="content"]').focus();
 				return false;
@@ -21,53 +22,54 @@
 	
 	<body>
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'board' ) }" />
-		
+	
 		<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '게시판', hcontent = '글 수정하기')}" />
-		
+	
 		<!-- Main Content-->
-        <main class="mb-4 jua-font">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <p class="text-info">자유롭게 작성해 주세요. 개인 정보는 포함하지 않도록 주의하시기 바랍니다.</p>
-                        <div id="contact_form" class="my-5">
-                    		<!-- 글 작성 부분 -->
-                            <form th:action="@{/board/boardModifyOk}" method="post" onsubmit="return valid()">
+		<main class="mb-4 jua-font">
+			<div class="container px-4 px-lg-5">
+				<div class="row gx-4 gx-lg-5 justify-content-center">
+					<div class="col-md-10 col-lg-8 col-xl-7">
+						<p class="text-info">자유롭게 작성해 주세요. 개인 정보는 포함하지 않도록 주의하시기 바랍니다.</p>
+						<div id="contact_form" class="my-5">
+							<!-- 글 작성 부분 -->
+							<form th:action="@{/board/boardModifyOk}" method="post" onsubmit="return valid()">
 								<input type="hidden" name="id" th:value="*{boardDTO.id}">
 								<input type="hidden" name="writer" th:value="*{boardDTO.writer}">
-								
+	
 								<input type="hidden" name="page" th:value="*{findCriteriaDTO.page}">
 								<input type="hidden" name="numPerPage" th:value="*{findCriteriaDTO.numPerPage}">
 								<input type="hidden" name="findType" th:value="*{findCriteriaDTO.findType}">
 								<input type="hidden" name="keyword" th:value="*{findCriteriaDTO.keyword}">
-								
-                                <div class="form-floating">
-                                    <input class="form-control input_field" name="writer" type="text" readonly />
-                                    <label for="writer" th:text="*{boardDTO.writer}" class="mt-2"></label>
-                                </div>
-                                <div class="form-floating">
-                                    <input id="subject_width" class="form-control pt-4 ps-2" name="subject" type="text" placeholder="Enter subject..."
-                                    	th:value="*{boardDTO.subject}"/>
-                                    <label for="subject">제목</label>
-                                </div>
-                                <div class="form-floating">
-                                    <textarea class="form-control pt-5 ps-2" name="content" placeholder="Enter your message here..." style="height: 12rem" 
-                                    	 th:text="*{boardDTO.content}"></textarea>
-                                    <label for="content">내용</label>
-                                </div>
-                                <br>
-                                <!-- Submit Button-->
-                                <span class="row ms-1">
-	                                <a onclick="history.go(-1);" class="col-4" id="back_btn" type="submit">← 뒤로</a>
-	                                <button class="col-4 mx-3" id="modify_btn" type="submit">수정 완료</button>
+	
+								<div class="form-floating">
+									<input class="form-control input_field" name="writer" type="text" readonly />
+									<label for="writer" th:text="*{boardDTO.writer}" class="mt-2"></label>
+								</div>
+								<div class="form-floating">
+									<input id="subject_width" class="form-control pt-4 ps-2" name="subject" type="text" placeholder="Enter subject..."
+										th:value="*{boardDTO.subject}" />
+									<label for="subject">제목</label>
+								</div>
+								<div class="form-floating">
+									<textarea class="form-control pt-5 ps-2" name="content" placeholder="Enter your message here..." style="height: 12rem"
+										th:text="*{boardDTO.content}"></textarea>
+									<label for="content">내용</label>
+								</div>
+								<br>
+								<!-- Submit Button-->
+								<span class="row ms-1">
+									<a onclick="history.go(-1);" class="col-4" id="back_btn" type="submit">← 뒤로</a>
+									<button class="col-4 mx-3" id="modify_btn" type="submit">수정 완료</button>
 								</span>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-		
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+	
 		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
 	</body>
+
 </html>
