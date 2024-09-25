@@ -17,20 +17,20 @@
 		}
 	
 		function valid() {
-			var passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,20}$/;
-			var idRegex = /^[a-zA-Z가-힣0-9]{4,20}$/;
+			var passwordRegex = /^(?=.*[a-zA-Z])(?=.*[\d])(?=.*[!@#$%^&*?_])[a-zA-Z\d!@#$%^&*?_]{8,20}$/;
+			var idRegex = /^[a-zA-Z가-힣0-9]{3,20}$/;
 	
 			var name = $("#username").val();
 			var pw = $("#password").val();
 			var cPw = $("#confirmPassword").val();
 			/* 아이디 유효성 검사 */
-			if (false === idRegex.test(name)) {
-				alert('아이디는 4~20자, 한글, 영문자, 숫자만 가능합니다.');
+			if (!idRegex.test(name)) {
+				alert('아이디는 3~20자, 한글, 영문자, 숫자만 가능합니다.');
 				$('#username').focus();
 				return false;
 			}
 			/* 비밀번호 유효성 검사 */
-			if (false === passwordRegex.test(pw)) {
+			if (!passwordRegex.test(pw)) {
 				alert('비밀번호는 8~20자, 영문자, 숫자, 특수문자를 모두 포함하여 입력해주세요.');
 				$('#password').focus();
 				return false;
@@ -40,6 +40,7 @@
 				$('#password').focus();
 				return false;
 			}
+			return true;
 		}
 	</script>
 	

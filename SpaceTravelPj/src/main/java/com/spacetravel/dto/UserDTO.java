@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Pattern;
 public class UserDTO {
 
 	@NotBlank
-	@Pattern(regexp = "[a-zA-Z가-힣0-9]{4,20}", message = "아이디는 4~20자, 한글, 영문자, 숫자만 가능합니다.")
+	@Pattern(regexp = "[a-zA-Z가-힣0-9]{3,20}", message = "아이디는 3~20자, 한글, 영문자, 숫자만 가능합니다.")
 	private String username;
 
 	@NotBlank

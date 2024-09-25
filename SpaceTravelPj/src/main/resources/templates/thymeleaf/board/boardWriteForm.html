@@ -11,6 +11,11 @@
 				$('input[name="subject"]').focus();
 				return false;
 			}
+			if ($('input[name="subject"]').val().length > 50) {
+				alert('제목은 50자까지 가능합니다.');
+				$('input[name="subject"]').focus();
+				return false;
+			}
 			/* 본문 유효성 검사 */
 			if ($('textarea[name="content"]').val().length == 0) {
 				alert('내용을 입력하세요.');
