@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="${apodDTO.apodTitle}">nasaApodFullimage</title>
+</head>
+<body style="background: #1b1a1a;">
+	<div style="text-align: center;">
+		<img th:src="*{apodDTO.apodHdurl}" class="img-fluid" alt="Full Resolution Image" style="max-width:100%;">
+	</div>
+</body>
+
+</html>

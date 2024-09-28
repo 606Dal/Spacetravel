@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='정보페이지' )}" />
+
+<body>
+	<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( ' ' ) }" />
+
+	<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '오늘의 천문학 사진', hcontent = ' ')}" />
+
+
+	<div class="row">
+		<nav th:replace="~{tpl/tpl_fragments :: tpl_informationSideNav ( 'pictureOfTheDay' ) }" />
+
+		<!-- Main Content-->
+		<main class="container col-sm-9 mb-4 jua-font">
+			<div class="px-4 px-lg-5" th:object="${apodDTO}">
+				<div class="justify-content-center">
+					<div id="content" class="p-3">
+						<div class="text-center py-2">
+							<form th:action="@{/infoview/nasaApodFullimage}" method="post" target="_blank">
+							    <input type="hidden" th:name="apodHdurl" th:value="*{apodHdurl}" />
+							    <input type="hidden" th:name="apodTitle" th:value="*{apodTitle}" />
+							    <button type="submit" class="p-0" style="width: 80%;">
+									<img type="submit" th:src="*{apodUrl}" class="img-fluid p-1" alt="Image" style="width: 100%;">
+								</button>
+							</form>
+						</div>
+						
+						<ul class="service_list2 pt-2">
+							<li><h2 th:text="*{apodTitle}">제목</h2></li>
+							<li>Date: <span th:text="*{apodDate}">날짜</span></li>
+							<li><span th:text="*{apodExplanation}">내용</span></li>
+							<br>
+							<li th:unless="*{apodCopyright == 'null'}">Copyright(저작권): <span th:text="${apodDTO.apodCopyright}"></span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+
+	<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
+</body>
+
+</html>
