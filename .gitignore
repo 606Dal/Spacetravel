@@ -48,6 +48,7 @@ local.properties
 .springBeans
 application-mysql.properties
 logback-variables.properties
+application-api.properties
 
 # Code Recommenders
 .recommenders/
