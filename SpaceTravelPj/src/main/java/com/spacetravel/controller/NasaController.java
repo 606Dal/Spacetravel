@@ -28,6 +28,9 @@ public class NasaController {
 		ApodDTO apodDTO = nasaServiceImpl.getApod(requestID);
 		
 		if(apodDTO != null) {
+			if(apodDTO.getApodCopyright() == null) {
+				apodDTO.setApodCopyright("null");
+			}
 			model.addAttribute("apodDTO", apodDTO);
 		}
 		else {

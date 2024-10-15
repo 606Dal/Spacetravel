@@ -21,10 +21,10 @@
 			<nav th:replace="~{tpl/tpl_fragments :: tpl_adminNav ( 'userList' ) }" />
 	
 			<!-- Main Content-->
-			<main class="col-sm-10 mb-4 jua-font">
+			<main class="col-sm-9 mb-4 jua-font">
 				<div class="container px-4 px-lg-5">
-					<div class="row row-cols-auto gx-4 gx-lg-5 justify-content-center">
-						<div class="col-md-10 col-lg-8 col-xl-7 bg-dark bg-gradient bg-opacity-75">
+					<div class="gx-4 gx-lg-5 justify-content-center">
+						<div class="bg-dark bg-gradient bg-opacity-75 p-2">
 							<p class="read_content mt-4 float-end" th:text="'&nbsp;&nbsp;총 유저 : ' + ${totalUser}">
 							</p>
 							<!-- 목록 출력 -->

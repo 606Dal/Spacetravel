@@ -184,3 +184,16 @@ ul.pagination li.selected a {
 .hide {
 	display: none;
 }
+
+/*NASA api APOD videoButton*/
+.videoButton{
+	border: 1px solid lightpink;
+	width: 60%;
+	font-size: 20px;
+}
+.videoButton:hover{
+	text-decoration: none;
+	background-color: lightpink;
+	color: black;
+	transition: all .35s;
+}
