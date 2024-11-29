@@ -130,20 +130,20 @@ em { color: #f3c331; }
 	margin-top: 5px;
 }
 #contact_form form label { 
-	display: block; 
-	width: 120px; 
-	margin-right: 10px; 
-	font-size: 14px; 
+	display: block;
+	width: 120px;
+	margin-right: 10px;
+	font-size: 14px;
 }
 #contact_form form textarea { 
-	height: 100px; 
-	padding: 5px; 
-	background: #1b1a1a; 
-	border: 1px solid #3b3a3a; 
+	height: 100px;
+	padding: 5px;
+	background: #1b1a1a;
+	border: 1px solid #3b3a3a;
 	font-family: Verdana,Geneva,sans-serif;
 	font-size: 14px;
 	color: #aaa;
-	margin-top: 5px; 
+	margin-top: 5px;
 }
 #contact_form form .submit_btn  {
 	padding: 5px 10px;

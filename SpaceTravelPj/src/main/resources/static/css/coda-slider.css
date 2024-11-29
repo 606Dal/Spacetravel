@@ -26,13 +26,15 @@
 	border-radius: 20px;
 }
 
-#content2 {
-	clear: both;
-	width: 900px;
-	height: 770px;
-	margin-bottom: 40px;
-	object-fit: fill;
-	background: url(../images/spaceLandscape1.jpg)
+@media only screen and (min-width: 400px) {
+	#content2 {
+		clear: both;
+		height: 770px;
+		margin-bottom: 40px;
+		object-fit: fill;
+		background: url(../images/spaceLandscape1.jpg);
+		background-size: cover;
+	}
 }
 
 .content_section {
