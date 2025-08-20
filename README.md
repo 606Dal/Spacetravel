@@ -16,7 +16,9 @@
 
 현재는 로그인 기능과 게시판+댓글 기능, NASA Open API를 이용한 오늘의 천문학 사진을 보는 기능이 있습니다.
 
-사이트 : www.spacedal.site
+사이트 : https://www.dalspace.site
+- 2025-08-20
+  - www.spacedal.site → https://www.dalspace.site 로 도메인 변경.
 
 따라 만들어 보기만 했던 프로젝트를 여태까지 배운 내용들을 이용해 직접 만들어 보고 싶어 시작했습니다.
 
