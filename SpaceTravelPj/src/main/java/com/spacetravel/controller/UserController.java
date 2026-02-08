@@ -3,14 +3,18 @@ package com.spacetravel.controller;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,27 +52,59 @@ public class UserController {
 
 	// 유저 등록
 	@PostMapping("/singUpOk")
-	public String singUpOk(@Valid UserDTO userDTO,
-			@RequestParam(value = "username") String username, Model model) {
+	public ResponseEntity<?> singUpOk(
+			@Valid UserDTO userDTO, 
+			BindingResult bindingResult,
+			@RequestParam String captcha,
+			HttpServletRequest request) {
 		
-		try {
-			String result = userService.usernameDuplicateCheck(username);
-			// DB에서 검색된 아이디가 없으면
-			if (result == null) {
-				userService.insertUser(userDTO);
+		Map<String, String> errors = new HashMap<>();
+		
+		// 캡차 검증
+		String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
+		log.info("sessionCaptcha: "+sessionCaptcha + "입력한 캡차: "+captcha);
+		
+		if (sessionCaptcha == null || !sessionCaptcha.equalsIgnoreCase(captcha)) {
+	        errors.put("captcha", "글자가 일치하지 않습니다.");
+	    }
+		
+		// 아이디 중복 체크
+		if (userService.usernameDuplicateCheck(userDTO.getUsername()) != null) {
+	        errors.put("username", "중복된 아이디입니다.");
+	    }
+		
+		if (bindingResult.hasErrors()) {
+	        bindingResult.getFieldErrors()
+	                .forEach(e -> errors.putIfAbsent(e.getField(), e.getDefaultMessage()));
+	    }
+		
+		if (!errors.isEmpty()) {
+	        return ResponseEntity.badRequest().body(Map.of("errors", errors));
+	    }
 
-				model.addAttribute("msg", "회원 가입에 성공하였습니다.");
-				model.addAttribute("url", "user/loginPage");
+	    // 가입 처리
+	    userService.insertUser(userDTO);
 
-				return "board/messageAlert";
-			} else {
-				model.addAttribute("msg", "중복된 아이디 입니다.");
-				model.addAttribute("reUsername", username);
-			}
-		} catch (Exception e) {
-			log.warn("회원가입 중 오류 발생");
-		}
-		return "user/singUpForm";
+	    return ResponseEntity.ok(Map.of("ok", true));
+		
+//		try {
+//			String result = userService.usernameDuplicateCheck(username);
+//			// DB에서 검색된 아이디가 없으면
+//			if (result == null) {
+//				userService.insertUser(userDTO);
+//
+//				model.addAttribute("msg", "회원 가입에 성공하였습니다.");
+//				model.addAttribute("url", "user/loginPage");
+//
+//				return "board/messageAlert";
+//			} else {
+//				model.addAttribute("msg", "중복된 아이디 입니다.");
+//				model.addAttribute("reUsername", username);
+//			}
+//		} catch (Exception e) {
+//			log.warn("회원가입 중 오류 발생");
+//		}
+//		return "user/singUpForm";
 	}
 
 	// 비밀번호 변경 페이지
@@ -78,10 +114,9 @@ public class UserController {
 
 	@PostMapping("/changePasswordOk")
 	public String changePasswordOk(UserDTO userDTO,
-			@Pattern(regexp = "(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,20}",
-				message = "비밀번호는 8~20자, 영문자, 숫자, 특수문자를 모두 포함하여 입력해주세요.") @RequestParam("newPassword") String newPassword,
+			@Pattern(regexp = "(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,20}", message = "비밀번호는 8~20자, 영문자, 숫자, 특수문자를 모두 포함하여 입력해주세요.") @RequestParam("newPassword") String newPassword,
 			HttpServletRequest request, Authentication authentication, Model model) {
-		
+
 		try {
 			String username = authentication.getName();
 			String currentPassword = request.getParameter("currentPassword");
@@ -127,9 +162,8 @@ public class UserController {
 
 	// 계정 탈퇴
 	@PostMapping("/deleteAccountOk")
-	public String deleteAccountOk(HttpServletRequest request,
-			Authentication authentication, Model model) {
-		
+	public String deleteAccountOk(HttpServletRequest request, Authentication authentication, Model model) {
+
 		try {
 			String username = authentication.getName();
 			String password = request.getParameter("password");

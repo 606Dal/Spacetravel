@@ -120,7 +120,7 @@ em { color: #f3c331; }
 	padding: 0px; 
 }
 #contact_form form .input_field { 
-	width: 300px; 
+	width: 100%;
 	padding: 5px; 
 	background: #1b1a1a; 
 	border: 1px solid #3b3a3a; 
@@ -259,50 +259,82 @@ em { color: #f3c331; }
     /* 색이 변하는 시간 */
 	transition: all .35s;
 }
+/*흰색 버튼*/
+.white_btn {
+	padding: 5px 10px;
+	width: 90px;
+	background: ghostwhite; 
+	border: 2px solid #1b1a1a; 
+	color: #1b1a1a;
+	font-size: 14px;
+}
 
 .jua-font {
-  font-family: "Jua", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+	font-family: "Jua", sans-serif;
+	font-weight: 400;
+	font-style: normal;
 }
 
 .post-preview > a {
-  text-decoration: none;
+	text-decoration: none;
 }
 .post-preview > a > .post-title:focus, .post-preview > a > .post-title:hover {
-  color: #0085A1;
+	color: #0085A1;
 }
 .post-preview > a > .post-title {
-  font-size: 1.875rem;
-  margin-top: 1.875rem;
-  margin-bottom: 0.625rem;
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+	margin-bottom: 0.625rem;
 }
 .post-preview > a > .post-subtitle {
-  font-weight: 300;
-  margin-bottom: 0.625rem;
+	font-weight: 300;
+	margin-bottom: 0.625rem;
 }
 .post-preview > .post-meta {
-  font-size: 1.125rem;
-  font-style: italic;
-  margin-top: 0;
-  color: floralwhite;
+	font-size: 1.125rem;
+	font-style: italic;
+	margin-top: 0;
+	color: floralwhite;
 }
 .post-preview > .post-meta > a {
-  text-decoration: none;
+	text-decoration: none;
 }
 @media (min-width: 800px) {
-  .post-preview > a > .post-title {
-    font-size: 2.25rem;
-  }
+	.post-preview > a > .post-title {
+		font-size: 2.25rem;
+	}
 }
 
 hr {
-  border-color: #dee2e6;
-  opacity: 1;
+	border-color: #dee2e6;
+	opacity: 1;
 }
 
 .read_content, #replyList_li {
-  font-size: 1.125rem;
-  color: floralwhite;
+	font-size: 1.125rem;
+	color: floralwhite;
+}
+
+#contact_form .captcha_img.input_field{
+  	display:block;
+ 	height:50px;
+ 	width:auto;
+ 	max-width: 100%;
+  	padding:0;
+  	object-fit:contain;
+  	background:#1b1a1a;
+}
+#contact_form .captcha_input {
+  	height: 38px;
+  	padding: 0 10px;
+  	line-height: 38px;
+  	margin-top: 0;
+  	background: #1b1a1a;
+  	border: 1px solid #3b3a3a;
+  	color: #aaa;
+}
+#contact_form .captcha_input::placeholder {
+  	color: #777;
+  	opacity: 1; /* Firefox */
 }
 

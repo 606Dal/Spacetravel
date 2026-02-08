@@ -9,16 +9,22 @@ public class ApodDTO {
 
 	@JsonProperty("copyright")
 	private String apodCopyright;
+	
 	@JsonProperty("date")
 	private String apodDate;
+	
 	@JsonProperty("explanation")
 	private String apodExplanation; // 사진에 대한 설명
+	
 	@JsonProperty("hdurl")
 	private String apodHdurl;
+	
 	@JsonProperty("media_type")
 	private String apodMedia_type;
+	
 	@JsonProperty("title")
 	private String apodTitle;
+	
 	@JsonProperty("url")
 	private String apodUrl;
 	

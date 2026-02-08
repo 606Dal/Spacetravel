@@ -1,4 +1,4 @@
-package com.spacetravel.controller;
+package com.spacetravel.handler;
 
 import java.io.IOException;
 

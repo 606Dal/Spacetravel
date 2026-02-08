@@ -3,6 +3,8 @@ package com.spacetravel.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -29,15 +31,23 @@ public class NasaServiceImpl implements NasaService {
 		ApodDTO apodDTO = new ApodDTO();
 		
 		try {
-			// nasa api 데이터 가져옴
-			apodDTO = restClient.get()
-					.uri(url)
-					.retrieve()
-					.body(ApodDTO.class);
-			log.info("RequestID: {} - APOD REQUEST", requestID);
+			
+			 ResponseEntity<ApodDTO> response = restClient.get()
+					 .uri(url)
+					 .retrieve()
+					 .toEntity(ApodDTO.class);
+
+			 apodDTO = response.getBody();
+			 
+			// 헤더에서 RateLimit 정보 추출
+//			 HttpHeaders headers = response.getHeaders();
+//		     String rateLimit = headers.getFirst("X-RateLimit-Limit");
+//		     String rateRemaining = headers.getFirst("X-RateLimit-Remaining");
+
 			
 		} catch (Exception e) {
-			log.warn("RequestID: {} - APOD REQUEST - Exception: Could not be retrieve APOD information from API", requestID, e.toString());
+			log.warn("RequestID: {} - APOD REQUEST - Exception: Could not be retrieve APOD information from API", requestID);
+			log.warn("Exception Message: {}", e.getMessage());
 			return null;
 		}
 		

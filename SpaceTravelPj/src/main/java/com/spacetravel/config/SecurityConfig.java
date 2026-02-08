@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.spacetravel.controller.CustomLoginSuccessHandler;
+import com.spacetravel.handler.CustomLoginSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -34,7 +34,18 @@ public class SecurityConfig {
 		
 			.authorizeHttpRequests((authorize) -> authorize
 				.requestMatchers("/admin/**").hasRole("ADMIN")
-				.requestMatchers("/css/**", "/js/**", "/images/**", "/", "/user/login", "/user/singUp", "/user/singUpOk", "/favicon.ico", "/etc/contactPage", "infoview/**").permitAll()
+				.requestMatchers(
+						"/css/**", 
+						"/js/**", 
+						"/images/**", 
+						"/", 
+						"/user/login", 
+						"/user/singUp", 
+						"/user/singUpOk", 
+						"/favicon.ico", 
+						"/etc/contactPage", 
+						"infoview/**", 
+						"/captcha").permitAll()
 				.anyRequest().authenticated()
 			);
 		return http.build();
