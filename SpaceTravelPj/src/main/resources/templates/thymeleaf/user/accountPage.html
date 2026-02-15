@@ -3,21 +3,7 @@
 
 	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='계정 탈퇴 페이지' )}" />
 	
-	<script type="text/javascript">
-		function check() {
-			if (confirm("정말 탈퇴하시겠습니까?") == true) {
-				if ($("#password").val().length == 0) {
-					alert('비밀번호를 입력하세요.');
-					$('#password').focus();
-					return false;
-				}
-			} else {
-				return false;
-			}
-		}
-	</script>
-	
-	<body>
+	<body class="sticky">
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( ' ' ) }" />
 	
 		<main class="mb-4 jua-font">
@@ -43,5 +29,19 @@
 	
 		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
 	</body>
+	
+	<script type="text/javascript">
+		function check() {
+			if (confirm("정말 탈퇴하시겠습니까?") == true) {
+				if ($("#password").val().length == 0) {
+					alert('비밀번호를 입력하세요.');
+					$('#password').focus();
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
+	</script>
 
 </html>

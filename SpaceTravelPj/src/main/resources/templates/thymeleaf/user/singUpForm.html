@@ -3,16 +3,16 @@
 	
 	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='회원 가입 페이지' )}" />
 	
-	<body>
+	<body class="sticky">
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'singup' ) }" />
 	
 		<main class="mb-4 jua-font">
 			<div class="container">
 				<div class="row justify-content-center">
-					<div id="contact_form" class="col-12 col-sm-10 col-md-6 px-2 px-sm-3 px-lg-0">
+					<div id="contact_form" class="col-10 col-md-6 col-lg-4 col-xl-4">
 						<h1 class="mt-5 jua-font">회원 가입</h1>
 	
-						<form id="signupForm" th:action="@{/user/singUpOk}" method="post" onsubmit="return false;">
+						<form id="signupForm" th:action="@{/user/singUpOk}" method="post">
 							<div class="form-floating mb-3">
 								<input type="text" id="username" name="username" class="form-control input_field pt-4 ps-2"
 									th:value="${reUsername}" placeholder="Username" />
@@ -22,13 +22,11 @@
 								<div id="usernameError" class="badge text-bg-danger bg-opacity-75 jua-font" th:text="${msg}">아이디 중복 메시지</div>
 							</h3>
 							<div class="form-floating mb-3">
-								<input type="password" id="password" name="password" class="form-control input_field pt-4 ps-2"
-									oninput="pwCheck()" placeholder="Password" />
+								<input type="password" id="password" name="password" class="form-control input_field pt-4 ps-2" placeholder="Password" />
 								<label for="password">비밀번호</label>
 							</div>
 							<div class="form-floating mb-1">
-								<input type="password" id="confirmPassword" name="confirmPassword" class="form-control input_field pt-4 ps-2"
-									oninput="pwCheck()" placeholder="samePassword" />
+								<input type="password" id="confirmPassword" name="confirmPassword" class="form-control input_field pt-4 ps-2" placeholder="samePassword" />
 								<label for="confirmPassword">비밀번호 확인</label>
 							</div>
 							<div id="pwConfirm" class="ps-2">아이디와 비밀번호를 입력하세요</div><br>
@@ -43,7 +41,7 @@
 							  	<!-- 입력 + 새로고침 버튼 -->
 							  	<div class="d-flex gap-2 align-items-stretch">
 								  	<input type="text" name="captcha" autocomplete="off" required class="form-control captcha_input flex-grow-1" placeholder="내용 입력">
-								  	<button type="button" onclick="refreshCaptcha()" class="white_btn">새로고침</button>
+								  	<button type="button" id="captchaRefreshBtn" class="white_btn">새로고침</button>
 								</div>
 								<!-- 에러 메시지 -->
 								<h3>
@@ -62,126 +60,13 @@
 	
 		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
 		
-		<script type="text/javascript">
-			/* 비밀번호 실시간 재확인 (글자만 출력) */
-			function pwCheck() {
-				if ($('#password').val() == $('#confirmPassword').val()) {
-					$('#pwConfirm').text('비밀번호 일치').css('color', 'green')
-				} else {
-					$('#pwConfirm').text('비밀번호 불일치').css('color', 'red')
-				}
-				if ($('#password').val().length < 8 || 20 < $('#password').val().length) {
-					$('#pwConfirm').text('비밀번호는 8~20, 영문자, 숫자, 특수문자를 모두 포함하여 입력해주세요');
-				}
-			}
-	
-			function valid() {
-				var passwordRegex = /^(?=.*[a-zA-Z])(?=.*[\d])(?=.*[!@#$%^&*?_])[a-zA-Z\d!@#$%^&*?_]{8,20}$/;
-				var idRegex = /^[a-zA-Z가-힣0-9]{3,20}$/;
-		
-				var name = $("#username").val();
-				var pw = $("#password").val();
-				var cPw = $("#confirmPassword").val();
-				/* 아이디 유효성 검사 */
-				if (!idRegex.test(name)) {
-					alert('아이디는 3~20자, 한글, 영문자, 숫자만 가능합니다.');
-					$('#username').focus();
-					return false;
-				}
-				/* 비밀번호 유효성 검사 */
-				if (!passwordRegex.test(pw)) {
-					alert('비밀번호는 8~20자, 영문자, 숫자, 특수문자를 모두 포함하여 입력해주세요.');
-					$('#password').focus();
-					return false;
-				}
-				if (pw != cPw) {
-					alert('비밀번호가 일치하지 않습니다.');
-					$('#password').focus();
-					return false;
-				}
-				return true;
-			} // valid()
-			
-			
-			function refreshCaptcha() {
-				fetch('/captcha')
-			        .then(response => response.json())
-			        .then(data => {
-			        	document.getElementById("captchaImg").src = data.captcha;
-			        })
-			        .catch(error => console.error("Error loading captcha:", error));
-			}
-		
-			refreshCaptcha();
-			
-			// ===== 에러 UI 헬퍼 =====
-		  	function showError(id, message) {
-				const el = document.getElementById(id);
-			    if (!el) return;
-			    if (!message) {
-			    	el.style.display = "none";
-			    	el.textContent = "";
-			    	return;
-		    	}
-		    		el.style.display = "inline-block";
-		    		el.textContent = message;
-		  	}
-		
-		  	function clearErrors() {
-		  		showError("usernameError", null);
-		  		showError("captchaError", null);
-		  	}
-		
-		  	// ===== submit AJAX 처리 =====
-		  	document.addEventListener("DOMContentLoaded", () => {
-		    	const form = document.getElementById("signupForm");
-		    	if (!form) return;
-		
-		    	form.addEventListener("submit", async (e) => {
-		      		e.preventDefault();
-		      		clearErrors();
-		
-		      		// 기존 클라이언트 검증 재사용
-		      		if (typeof valid === "function" && !valid()) return;
-		
-		      		const formData = new FormData(form);
-		
-			      	try {
-				        const res = await fetch(form.action, {
-				          	method: "POST",
-				          	body: formData,
-				          	headers: {
-				            	"X-Requested-With": "XMLHttpRequest"
-				          	}
-			        	});
-			
-				        // 서버가 JSON으로 응답한다고 가정
-				        const data = await res.json();
-				
-				        if (data.ok) {
-				          	alert("회원 가입에 성공하였습니다.");
-				          	window.location.href = "/user/loginPage";
-				          	return;
-				        }
-				
-				        // 실패 처리: 필드별 에러
-				        if (data.errors) {
-				          	showError("usernameError", data.errors.username);
-				          	showError("captchaError", data.errors.captcha);
-				        } else if (data.message) {
-				          	// 일반 메시지
-				          	showError("usernameError", data.message);
-				        }
-						// 실패 시 새로 갱신
-				        refreshCaptcha();
-			
-				    } catch (err) {
-			        	console.error(err);
-			        	alert("일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-				    }
-				});
-			});
-		</script>
 	</body>
+	<script>
+		window.APP = {
+	    	captchaUrl: /*[[@{/captcha}]]*/ "/captcha",
+	    	loginUrl:   /*[[@{/user/loginPage}]]*/ "/user/loginPage"
+		};
+	</script>
+	<script th:src="@{/js/pages/signup.js}"></script>
 
 </html>

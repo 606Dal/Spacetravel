@@ -3,17 +3,7 @@
 
 	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='글읽기' )}" />
 	
-	<script type="text/javascript">
-		function check() {
-			if (confirm("글을 삭제하시겠습니까?") == true) {
-	
-			} else {
-				return false;
-			}
-		}
-	</script>
-	
-	<body>
+	<body class="sticky">
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'board' ) }" />
 	
 		<header>
@@ -337,6 +327,14 @@
 				}
 			});
 			/* ]]> */
+			
+			function check() {
+				if (confirm("글을 삭제하시겠습니까?") == true) {
+		
+				} else {
+					return false;
+				}
+			}
 		</script>
 	
 		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />

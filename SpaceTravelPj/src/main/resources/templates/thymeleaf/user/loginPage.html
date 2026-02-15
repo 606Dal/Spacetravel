@@ -1,30 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='로그인페이지' )}" />
+	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='로그인페이지' )}"></head>
 	
-	<script type="text/javascript">
-		function check() {
-			if ($("#username").val().length == 0) {
-				alert('아이디를 입력하세요.');
-				$('#username').focus();
-				return false;
-			}
-			if ($("#password").val().length == 0) {
-				alert('비밀번호를 입력하세요.');
-				$('#password').focus();
-				return false;
-			}
-		}
-	</script>
-	
-	<body>
+	<body class="sticky">
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'login' ) }" />
 	
 		<main class="mb-4 jua-font">
-			<div class="container px-4 px-lg-5">
+			<div class="container">
 				<div class="row gx-4 gx-lg-5 justify-content-center">
-					<div id="contact_form" class="col-md-6 col-lg-6 col-xl-5 ps-5">
+					<div id="contact_form" class="col-10 col-md-6 col-lg-4 col-xl-4">
 						<h1 id="login" class="mt-5 jua-font">로그인 화면</h1>
 						<h3>
 							<div class="badge text-bg-danger bg-opacity-75 jua-font" th:if="${param.error}">
@@ -35,7 +20,7 @@
 								로그아웃 되었습니다(You have been logged out).</div>
 						</h3>
 	
-						<form th:action="@{/user/login}" method="post" th:onsubmit="return check()">
+						<form th:action="@{/user/login}" method="post">
 							<input type="hidden" id="csrfToken" name="_csrf" th:value="${csrfToken}">
 	
 							<div class="form-floating mb-3">
@@ -61,5 +46,6 @@
 	
 		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
 	</body>
+	<script th:src="@{/js/pages/login.js}"></script>
 
 </html>

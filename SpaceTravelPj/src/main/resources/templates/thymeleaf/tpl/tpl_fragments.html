@@ -29,43 +29,51 @@
 	<body>
 		<!-- 네비게이션 바(navbar) -->
 		<nav th:fragment="tpl_nav( naviVal )" class="navbar navbar-expand-md my-1 jua-font" aria-label="navbar">
-			<div class="container-fluid">
-				<span id="site_title" class="navbar-brand ps-4 ps-lg-5"><a th:href="@{/}">우주 여행 로고</a></span>
+			<div class="container">
+				<span id="site_title" class="navbar-brand ps-0"><a th:href="@{/}">우주 여행 로고</a></span>
 				<!--토글 버튼(toggl btn)-->
 				<button class="navbar-toggler bg-light bg-opacity-75" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMyTopmenu">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 	
 				<div class="collapse navbar-collapse" id="navbarMyTopmenu">
-					<ul class="navigation navbar-nav">
+					<ul class="navbar-nav me-auto mb-2 mb-md-0">
 						<li class="nav-item">
-							<a th:href="@{/}" class="nav-link" th:classappend="${naviVal} == 'home' ? 'selected'">Home</a>
+							<a th:href="@{/}" class="nav-link" th:classappend="${naviVal} == 'home' ? 'selected'">
+								Home
+							</a>
 						</li>
 						<li class="nav-item">
-							<a th:href="@{/infoview/nasaApod}" class="nav-link" th:classappend="${naviVal} == 'infoview' ? 'selected'">정보</a>
+							<a th:href="@{/infoview/nasaApod}" class="nav-link" th:classappend="${naviVal} == 'infoview' ? 'selected'">
+								🛰️정보
+							</a>
 						</li>
 						<li class="nav-item">
-							<a th:href="@{/board/boardList(page=1, numPerPage=10)}" class="nav-link"
-								th:classappend="${naviVal} == 'board' ? 'selected'">🌏게시판</a>
+							<a th:href="@{/board/boardList(page=1, numPerPage=10)}" class="nav-link" th:classappend="${naviVal} == 'board' ? 'selected'">
+								🌏게시판
+							</a>
 						</li>
 						<li class="nav-item">
-							<a th:href="@{/etc/contactPage}" class="nav-link"
-								th:classappend="${naviVal} == 'contact' ? 'selected'">연락처</a>
+							<a th:href="@{/etc/contactPage}" class="nav-link" th:classappend="${naviVal} == 'contact' ? 'selected'">
+								📧연락처
+							</a>
 						</li>
 						<!--/* 로그아웃 상태에 보임 */-->
 						<th:block sec:authorize="isAnonymous()">
 							<li class="nav-item">
-								<a id="login" th:href="@{/user/login}" class="nav-link"
-									th:classappend="${naviVal} == 'login' ? 'selected'">🔅로그인</a>
+								<a th:href="@{/user/login}" class="nav-link" th:classappend="${naviVal} == 'login' ? 'selected'">
+									🔅로그인
+								</a>
 							</li>
 							<li class="nav-item">
-								<a th:href="@{/user/singUp}" class="nav-link"
-									th:classappend="${naviVal} == 'singup' ? 'selected'">🚀회원가입</a>
+								<a th:href="@{/user/singUp}" class="nav-link" th:classappend="${naviVal} == 'singup' ? 'selected'">
+									🚀회원가입
+								</a>
 							</li>
 						</th:block>
 						<!--/* 로그아웃 상태에 보임 끝 */-->
 					</ul>
-					<ul class="navigation2 navbar-nav">
+					<ul class="navbar-nav ms-md-auto mb-2 mb-md-0">
 						<!--/* 로그인 유지 상태에 보임 */-->
 						<th:block sec:authorize="isAuthenticated()">
 							<li class="nav-item dropdown">
@@ -99,7 +107,6 @@
 						<!--/* 로그인 유지 상태에 보임 끝 */-->
 					</ul>
 				</div>
-				<div class="cleaner"></div>
 			</div>
 		</nav>
 		<!-- 네비게이션 바(navbar) 끝-->
@@ -161,7 +168,7 @@
 			<!-- 정보 페이지 사이드 바 내비게이션 끝 -->
 	
 			<!-- 사이드 바 옆 Main Content : col-sm-9 로 각 페이지에서 설정-->
-			<main class="col-sm-9">
+			<main class="flex-grow-1 col-sm-9">
 				...
 			</main>
 		</div>
@@ -169,8 +176,8 @@
 		<h2>본문 부분</h2>
 	
 		<!-- 밑단(footer) -->
-		<footer th:fragment="tpl_footer">
-			<div id="footer" class="text-center mx-5 px-1 jua-font">
+		<footer th:fragment="tpl_footer" class="mt-auto">
+			<div id="footer" class="container text-center px-1 jua-font">
 				<div class="row">
 					<!--/* <div id="footer_left" class="col-md-3 ms-5 py-2">
 						 쓸 일 있을 때 사용 

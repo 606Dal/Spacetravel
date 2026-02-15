@@ -3,34 +3,7 @@
 
 	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='글쓰기' )}" />
 	
-	<script th:inline="javascript">
-		/* <![CDATA[ */
-		const page = /*[[ ${findCriteriaDTO.page} ]]*/ 'default';
-		const numPerPage = /*[[ ${findCriteriaDTO.numPerPage} ]]*/ 'default';
-		// 셀렉트 옵션에 따라 경로 변경
-		function changeNumPerPage() {
-			if ($("#findword").val().length == 0) {
-				self.location = "/board/boardList?page=" + page + "&numPerPage=" + $("#selectNum").val();
-			} else {
-				self.location = "/board/boardList?page=" + page + "&numPerPage=" + $("#selectNum").val()
-					+ "&findType=" + $("#findType option:selected").val()
-					+ "&keyword=" + $("#findword").val();
-			}
-		};
-		// 검색 버튼 클릭 시
-		function findBoard() {
-			self.location = "/board/boardList?page=" + page + "&numPerPage=" + numPerPage
-				+ "&findType=" + $("#findType option:selected").val()
-				+ "&keyword=" + $("#findword").val();
-	
-			if ($("#findword").val() == '') {
-				self.location = "/board/boardList?page=1&numPerPage=10";
-			}
-		};
-		/* ]]> */
-	</script>
-	
-	<body>
+	<body class="sticky">
 		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'board' ) }" />
 	
 		<header th:replace="~{tpl/tpl_fragments :: tpl_header ( htitle = '게시판', hcontent = ' ')}" />
@@ -134,5 +107,32 @@
 	
 		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
 	</body>
+	
+	<script th:inline="javascript">
+		/* <![CDATA[ */
+		const page = /*[[ ${findCriteriaDTO.page} ]]*/ 'default';
+		const numPerPage = /*[[ ${findCriteriaDTO.numPerPage} ]]*/ 'default';
+		// 셀렉트 옵션에 따라 경로 변경
+		function changeNumPerPage() {
+			if ($("#findword").val().length == 0) {
+				self.location = "/board/boardList?page=" + page + "&numPerPage=" + $("#selectNum").val();
+			} else {
+				self.location = "/board/boardList?page=" + page + "&numPerPage=" + $("#selectNum").val()
+					+ "&findType=" + $("#findType option:selected").val()
+					+ "&keyword=" + $("#findword").val();
+			}
+		};
+		// 검색 버튼 클릭 시
+		function findBoard() {
+			self.location = "/board/boardList?page=" + page + "&numPerPage=" + numPerPage
+				+ "&findType=" + $("#findType option:selected").val()
+				+ "&keyword=" + $("#findword").val();
+	
+			if ($("#findword").val() == '') {
+				self.location = "/board/boardList?page=1&numPerPage=10";
+			}
+		};
+		/* ]]> */
+	</script>
 
 </html>

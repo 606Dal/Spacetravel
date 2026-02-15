@@ -1,5 +1,5 @@
 #site_title {
-	float: left;
+	float: none;
 }
 
 #site_title a {
@@ -9,6 +9,14 @@
 	color: #fff;
 	text-indent: -10000px;
 	background: url(../images/spaceTravelLogo.png) no-repeat;
+	background-size: contain;
+}
+
+@media (max-width: 768px){
+  #site_title a{
+    width: 140px;   /* 또는 120px */
+    height: 32px;
+  }
 }
 
 #menu {
@@ -32,10 +40,8 @@
 		height: 770px;
 		margin-bottom: 40px;
 		object-fit: fill;
-		background: url(../images/spaceLandscape1.jpg);
-		background-size: cover;
 	}
-}
+};
 
 .content_section {
 	margin-bottom: 30px;
@@ -71,40 +77,15 @@
 	height: 60px;
 }
 
-ul.navigation {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-ul.navigation li {
-	display: inline;
-	margin: 0;
-	padding: 0;
-}
-
-ul.navigation a {
-	float: left;
-	display: block;
-	width: 120px;
-	height: 32px;
-	padding: 10px 2px 0 0;
-	color: #fff;
+.navbar .nav-link{
 	font-size: 18px;
 	font-weight: 700;
-	text-align: center;
+	color: #fff;
 	text-decoration: none;
-	background: url(../images/tooplate_menu_divider.png) no-repeat center right;
-	background-color: rgb(0, 0, 0, 0.2);
 }
 
-ul.navigation a:hover,
-ul.navigation a.selected {
-	color: #f6bf34;
-}
-
-ul.navigation a:focus {
-	outline: none;
+.navbar .nav-link.selected, .navbar a:hover{
+	color:#f6bf34;
 }
 
 ul.adminNav {
@@ -132,35 +113,6 @@ ul.adminNav a.selected {
 	color: mediumaquamarine;
 }
 
-ul.navigation2 {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-ul.navigation2 .nav-item {
-	display: inline;
-	margin: 0;
-	padding: 0;
-}
-
-ul.navigation2 .nav-link {
-	float: left;
-	display: block;
-	width: 100px;
-	height: 32px;
-	padding: 10px 2px 0 0;
-	color: mediumaquamarine;
-	font-size: 18px;
-	font-weight: 700;
-	text-align: center;
-	text-decoration: none;
-}
-
-ul.navigation2 a:hover {
-	color: darkorchid;
-	text-decoration: none;
-}
 
 /*페이지 버튼*/
 ul.pagination a {
@@ -172,15 +124,6 @@ ul.pagination a:hover,
 ul.pagination li.selected a {
 	text-decoration: none;
 	color: mediumaquamarine;
-}
-
-#login {
-	color: darkorchid;
-}
-
-#login.nav-link:hover,
-#login.nav-link.selected {
-	color: #f6bf34;
 }
 
 .hide {
