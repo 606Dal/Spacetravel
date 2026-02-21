@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spacetravel.dto.UserDTO;
+import com.spacetravel.service.CustomUserDetails;
 import com.spacetravel.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,7 +40,13 @@ public class UserController {
 	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
 	@GetMapping("/login")
-	public String loginPage() {
+	public String loginPage(Authentication authentication) {
+		if (authentication != null
+				&& authentication.isAuthenticated()
+				&& authentication.getPrincipal() instanceof CustomUserDetails) {
+			return "redirect:/";
+		}
+		
 		return "user/loginPage";
 	}
 
@@ -62,7 +69,6 @@ public class UserController {
 		
 		// 캡차 검증
 		String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
-		log.info("sessionCaptcha: "+sessionCaptcha + "입력한 캡차: "+captcha);
 		
 		if (sessionCaptcha == null || !sessionCaptcha.equalsIgnoreCase(captcha)) {
 	        errors.put("captcha", "글자가 일치하지 않습니다.");
@@ -87,24 +93,6 @@ public class UserController {
 
 	    return ResponseEntity.ok(Map.of("ok", true));
 		
-//		try {
-//			String result = userService.usernameDuplicateCheck(username);
-//			// DB에서 검색된 아이디가 없으면
-//			if (result == null) {
-//				userService.insertUser(userDTO);
-//
-//				model.addAttribute("msg", "회원 가입에 성공하였습니다.");
-//				model.addAttribute("url", "user/loginPage");
-//
-//				return "board/messageAlert";
-//			} else {
-//				model.addAttribute("msg", "중복된 아이디 입니다.");
-//				model.addAttribute("reUsername", username);
-//			}
-//		} catch (Exception e) {
-//			log.warn("회원가입 중 오류 발생");
-//		}
-//		return "user/singUpForm";
 	}
 
 	// 비밀번호 변경 페이지

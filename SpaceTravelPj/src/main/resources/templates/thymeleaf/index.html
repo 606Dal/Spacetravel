@@ -21,9 +21,11 @@
 				<a th:href="@{/infoview/nasaApod}" class="btn btn-outline-light px-4">
 					오늘의 우주 보기
 				</a>
-				<a th:href="@{/user/login}" class="btn btn-primary px-4">
-					로그인
-				</a>
+				<th:block sec:authorize="isAnonymous()">
+					<a th:href="@{/user/login}" class="btn btn-primary px-4">
+						로그인
+					</a>
+				</th:block>
 			</div>
 		</section>
 

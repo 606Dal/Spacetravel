@@ -12,11 +12,12 @@
 	background-size: contain;
 }
 
-@media (max-width: 768px){
-  #site_title a{
-    width: 140px;   /* 또는 120px */
-    height: 32px;
-  }
+@media (max-width: 768px) {
+	#site_title a {
+		width: 140px;
+		/* 또는 120px */
+		height: 32px;
+	}
 }
 
 #menu {
@@ -41,7 +42,9 @@
 		margin-bottom: 40px;
 		object-fit: fill;
 	}
-};
+}
+
+;
 
 .content_section {
 	margin-bottom: 30px;
@@ -77,15 +80,47 @@
 	height: 60px;
 }
 
-.navbar .nav-link{
+@media (max-width: 576px) {
+	#social_box {
+		float: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		height: auto;
+		flex-wrap: wrap;
+		max-width: 100%;
+	}
+
+	#social_box a {
+		margin-left: 0;
+		width: 48px;
+		height: 48px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	#social_box svg {
+		width: 32px;
+		height: 32px;
+	}
+
+	#social_box span {
+		white-space: normal;
+	}
+}
+
+.navbar .nav-link {
 	font-size: 18px;
 	font-weight: 700;
 	color: #fff;
 	text-decoration: none;
 }
 
-.navbar .nav-link.selected, .navbar a:hover{
-	color:#f6bf34;
+.navbar .nav-link.selected,
+.navbar a:hover {
+	color: #f6bf34;
 }
 
 ul.adminNav {
@@ -131,12 +166,13 @@ ul.pagination li.selected a {
 }
 
 /*NASA api APOD videoButton*/
-.videoButton{
+.videoButton {
 	border: 1px solid lightpink;
 	width: 60%;
 	font-size: 20px;
 }
-.videoButton:hover{
+
+.videoButton:hover {
 	text-decoration: none;
 	background-color: lightpink;
 	color: black;

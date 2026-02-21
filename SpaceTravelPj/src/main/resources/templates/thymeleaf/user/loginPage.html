@@ -1,51 +1,63 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-	<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='로그인페이지' )}"></head>
-	
-	<body class="sticky">
-		<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'login' ) }" />
-	
-		<main class="mb-4 jua-font">
-			<div class="container">
-				<div class="row gx-4 gx-lg-5 justify-content-center">
-					<div id="contact_form" class="col-10 col-md-6 col-lg-4 col-xl-4">
-						<h1 id="login" class="mt-5 jua-font">로그인 화면</h1>
-						<h3>
-							<div class="badge text-bg-danger bg-opacity-75 jua-font" th:if="${param.error}">
-								아이디나 비밀번호가 잘못되었습니다.<br>(Invalid username and password)</div>
-						</h3>
-						<h3>
-							<div class="badge text-bg-danger bg-opacity-75 jua-font" th:if="${param.logout}">
-								로그아웃 되었습니다(You have been logged out).</div>
-						</h3>
-	
-						<form th:action="@{/user/login}" method="post">
-							<input type="hidden" id="csrfToken" name="_csrf" th:value="${csrfToken}">
-	
-							<div class="form-floating mb-3">
-								<input type="text" id="username" name="username" class="form-control input_field pt-4 ps-2" placeholder="Username" />
-								<label for="username">아이디</label>
-							</div>
-							<div class="form-floating mb-3">
-								<input type="password" id="password" name="password" class="form-control input_field pt-4 ps-2" placeholder="Password" />
-								<label for="password">비밀번호</label>
-							</div>
-							<div class="form-floating mb-3" style="color: ghostwhite; font-size: 18px;">
-								※ 로그인 시 첫 화면으로 돌아갑니다.
-							</div>
-							<div class="row mb-5">
-								<input type="submit" id="modify_btn" class="ms-3 me-5" value="로그인" />
-								<a th:href="@{/user/singUp}" id="back_btn" class="ms-5">회원가입</a>
-							</div>
-						</form>
-					</div>
+<head th:replace="~{tpl/tpl_fragments :: tpl_head( title='로그인페이지' )}"></head>
+
+<body class="sticky">
+	<nav th:replace="~{tpl/tpl_fragments :: tpl_nav ( 'login' ) }" />
+
+	<main class="mb-4 jua-font">
+		<div class="container">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div id="contact_form" class="col-10 col-md-6 col-lg-4 col-xl-4">
+					<h1 id="login" class="mt-5 jua-font">로그인 화면</h1>
+					<h3>
+						<div class="alert alert-danger bg-opacity-75 jua-font small py-2 px-2 mb-2" th:if="${param.error}">
+							<span th:if="${param.code != null and param.code[0] == 'locked'}">
+								정지된 계정입니다. 관리자에게 문의하세요.<br />
+								(Your account has been suspended. Please contact the administrator.)
+							</span>
+
+							<span th:if="${param.code != null and param.code[0] == 'disabled'}">
+								탈퇴 처리된 계정입니다.<br />
+								(This account has been deactivated.)
+							</span>
+
+							<span th:if="${param.code == null or param.code[0] == 'bad'}">
+								아이디 또는 비밀번호가 올바르지 않습니다.<br />
+								(Invalid username and password)
+							</span>
+						</div>
+					</h3>
+
+					<form th:action="@{/user/login}" method="post">
+						<input type="hidden" id="csrfToken" name="_csrf" th:value="${csrfToken}">
+
+						<div class="form-floating mb-3">
+							<input type="text" id="username" name="username" class="form-control input_field pt-4 ps-2"
+								placeholder="Username" />
+							<label for="username">아이디</label>
+						</div>
+						<div class="form-floating mb-3">
+							<input type="password" id="password" name="password"
+								class="form-control input_field pt-4 ps-2" placeholder="Password" />
+							<label for="password">비밀번호</label>
+						</div>
+						<div class="form-floating mb-3" style="color: ghostwhite; font-size: 18px;">
+							※ 로그인 시 첫 화면으로 돌아갑니다.
+						</div>
+						<div class="row mb-5">
+							<input type="submit" id="modify_btn" class="ms-3 me-5" value="로그인" />
+							<a th:href="@{/user/singUp}" id="back_btn" class="ms-5">회원가입</a>
+						</div>
+					</form>
 				</div>
 			</div>
-		</main>
-	
-		<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
-	</body>
-	<script th:src="@{/js/pages/login.js}"></script>
+		</div>
+	</main>
+
+	<footer th:replace="~{tpl/tpl_fragments :: tpl_footer}" />
+</body>
+<script th:src="@{/js/pages/login.js}"></script>
 
 </html>

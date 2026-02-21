@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.spacetravel.handler.CustomLoginFailureHandler;
 import com.spacetravel.handler.CustomLoginSuccessHandler;
 
 @Configuration
@@ -25,6 +26,7 @@ public class SecurityConfig {
 		http.formLogin((form) -> form
 				.loginPage("/user/login")
 				.successHandler(new CustomLoginSuccessHandler())
+				.failureHandler(new CustomLoginFailureHandler())
 			)
 			.logout((logout) -> logout
 	                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))

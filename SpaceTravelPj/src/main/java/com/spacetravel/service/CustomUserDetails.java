@@ -50,10 +50,10 @@ public class CustomUserDetails implements UserDetails {
 		return true;
 	}
 
-	//계정이 잠겨있지 않는지 리턴한다. (true : 잠기지 않음)
+	//정지된 유저가 아닌지 확인
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		return !UserDTO.STATUS_LOCKED.equals(userDTO.getStatus());
 	}
 
 	//비밀번호가 만료되지 않았는지 리턴한다. (true : 만료 안됨)
@@ -62,10 +62,10 @@ public class CustomUserDetails implements UserDetails {
 		return true;
 	}
 
-	//계정 활성화(사용가능)인지 리턴한다. (true : 활성화)
+	//계정 활성화(사용가능)인지 리턴한다.
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return !UserDTO.STATUS_DELETED.equals(userDTO.getStatus());
 	}
 
 }

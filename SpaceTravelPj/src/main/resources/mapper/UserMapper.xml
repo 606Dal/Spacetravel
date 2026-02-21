@@ -9,6 +9,7 @@
 		<result column="regdate" property="regdate" />
 		<result column="update_date" property="updateDate" />
 		<result column="rolename" property="rolename" />
+		<result column="status" property="status" />
 	</resultMap>
 
 	<insert id="insertUser" parameterType="UserDTO">
@@ -47,16 +48,26 @@
 		]]>
 	</update>
 	
-	<delete id="deleteUser" parameterType="String">
+	<update id="deleteUser" parameterType="String">
 		<![CDATA[
-			DELETE FROM user_tb WHERE username = #{username};
+			UPDATE user_tb
+    		SET status = 'DELETED'
+    		WHERE username = #{username};
 		]]>
-	</delete>
+	</update>
 	
 	<select id="findUserDate" parameterType="String" resultType="Date">
 		<![CDATA[
 			SELECT regdate FROM user_tb WHERE username = #{username};
 		]]>
 	</select>
+	
+	<update id="updateStatus" parameterType="UserDTO">
+	  <![CDATA[
+	    	UPDATE user_tb
+	    	SET status = #{status}
+	    	WHERE username = #{username};
+	  ]]>
+	</update>
 	
 </mapper>

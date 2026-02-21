@@ -8,6 +8,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public class UserDTO {
+	
+	public static final String STATUS_ACTIVE  = "ACTIVE";
+    public static final String STATUS_DELETED = "DELETED";
+    public static final String STATUS_LOCKED  = "LOCKED";
 
 	@NotBlank
 	@Pattern(regexp = "[a-zA-Z가-힣0-9]{3,20}", message = "아이디는 3~20자, 한글, 영문자, 숫자만 가능합니다.")
@@ -20,6 +24,8 @@ public class UserDTO {
 	private LocalDateTime regdate;
 	private LocalDateTime updateDate;
 	private String rolename;
+	
+	private String status;
 
 	// getter, setter
 	public String getUsername() {
@@ -73,10 +79,18 @@ public class UserDTO {
 	public void setRolename(String rolename) {
 		this.rolename = rolename;
 	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {
-		return "UserDTO [username=" + username + ", regdate=" + regdate + ", updateDate=" + updateDate + "]";
+		return "UserDTO [username=" + username + ", regdate=" + regdate + ", updateDate=" + updateDate + ", status=" + status + "]";
 	}
 
 }

@@ -36,7 +36,7 @@ body.sticky {
 }
 
 a:link, a:visited { color: mediumaquamarine; text-decoration: none; }
-a:hover { text-decoration: underline; }
+a:hover { text-decoration: none; }
 
 p { margin: 0 0 15px 0; padding: 0; }
 img { border: none; }
