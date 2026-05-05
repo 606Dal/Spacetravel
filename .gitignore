@@ -50,6 +50,9 @@ application-mysql.properties
 logback-variables.properties
 application-api.properties
 
+application-local.properties
+application-prod.properties
+
 # Code Recommenders
 .recommenders/
 

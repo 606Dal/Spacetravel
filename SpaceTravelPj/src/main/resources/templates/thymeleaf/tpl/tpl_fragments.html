@@ -24,6 +24,14 @@
 		<link href="https://fonts.googleapis.com" rel="preconnect">
 		<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+		<script>
+			if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+			    console.log = function() {};
+			    console.info = function() {};
+			    console.warn = function() {};
+			    console.error = function() {};
+			}
+		</script>
 	</head>
 	
 	<body>

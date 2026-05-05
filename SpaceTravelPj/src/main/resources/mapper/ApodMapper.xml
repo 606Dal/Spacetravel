@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spacetravel.mapper.ApodMapper">
+
+	<resultMap id="CachedApodResult" type="CachedApodDTO">
+	    <id column="id" property="id" />
+	    <result column="title" property="title" />
+	    <result column="explanation" property="explanation" />
+	    <result column="copyright" property="copyright" />
+	    <result column="local_path" property="localPath" />
+	    <result column="original_url" property="originalUrl" />
+	    <result column="original_hd_url" property="originalHdUrl" />
+	    <result column="media_type" property="mediaType" />
+	    <result column="apod_date" property="apodDate" />
+	    <result column="created_at" property="createdAt" />
+	</resultMap>
+
+	<!-- 1. 캐시 저장 -->
+	<insert id="insertCachedApod" parameterType="CachedApodDTO">
+        INSERT INTO cached_apod (
+            title, 
+            explanation, 
+            copyright, 
+            local_path, 
+            original_url, 
+            original_hd_url, 
+            media_type, 
+            apod_date
+        ) VALUES (
+            #{title}, 
+            #{explanation}, 
+            #{copyright}, 
+            #{localPath}, 
+            #{originalUrl}, 
+            #{originalHdUrl}, 
+            #{mediaType}, 
+            #{apodDate}
+        )
+    </insert>
+
+    <!-- 2. 특정 날짜로 조회 -->
+    <select id="selectApodByDate" resultMap="CachedApodResult">
+        SELECT * 
+        FROM cached_apod 
+        WHERE apod_date = #{apodDate}
+    </select>
+
+    <!-- 3. 랜덤하게 1건 조회 -->
+    <select id="selectRandomApod" resultMap="CachedApodResult">
+        SELECT * 
+        FROM cached_apod 
+        ORDER BY RAND() 
+        LIMIT 1
+    </select>
+	
+</mapper>
