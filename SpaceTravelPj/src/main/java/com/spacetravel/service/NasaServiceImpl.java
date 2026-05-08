@@ -59,7 +59,7 @@ public class NasaServiceImpl implements NasaService {
 //			 String rateLimit = headers.getFirst("X-RateLimit-Limit");
 			 String rateRemaining = headers.getFirst("X-RateLimit-Remaining");
 			 
-			 log.info("NASA API 남은 호출 횟수: {}", rateRemaining);
+			 log.debug("NASA API 남은 호출 횟수: {}", rateRemaining);
 			 
 			 return response.getBody();
 			 
@@ -95,7 +95,6 @@ public class NasaServiceImpl implements NasaService {
 
 	/**
      * 관리자가 '저장' 버튼을 눌렀을 때 실행될 캐싱 메서드
-	 * @return 
      */
 	@Override
 	public String saveApodToCache(ApodDTO apodDTO) {

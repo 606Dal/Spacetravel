@@ -12,25 +12,30 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spacetravel.dto.UserDTO;
 import com.spacetravel.service.AdminService;
+import com.spacetravel.service.CacheManageService;
 import com.spacetravel.service.CustomUserDetails;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private CacheManageService cacheManageService;
 
-	private static final Logger log = LoggerFactory.getLogger(AdminController.class);
-
+	
 	@GetMapping("/adminPage")
-	public void adminPage() {
-	}
+	public void adminPage() { }
 
 	// 유저 목록
 	@GetMapping("/userList")
@@ -46,7 +51,7 @@ public class AdminController {
 	}
 
 	// 유저 삭제
-	@PostMapping("deleteUserOk")
+	@PostMapping("/deleteUserOk")
 	public String deleteUserOk(HttpServletRequest request,
 			@AuthenticationPrincipal CustomUserDetails userDetails,
 			Model model) {
@@ -81,6 +86,16 @@ public class AdminController {
 		}
 
 		return "admin/userList";
+	}
+	
+	@GetMapping("/cache-clear")
+	public String clearCache(Model model) {
+	    cacheManageService.clearApodCache();
+	    
+	    model.addAttribute("msg", "우주 사진 캐시가 성공적으로 초기화되었습니다.");
+		model.addAttribute("url", "/admin/adminPage");
+	    
+	    return "board/messageAlert";
 	}
 
 }
