@@ -32,9 +32,9 @@
 							<!--/* 작성자와 이름이 같은 유저와 관리자 역할 계정만 버튼이 보임 */-->
 							<span class="pe-0" th:if="${#authentication.principal.username == boardDTO.writer or #authorization.expression('hasRole(''ADMIN'')')}">
 								<!--/* 수정 버튼 form action과 별개 */-->
-								<a type="submit" th:href="@{/board/boardModifyForm(page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, id=${boardDTO.id})}"
+								<a th:href="@{/board/boardModifyForm(page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, id=${boardDTO.id})}"
 									id="modify_btn" class="col mx-2" th:if="${findCriteriaDTO.keyword} == null">수정하기</a>
-								<a type="submit" th:href="@{/board/boardModifyForm(page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, findType=${findCriteriaDTO.findType}, keyword=${findCriteriaDTO.keyword}, id=${boardDTO.id})}"
+								<a th:href="@{/board/boardModifyForm(page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, findType=${findCriteriaDTO.findType}, keyword=${findCriteriaDTO.keyword}, id=${boardDTO.id})}"
 									id="modify_btn" class="col mx-2" th:unless="${findCriteriaDTO.keyword} == null">수정하기</a>
 	
 								<input type="hidden" name="page" th:value="*{findCriteriaDTO.page}">
@@ -47,7 +47,8 @@
 							</span>
 							<span>
 								<!-- 뒤로가기 버튼 -->
-								<a type="submit" id="back_btn" class="col mx-2" onclick="history.go(-1);">← 뒤로</a>
+								<a  th:href="@{/board/boardList(page=${findCriteriaDTO.page}, numPerPage=${findCriteriaDTO.numPerPage}, findType=${findCriteriaDTO.findType}, keyword=${findCriteriaDTO.keyword})}"
+									id="back_btn" class="col mx-2">← 뒤로</a>
 							</span>
 						</form>
 						<!-- Divider-->

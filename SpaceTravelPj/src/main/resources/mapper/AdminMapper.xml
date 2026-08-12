@@ -12,11 +12,9 @@
 	</resultMap>
 
 	<select id="getCountUser" resultType="int">
-		<![CDATA[
 			SELECT COUNT(*)
 			FROM
 				user_tb
-		]]>
 	</select>
 	
 	<select id="getUserList" resultMap="UserResult">

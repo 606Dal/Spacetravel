@@ -16,10 +16,11 @@
 
 현재는 로그인 기능과 게시판+댓글 기능, NASA Open API를 이용한 오늘의 천문학 사진을 보는 기능이 있습니다.
 
-사이트 : https://www.dalspace.site
+사이트 : https://www.spacedal.site
 * 2025-08-20
   * 기존 www.spacedal.site → https://www.dalspace.site 로 도메인 변경.
-
+* 2026-08-12
+  * 기존 www.dalspace.site → https://www.spacedal.site 로 다시 변경.
 
 ---
 사용 기술
@@ -29,11 +30,6 @@
  * NASA Open API를 이용한 오늘의 천문학 사진(APOD) - 24.09.28 업데이트 
 
 ---
-후기
-
-따라 만들어 보기만 했던 프로젝트를 여태까지 배운 내용들을 이용해 직접 만들어 보고 싶어 시작했습니다.
-혼자 만든 웹사이트라서 배포도 간소하게 했는데, 알아갈수록 더 복잡하고 어려운 것들이 계속 나오는 것 같습니다. 그래도 프로젝트가 만들어져 가는 게 뿌듯하고 점차 할 수 있는 작업이 많아져서 좋아 계속할 수 있는 동기가 됩니다.
-
 
 참고 템플릿 : https://all-free-download.com/free-website-templates/download/galaxy_design_6891300.html
 

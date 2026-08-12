@@ -26,7 +26,9 @@ import com.spacetravel.service.BoardService;
 import com.spacetravel.service.CustomUserDetails;
 import com.spacetravel.service.ReplyService;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @Controller
@@ -93,14 +95,41 @@ public class BoardController {
 
 	// 글 내용 보기
 	@GetMapping("/boardReadPage")
-	public String boardReadPage(@RequestParam(required = false) Integer id, Model model,
+	public String boardReadPage(@RequestParam(required = false) Integer id,
+			Model model,
 			@ModelAttribute("findCriteriaDTO") FindCriteriaDTO findCriteriaDTO,
 			@ModelAttribute("pageCriteriaDTO") PageCriteriaDTO pageCriteriaDTO,
-			@RequestParam(required = false) Integer replyPage) {
+			@RequestParam(required = false) Integer replyPage,
+			HttpServletRequest request,
+			HttpServletResponse response) {
 		
 		if (id != null) {
+			
+			Cookie[] cookies = request.getCookies();
+	        boolean isViewed = false;
+	        
+	        if (cookies != null) {
+	            for (Cookie cookie : cookies) {
+	                // "postView_게시글번호" 형태의 쿠키가 있는지 확인
+	                if (cookie.getName().equals("postView_" + id)) {
+	                    isViewed = true;
+	                    break;
+	                }
+	            }
+	        }
+	        
+	        // 쿠키가 없다면 (처음 읽는 글이라면) 조회수 증가시키고 쿠키 생성
+	        if (!isViewed) {
+	            boardService.updateHit(id);
+	            
+	            Cookie newCookie = new Cookie("postView_" + id, "1");
+	            newCookie.setMaxAge(60 * 60 * 24); // 쿠키 유지 시간 설정 (24시간)
+	            newCookie.setPath("/"); // 모든 경로에서 쿠키 접근 가능
+	            response.addCookie(newCookie);
+	        }
+			
 			BoardDTO boardDTO = boardService.readBoard(id);
-			// db에서 가져온 정보가 없을 경우
+			
 			if (boardDTO == null) {
 				model.addAttribute("msg", "존재하지 않는 글입니다.");
 				model.addAttribute("url", "/board/boardList?page=1&numPerPage=10");
@@ -110,7 +139,6 @@ public class BoardController {
 			// 댓글 페이지 버튼
 			if (replyPage == null) {
 				replyPage = 1;
-				boardService.updateHit(id); // 처음 boardReadPage 왔을 때만 조회 수 증가
 			}
 			pageCriteriaDTO.setPage(replyPage);
 			pageCriteriaDTO.setNumPerPage(5);
@@ -124,6 +152,7 @@ public class BoardController {
 			model.addAttribute("boardDTO", boardDTO);
 			model.addAttribute("replyList", replyList);
 			model.addAttribute("pagingDTO", pagingDTO);
+			
 			// replyPage를 url에서 숫자 변경시
 			if (pagingDTO.getTotalData() > 0 && (pagingDTO.getEndPage() - pagingDTO.getStartPage()) < 0) {
 				model.addAttribute("msg", "존재하지 않는 페이지입니다.");
